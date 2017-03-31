@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EXPOCOMA.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="dblocal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dbexpo</Value>
+    </Setting>
+    <Setting Name="sqlserServidor" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sqlserUsuario" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sqlserPass" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sqlserDb" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="cerrarApp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="sqlorigen" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="filaAltern" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">204, 255, 204</Value>
+    </Setting>
+    <Setting Name="filaSeleccion" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">128, 128, 255</Value>
+    </Setting>
+    <Setting Name="filaroja" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 70, 70</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
