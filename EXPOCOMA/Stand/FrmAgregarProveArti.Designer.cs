@@ -67,7 +67,11 @@
             this.dgvProveedor.Name = "dgvProveedor";
             this.dgvProveedor.RowHeadersWidth = 4;
             this.dgvProveedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+<<<<<<< HEAD
             this.dgvProveedor.Size = new System.Drawing.Size(558, 133);
+=======
+            this.dgvProveedor.Size = new System.Drawing.Size(678, 211);
+>>>>>>> parent of 5050a28... Revert "hola"
             this.dgvProveedor.TabIndex = 2;
             this.dgvProveedor.TabStop = false;
             this.dgvProveedor.Tag = "";
