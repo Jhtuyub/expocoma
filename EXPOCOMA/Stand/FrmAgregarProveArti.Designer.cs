@@ -67,10 +67,7 @@
             this.dgvProveedor.Name = "dgvProveedor";
             this.dgvProveedor.RowHeadersWidth = 4;
             this.dgvProveedor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-
-            this.dgvProveedor.Size = new System.Drawing.Size(558, 133);
-            this.dgvProveedor.Size = new System.Drawing.Size(678, 211);
-            this.dgvProveedor.Size = new System.Drawing.Size(678, 211);
+            this.dgvProveedor.Size = new System.Drawing.Size(698, 227);
             this.dgvProveedor.TabIndex = 2;
             this.dgvProveedor.TabStop = false;
             this.dgvProveedor.Tag = "";
