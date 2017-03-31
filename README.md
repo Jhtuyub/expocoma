@@ -1,2 +1,2 @@
 # expocoma
-sistema para expos COMA
+sistema de proyecto estudiane
