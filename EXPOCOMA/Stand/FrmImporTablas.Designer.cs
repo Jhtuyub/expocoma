@@ -153,7 +153,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.barraProgreso.Location = new System.Drawing.Point(11, 462);
             this.barraProgreso.Name = "barraProgreso";
-            this.barraProgreso.Size = new System.Drawing.Size(681, 28);
+            this.barraProgreso.Size = new System.Drawing.Size(669, 28);
             this.barraProgreso.TabIndex = 16;
             // 
             // lblMensaje
@@ -170,9 +170,9 @@
             // 
             this.picbCargando.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.picbCargando.Image = global::EXPOCOMA.Properties.Resources.loader;
-            this.picbCargando.Location = new System.Drawing.Point(699, 462);
+            this.picbCargando.Location = new System.Drawing.Point(686, 455);
             this.picbCargando.Name = "picbCargando";
-            this.picbCargando.Size = new System.Drawing.Size(27, 28);
+            this.picbCargando.Size = new System.Drawing.Size(40, 40);
             this.picbCargando.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbCargando.TabIndex = 18;
             this.picbCargando.TabStop = false;

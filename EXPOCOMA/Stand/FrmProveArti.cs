@@ -172,8 +172,8 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["id"].Visible = false;
                 dgvArticulo.Columns["ID_SUCURSALALM"].Visible = false;
                 dgvArticulo.Columns["FAMI_ARTI"].Visible = false;
-                dgvArticulo.Columns["C_PROVE"].Visible = false;
-                dgvArticulo.Columns["C_PROVE2"].Visible = false;
+                //dgvArticulo.Columns["C_PROVE"].Visible = false;
+                //dgvArticulo.Columns["C_PROVE2"].Visible = false;
                 dgvArticulo.Columns["CANTIDAD"].Visible = false;
                 dgvArticulo.Columns["CANCELA"].Visible = false;
                 dgvArticulo.Columns["FALTANTE"].Visible = false;
@@ -328,7 +328,7 @@ namespace EXPOCOMA.Stand
 
         private void dgvProveedor_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
             if (dgvProveedor.Columns[e.ColumnIndex].Name == "PARTICIPA")
             {
                 //dgvProveedor.Enabled = false;
@@ -359,9 +359,7 @@ namespace EXPOCOMA.Stand
                                         //chBoxArtiTodos.Checked = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
                                     }
                                 }
-
                                 
-
                             }
                             else
                             {
@@ -373,6 +371,16 @@ namespace EXPOCOMA.Stand
                         }
                     }
                 }
+
+                //if (Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value) == true)
+                //{
+                btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                //}
+                //else
+                //{
+                //    btnAgregarArti.Enabled = false;
+                //}
+
                 //dgvProveedor.Enabled = true;
 
             }
@@ -721,14 +729,18 @@ namespace EXPOCOMA.Stand
 
         private void dgvProveedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            
             FiltrarArticulo();
-            btnAgregarArti.Enabled = true;
+            //btnAgregarArti.Enabled = true;
         }
 
         private void dgvProveedor_SelectionChanged(object sender, EventArgs e)
         {
+
             try
             {
+                btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+
                 FiltrarArticulo();
                 //chBoxArtiTodos.Checked = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
             }
@@ -897,6 +909,9 @@ namespace EXPOCOMA.Stand
 
         private void btnAgregarArti_Click(object sender, EventArgs e)
         {
+
+            //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
+            
             DataTable _dtAddArticulo;
             DataRow[] _drProve = _dtProveedor.Select("ID_SUCURSALALM ="+ cBoxSucursal.SelectedValue.ToString() + " AND participa = false AND RESP_COMA = '" + SesionLetra + "'");
 
@@ -906,18 +921,21 @@ namespace EXPOCOMA.Stand
                 _dtAddArticulo.ImportRow(fila);
             }
 
-
-
             FrmAgregarProveArti frmAgregarArti = new FrmAgregarProveArti();
             frmAgregarArti.MdiParent = this.MdiParent;
             frmAgregarArti._CadenaConexion = _CadenaConexion;
-            frmAgregarArti._dtProveedor = _dtAddArticulo;
+            frmAgregarArti._dtAddArticulo = _dtAddArticulo;
+            //frmAgregarArti._dtProveedor = _dtProveedor;
+            frmAgregarArti._dtArticulos = _dtArticulo;
             frmAgregarArti._CProve = dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString();
             frmAgregarArti._NomProve = dgvProveedor.CurrentRow.Cells["DESCRI"].Value.ToString();
             frmAgregarArti._NumAlmacen = cBoxSucursal.SelectedValue.ToString();
             //_frmSucusal.Owner = this;
             frmAgregarArti.Show();
             this.Enabled = false;
+
+            
+
         }
 
         private void FrmProveArti_FormClosing(object sender, FormClosingEventArgs e)
