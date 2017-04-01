@@ -227,6 +227,7 @@
             // 
             // btnAgregarArti
             // 
+            this.btnAgregarArti.Enabled = false;
             this.btnAgregarArti.Location = new System.Drawing.Point(484, 4);
             this.btnAgregarArti.Name = "btnAgregarArti";
             this.btnAgregarArti.Size = new System.Drawing.Size(128, 29);

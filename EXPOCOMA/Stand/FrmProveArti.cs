@@ -31,7 +31,7 @@ namespace EXPOCOMA.Stand
         DataTable _dtGuardarArticulo;
         DataTable _dtTblArticulo;
         DataTable _dtArticulo;
-        DataView _dvArticulo;        
+        DataView _dvArticulo;
         DataView _dvArticuloTMP;
         DataRow[] foundRows;
 
@@ -88,16 +88,11 @@ namespace EXPOCOMA.Stand
             cboxOrdProve.Invoke(new Action(delegate () {
                 _funcion.llenarCombobox(cboxOrdProve, _cbOrdDatos);
             }));
-            
-
-
-            
 
             //FiltrarProveedor(_dtProveedor, "ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString());
             this.Invoke(new Action(delegate () {
                 FiltrarProveedor();
             }));
-
 
             dgvProveedor.Invoke(new Action(delegate () {
                 _dtProveedor.Columns.Add("PARTICIPA", typeof(Boolean));
@@ -727,6 +722,7 @@ namespace EXPOCOMA.Stand
         private void dgvProveedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             FiltrarArticulo();
+            btnAgregarArti.Enabled = true;
         }
 
         private void dgvProveedor_SelectionChanged(object sender, EventArgs e)
@@ -777,7 +773,7 @@ namespace EXPOCOMA.Stand
                 
                 this.Invoke((MethodInvoker)delegate
                 {
-                    consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString() + " AND STATUS <> '*')";
+                    consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString() + " AND STATUS <> '*' OR STATUS <> 'INACTIVO')";
                     _forProve = dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString();
                     _cBoxSucursal = cBoxSucursal.SelectedValue.ToString();
                 });
@@ -800,7 +796,7 @@ namespace EXPOCOMA.Stand
                     for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
                     {
                         
-                        if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == _cBoxSucursal) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == _forProve) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*"))
+                        if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == _cBoxSucursal) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == _forProve) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
                         {
                             _dtArticulo.Rows[ii]["PARTICIPA"] = chBoxProvTodos.Checked;
                         }
@@ -901,9 +897,24 @@ namespace EXPOCOMA.Stand
 
         private void btnAgregarArti_Click(object sender, EventArgs e)
         {
+            DataTable _dtAddArticulo;
+            DataRow[] _drProve = _dtProveedor.Select("ID_SUCURSALALM ="+ cBoxSucursal.SelectedValue.ToString() + " AND participa = false AND RESP_COMA = '" + SesionLetra + "'");
+
+            _dtAddArticulo = _dtProveedor.Clone();
+            foreach (DataRow fila in _drProve)
+            {
+                _dtAddArticulo.ImportRow(fila);
+            }
+
+
+
             FrmAgregarProveArti frmAgregarArti = new FrmAgregarProveArti();
             frmAgregarArti.MdiParent = this.MdiParent;
             frmAgregarArti._CadenaConexion = _CadenaConexion;
+            frmAgregarArti._dtProveedor = _dtAddArticulo;
+            frmAgregarArti._CProve = dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString();
+            frmAgregarArti._NomProve = dgvProveedor.CurrentRow.Cells["DESCRI"].Value.ToString();
+            frmAgregarArti._NumAlmacen = cBoxSucursal.SelectedValue.ToString();
             //_frmSucusal.Owner = this;
             frmAgregarArti.Show();
             this.Enabled = false;
