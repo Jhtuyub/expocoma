@@ -167,13 +167,12 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 //dgvArticulo.Columns["id"].Visible = false;
                 //dgvArticulo.Columns["ID_SUCURSALALM"].Visible = false;
-                //dgvArticulo.Columns["C_PROVE"].Visible = false;
                 //dgvArticulo.Columns["PARTICIPA"].Visible = true;
                 dgvArticulo.Columns["id"].Visible = false;
                 dgvArticulo.Columns["ID_SUCURSALALM"].Visible = false;
                 dgvArticulo.Columns["FAMI_ARTI"].Visible = false;
-                //dgvArticulo.Columns["C_PROVE"].Visible = false;
-                //dgvArticulo.Columns["C_PROVE2"].Visible = false;
+                dgvArticulo.Columns["C_PROVE"].Visible = false;
+                dgvArticulo.Columns["C_PROVE2"].Visible = false;
                 dgvArticulo.Columns["CANTIDAD"].Visible = false;
                 dgvArticulo.Columns["CANCELA"].Visible = false;
                 dgvArticulo.Columns["FALTANTE"].Visible = false;
