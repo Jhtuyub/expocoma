@@ -223,7 +223,7 @@ namespace EXPOCOMA.Stand
 
         private void FrmProveArti_Load(object sender, EventArgs e)
         {
-            //CargarInformacion();
+            CargarInformacion();
             CargarInfo = new Thread(CargarInformacion);
             CargarInfo.IsBackground = true;
             CargarInfo.Start();
