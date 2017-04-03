@@ -20,10 +20,10 @@ namespace EXPOCOMA.Stand
 
         funciones _funcion = new funciones();
 
-        
-
         String Sesion = "ALEX  CARDENAS";
         String SesionLetra = "H";
+
+        DataView _dvProveedor;
 
         public FrmAgregarProveArti()
         {
@@ -45,7 +45,7 @@ namespace EXPOCOMA.Stand
 
             dgvProveedor.Columns["id"].Visible = false;
             dgvProveedor.Columns["ID_SUCURSALALM"].Visible = false;
-            //dgvProveedor.Columns["C_PROVE2"].Visible = false;
+            dgvProveedor.Columns["C_PROVE2"].Visible = false;
             dgvProveedor.Columns["PARTICIPA"].DisplayIndex = 0;
             dgvProveedor.Columns["PARTICIPA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvProveedor.Columns["PARTICIPA"].HeaderText = "+";
@@ -73,6 +73,13 @@ namespace EXPOCOMA.Stand
                     }
                 }
             }
+
+            String[,] _cbdatos = {
+                { "C_PROVE", "DESCRI" },
+                { "Clave", "Nombre Proveedor" }
+            };
+                _funcion.llenarCombobox(cboxBuscarCampo, _cbdatos);
+           
 
         }
 
@@ -168,6 +175,52 @@ namespace EXPOCOMA.Stand
             Close();
         }
 
-       
+        private void txtBuscar_KeyUp(object sender, KeyEventArgs e)
+        {
+            //    public void FiltrarProveedor()
+            //{
+            //String consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ")";
+            String consulta = cboxBuscarCampo.SelectedValue.ToString() + " LIKE '%" + txtBuscar.Text + "%'";
+            //if (!(txtBusProve.Text == null))
+            //{
+
+            //    if (!(cboxOrdProve.SelectedValue.ToString() == ""))
+            //    {
+            //        consulta += " AND (" + cboxBusProve.SelectedValue.ToString() + " LIKE '%" + txtBusProve.Text + "%' AND resp_coma = '" + cboxOrdProve.SelectedValue.ToString() + "')";
+            //    }
+            //    else
+            //    {
+            //        consulta += " AND (" + cboxBusProve.SelectedValue.ToString() + " LIKE '%" + txtBusProve.Text + "%')";
+            //    }
+
+            //}
+
+            _dvProveedor = _dtAddArticulo.DefaultView;
+            _dvProveedor.RowFilter = consulta;
+            _dvProveedor.Sort = cboxBuscarCampo.SelectedValue.ToString() + " ASC";
+            dgvProveedor.DataSource = _dvProveedor;
+
+            //for (int i = 0; i < dgvProveedor.Rows.Count; i++)
+            //{
+
+
+            //    //dgvProveedor.Rows[i].["PARTICIPA"]. = false;
+            //    if (!(dgvProveedor.Rows[i].Cells["resp_coma"].Value.ToString() == SesionLetra))
+            //    {
+            //        dgvProveedor.Rows[i].Cells["PARTICIPA"].ReadOnly = true;
+            //    }
+
+
+            //}
+
+
+
+            //}
+        }
+
+        private void cboxBuscarCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtBuscar.Focus();
+        }
     }
 }
