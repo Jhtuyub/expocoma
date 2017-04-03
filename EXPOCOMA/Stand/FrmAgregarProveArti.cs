@@ -106,10 +106,7 @@ namespace EXPOCOMA.Stand
                         if ((_dtArticulos.Rows[ii]["C_PROVE"].ToString() == CProve) && (_dtArticulos.Rows[ii]["ID_SUCURSALALM"].ToString() == _NumAlmacen))
                         {
                         ////if (_dtArticulos.Rows[i]["C_PROVE"].ToString()==_CProve )
-                        ////{
-                            if (participa)
-                            {
-                            var holaprueba = "";
+                        /ksdjfñdsñkj
                                 if (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "*") && (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "INACTIVO")))
                                 {
                                     //MessageBox.Show(CProve + "       " + _dtArticulos.Rows[i]["C_PROVE"].ToString());
