@@ -361,11 +361,11 @@ namespace EXPOCOMA.Stand
                                 }
                                 
                             }
-                            else
-                            {
-                                _dtProveedor.Rows[i]["PARTICIPA"] = false;
-                                dgvProveedor.CurrentRow.Cells["PARTICIPA"].ReadOnly = true;
-                            }
+                            //else
+                            //{
+                            //    _dtProveedor.Rows[i]["PARTICIPA"] = false;
+                            //    dgvProveedor.CurrentRow.Cells["PARTICIPA"].ReadOnly = true;
+                            //}
                             
                           
                         }
