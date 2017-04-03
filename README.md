@@ -1,2 +1,2 @@
 # expocoma
-sistema para proyecto de estudiante
+sistema para proyecto
