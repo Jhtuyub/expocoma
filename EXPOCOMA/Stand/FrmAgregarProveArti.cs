@@ -84,6 +84,7 @@ namespace EXPOCOMA.Stand
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             String CProve;
+            String CProve2;
             Boolean participa;
             //DataRow[] _drProveedor = _dtAddArticulo.Select("participa = true AND RESP_COMA = '" + SesionLetra + "'");
             DataRow[] _drProveedor = _dtAddArticulo.Select("ID_SUCURSALALM = '"+_NumAlmacen +"' AND RESP_COMA = '" + SesionLetra + "'");
@@ -96,10 +97,11 @@ namespace EXPOCOMA.Stand
             for (int i = 0; i < _dtTmpProve.Rows.Count; i++)
             {
                 CProve = _dtTmpProve.Rows[i]["C_PROVE"].ToString();
+                CProve2 = _dtTmpProve.Rows[i]["C_PROVE2"].ToString();
                 participa =Convert.ToBoolean(_dtTmpProve.Rows[i]["PARTICIPA"]);
                 //MessageBox.Show(""+participa);
-                //if (participa)
-                //{
+                if (participa)
+                {
                     for (int ii = 0; ii < _dtArticulos.Rows.Count; ii++)
                     {
 
@@ -107,20 +109,19 @@ namespace EXPOCOMA.Stand
                         {
                         ////if (_dtArticulos.Rows[i]["C_PROVE"].ToString()==_CProve )
                         ////{
-                            if (participa)
-                            {
-                            var holaprueba = "";
+                            //if (participa)
+                            //{
                                 if (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "*") && (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "INACTIVO")))
                                 {
                                     //MessageBox.Show(CProve + "       " + _dtArticulos.Rows[i]["C_PROVE"].ToString());
                                     //MessageBox.Show(_dtArticulos.Rows[i]["c_arti"].ToString());
                                     _dtArticulos.Rows[ii]["C_PROVE"] = txtClProve.Text;
                                 }
-                            }
-                            else
-                            {
-                                _dtArticulos.Rows[ii]["C_PROVE"] = _dtArticulos.Rows[ii]["C_PROVE2"].ToString();
-                            }
+                            //}
+                            //else
+                            //{
+                            //    _dtArticulos.Rows[ii]["C_PROVE"] = _dtArticulos.Rows[ii]["C_PROVE2"].ToString();
+                            //}
                         ////if (!(_dtArticulos.Rows[i]["C_PROVE"].ToString() == _dtArticulos.Rows[i]["C_PROVE2"].ToString()))
                         ////{
 
@@ -132,24 +133,24 @@ namespace EXPOCOMA.Stand
 
                     }
                     }
-                //}
-                //else
-                //{
+                }
+                else
+                {
 
 
-                //    for (int ii = 0; ii < _dtArticulos.Rows.Count; ii++)
-                //    {
+                    for (int ii = 0; ii < _dtArticulos.Rows.Count; ii++)
+                    {
 
-                //        if ((_dtArticulos.Rows[ii]["C_PROVE"].ToString() == CProve) && (_dtArticulos.Rows[ii]["ID_SUCURSALALM"].ToString() == _NumAlmacen))
-                //        {
-                //            _dtArticulos.Rows[ii]["C_PROVE"] = _dtArticulos.Rows[ii]["C_PROVE2"].ToString();
-                //        }
-                //    }
+                        if ((_dtArticulos.Rows[ii]["C_PROVE2"].ToString() == CProve2) && (_dtArticulos.Rows[ii]["ID_SUCURSALALM"].ToString() == _NumAlmacen))
+                        {
+                            _dtArticulos.Rows[ii]["C_PROVE"] = _dtArticulos.Rows[ii]["C_PROVE2"].ToString();
+                        }
+                    }
 
 
-                    
-                //}
-                
+
+                }
+
 
                 //_dtGuardarProveedor.ImportRow(fila);
             }
