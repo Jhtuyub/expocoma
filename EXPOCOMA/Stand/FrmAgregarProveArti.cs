@@ -109,6 +109,7 @@ namespace EXPOCOMA.Stand
                         ////{
                             if (participa)
                             {
+                            var holaprueba = "";
                                 if (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "*") && (!(_dtArticulos.Rows[ii]["STATUS"].ToString() == "INACTIVO")))
                                 {
                                     //MessageBox.Show(CProve + "       " + _dtArticulos.Rows[i]["C_PROVE"].ToString());
