@@ -42,13 +42,12 @@ namespace EXPOCOMA.Stand
             //_funcion._TIPObasedatos = "sqlserver";
             //_funcion.cargar_datos(dgvSucursal, "tbl_sucursal");
             _dtSucursal = _funcion.llenar_form("tbl_sucursal");
-           _dtSucursal.Columns.Add("importar", typeof(Boolean));
+            _dtSucursal.Columns.Add("importar", typeof(Boolean));
 
             for (int i = 0; i < _dtSucursal.Rows.Count; i++)
             {
                 _dtSucursal.Rows[i]["importar"] = false;
             }
-
 
             picbCargando.Visible = false;
 
@@ -56,7 +55,7 @@ namespace EXPOCOMA.Stand
             dgvSucursal.DataSource = _dtSucursal;
             dgvSucursal.Columns["importar"].DisplayIndex = 0;
             //dgvSucursal.Columns["importar"].
-           dgvSucursal.Columns["id"].Visible = false;
+            dgvSucursal.Columns["id"].Visible = false;
             dgvSucursal.Columns["id_catsucursal"].Visible = false;
             dgvSucursal.Columns["anfitrion"].ReadOnly = true;
             dgvSucursal.Columns["anfitrion"].Width = 55;
@@ -87,9 +86,9 @@ namespace EXPOCOMA.Stand
                 {
                     "SELECT * FROM VW_MTL_SYSTEM_ITEMS_B_CMA_2 WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//articulo
                     "SELECT * FROM PO_FAMILIAS_COMA WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//fam_arti
-                    "tabla no identificada",//porpieza
-                    "tabla no disponible",//cliente
-                    "tabla no identificada",//prefijos
+                    "",//porpieza
+                    "",//cliente
+                    "",//prefijos
                     "SELECT * FROM VW_PO_VENDORS_INT WHERE organizacion = @ORGANIZATION_ID",//proveedo
                     "SELECT statarti.ITEM_NUMBER, statarti.STATUS_NUMBER, estatus.CONCEPTO, articulos.DESCRIPTION, articulos.ATTRIBUTE3, articulos.ATTRIBUTE2, articulos.NO_PROV_AFECTA_PRECIO FROM po_supp_item_status_int statarti INNER JOIN PO_CATALOG_STATUS estatus ON statarti.STATUS_NUMBER = estatus.STATUS_NUMBER INNER JOIN VW_MTL_SYSTEM_ITEMS_B_CMA_2 articulos ON statarti.ITEM_NUMBER = articulos.SEGMENT1 WHERE (statarti.ORGANIZATION_ID = @ORGANIZATION_ID) AND (statarti.STATUS_NUMBER <= 5 OR statarti.STATUS_NUMBER IN (12, 19, 20, 34)) AND (articulos.ORGANIZATION_ID = @ORGANIZATION_ID) ORDER BY statarti.ITEM_NUMBER, CONVERT(SMALLDATETIME, statarti.FECHA_CREACION, 105), CAST(statarti.STATUS_NUMBER AS numeric)",//statarti
                     "SELECT * FROM po_catalog_status"//estatus
@@ -99,8 +98,8 @@ namespace EXPOCOMA.Stand
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR",
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
-                    "false",
-                    "false",
+                    "",
+                    "",
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA", //
                     "ID_SUCURSALALM-ID_SUCURSALALM,ITEM_NUMBER-C_ARTI,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,DESCRIPTION-DES_ARTI,ATTRIBUTE3-EMPAQUE,ATTRIBUTE2-CAP_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE", //,status_number-STATUS
                     "ID_SUCURSALALM-ID_SUCURSALALM,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,FECHA_ALTA-FECHA_ALT"
@@ -110,7 +109,7 @@ namespace EXPOCOMA.Stand
                 //{ "Almacen", ""}
             };
 
-             _dtTablas = new DataTable("tablas");
+            _dtTablas = new DataTable("tablas");
             _dtTablas.Columns.Add("tablas");
             _dtTablas.Columns.Add("dbf", typeof(Boolean));
             _dtTablas.Columns.Add("tablassql");
@@ -132,22 +131,14 @@ namespace EXPOCOMA.Stand
                 _dtTablas.Rows.Add(dr);
             }
             
-
             dgvTablas.DataSource = _dtTablas;
+            //dgvTablas.Columns["tablassql"].Visible = false;
+            //dgvTablas.Columns["campos"].Visible = false;
             dgvTablas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvTablas.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvTablas.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
-
-            //for (int ii = 0; ii < dgvTablas.RowCount; ii++)
-            //{
-            //    //MessageBox.Show(dgvTablas.Rows[ii].Cells["tablas"].Value.ToString());
-            //    if (dgvTablas.Rows[ii].Cells["tablas"].Value.ToString() == "cliente")
-            //    {
-            //        dgvTablas.Rows[3].Cells["sql"].ReadOnly = true;
-            //    }
-            //}
-
+            
         }
 
         private void FrmImporTablas_FormClosing(object sender, FormClosingEventArgs ee)
@@ -201,7 +192,29 @@ namespace EXPOCOMA.Stand
         {
             for (int i = 0; i < DT.Rows.Count; i++)
             {
-                DT.Rows[i][COLUMNA] = CHECKED;
+                if (COLUMNA == "sql")
+                {
+                    if (DT.Rows[i]["tablas"].ToString() == "porpieza")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
+                    else if (DT.Rows[i]["tablas"].ToString() == "cliente")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
+                    else if (DT.Rows[i]["tablas"].ToString() == "prefijos")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
+                    else
+                    {
+                        DT.Rows[i][COLUMNA] = CHECKED;
+                    }
+
+                }else
+                {
+                    DT.Rows[i][COLUMNA] = CHECKED;
+                }
 
             }
         }
@@ -213,24 +226,26 @@ namespace EXPOCOMA.Stand
 
         private void checkbxDbfTodos_Click(object sender, EventArgs e)
         {
-            CheckTodos(_dtTablas, "dbf", checkbxDbfTodos.Checked);
+            
             if (checkbxDbfTodos.Checked)
             {
-                CheckTodos(_dtTablas, "sql", !checkbxDbfTodos.Checked);
                 checkbxSqlTodos.Checked = false;
+                CheckTodos(_dtTablas, "sql", !checkbxDbfTodos.Checked);
             }
-            
+            CheckTodos(_dtTablas, "dbf", checkbxDbfTodos.Checked);
+
         }
 
         private void checkbxSqlTodos_Click(object sender, EventArgs e)
         {
-            CheckTodos(_dtTablas, "sql", checkbxSqlTodos.Checked);
+
             if (checkbxSqlTodos.Checked)
             {
-                CheckTodos(_dtTablas, "dbf", !checkbxSqlTodos.Checked);
                 checkbxDbfTodos.Checked = false;
+                CheckTodos(_dtTablas, "dbf", !checkbxSqlTodos.Checked);
             }
-                
+            CheckTodos(_dtTablas, "sql", checkbxSqlTodos.Checked);
+
         }
         
         private void dgvTablas_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -238,7 +253,7 @@ namespace EXPOCOMA.Stand
             
             if (dgvTablas.Columns[e.ColumnIndex].Name == "dbf")
             {
-                checkbxSqlTodos.Checked = false;
+                checkbxDbfTodos.Checked = false;
                 for (int i = 0; i < _dtTablas.Rows.Count; i++)
                 {
 
@@ -251,6 +266,10 @@ namespace EXPOCOMA.Stand
                             _dtTablas.Rows[i]["sql"] = false;
 
                         }
+                        //else
+                        //{
+                        //    _dtTablas.Rows[i]["sql"] = false;
+                        //}
 
                         break;
                     }
@@ -261,21 +280,36 @@ namespace EXPOCOMA.Stand
             }
             else if (dgvTablas.Columns[e.ColumnIndex].Name == "sql")
             {
-                checkbxDbfTodos.Checked = false;
+                checkbxSqlTodos.Checked = false;
                 for (int i = 0; i < _dtTablas.Rows.Count; i++)
                 {
-
-                    if (_dtTablas.Rows[i]["tablas"].ToString() == dgvTablas.CurrentRow.Cells["tablas"].Value.ToString())
+                    //porpieza
+                    //cliente
+                    //prefijos
+                    //|| dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "porpieza" || dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos"
+                    if ((_dtTablas.Rows[i]["tablas"].ToString() == "porpieza" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "porpieza") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "cliente" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString()=="cliente") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "prefijos" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos"))
                     {
-
-                        if (Convert.ToBoolean(_dtTablas.Rows[i]["dbf"]) == true)
-                        {
-                            _dtTablas.Rows[i]["sql"] = true;
-                            _dtTablas.Rows[i]["dbf"] = false;
-
-                        }
-                        break;
+                        MessageBox.Show(_dtTablas.Rows[i]["tablas"].ToString()+" no disponible en esta opción");
+                        _dtTablas.Rows[i]["sql"] = false;
+                        break; 
                     }
+                    else
+                    {
+                        if (_dtTablas.Rows[i]["tablas"].ToString() == dgvTablas.CurrentRow.Cells["tablas"].Value.ToString())
+                        {
+
+                            if (Convert.ToBoolean(_dtTablas.Rows[i]["dbf"]) == true)
+                            {
+                                _dtTablas.Rows[i]["sql"] = true;
+                                _dtTablas.Rows[i]["dbf"] = false;
+
+                            }
+                            break;
+                        }
+                    }
+                    
                 }
             }
             
@@ -708,122 +742,129 @@ namespace EXPOCOMA.Stand
                         }
                         else if (Convert.ToBoolean(sqldtTablas) == true)
                         {
-                            int totalProcesoDBF = 4;
-                            int actualProcesoDBF = 1;
-                            String CadenaConexionSql = "Data Source=" + _dtSucursal.Rows[i]["servidor"].ToString() + ";"
-                                  + "Initial Catalog=" + _dtSucursal.Rows[i]["db"] + ";"
-                                  + "Integrated Security=false;"
-                                  + "UID=" + _dtSucursal.Rows[i]["usuario"].ToString() + ";"
-                                  + "PWD=" + _dtSucursal.Rows[i]["contrasena"].ToString() + ";";
-                            //MessageBox.Show("Lo siento, no disponible la importación del SQL " + tbldtTablas, ":.3",MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            using (SqlConnection _consqlOrigen = new SqlConnection(CadenaConexionSql))
+                            if (!String.IsNullOrEmpty(_dtTablas.Rows[j]["tablassql"].ToString()))
                             {
-                                if (_consqlOrigen.State == ConnectionState.Closed)
+                                int totalProcesoDBF = 4;
+                                int actualProcesoDBF = 1;
+                                String CadenaConexionSql = "Data Source=" + _dtSucursal.Rows[i]["servidor"].ToString() + ";"
+                                      + "Initial Catalog=" + _dtSucursal.Rows[i]["db"] + ";"
+                                      + "Integrated Security=false;"
+                                      + "UID=" + _dtSucursal.Rows[i]["usuario"].ToString() + ";"
+                                      + "PWD=" + _dtSucursal.Rows[i]["contrasena"].ToString() + ";";
+                                //MessageBox.Show("Lo siento, no disponible la importación del SQL " + tbldtTablas, ":.3",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                using (SqlConnection _consqlOrigen = new SqlConnection(CadenaConexionSql))
                                 {
-                                    _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Conectando a la base de tados");
-                                    _consqlOrigen.Open();
-                                }
-                               
-                                SqlCommand sqlComTablas = new SqlCommand(_dtTablas.Rows[j]["tablassql"].ToString(),_consqlOrigen);
-                                if (!(_dtTablas.Rows[j]["tablas"].ToString()=="estatus"))
-                                {
-                                    
-                                    sqlComTablas.Parameters.AddWithValue("@ORGANIZATION_ID", _dtSucursal.Rows[i]["ORGANIZATION_ID"]);
-                                }
-                                
-                                SqlDataAdapter myAdaptador = new SqlDataAdapter(sqlComTablas);
-                                _dtTblTablaSql = new DataTable();
-                                myAdaptador.Fill(_dtTblTablaSql);
-
-                            }
-                         
-
-                            _dtTblTablaSql.Columns.Add("ID_SUCURSALALM", typeof(String));
-
-                            for (int iAlm = 0; iAlm < _dtTblTablaSql.Rows.Count; iAlm++)
-                            {
-                                _funcion.Cargando(this, barraProgreso, 0, iAlm, _dtTblTablaSql.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
-                                _dtTblTablaSql.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
-                            }
-
-                            using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
-                            {
-                                
-                                SqlTransaction _tranSql;
-                                string _tabla = "dbf_" + tbldtTablas.ToString();
-                                if (_consql.State == ConnectionState.Closed)
-                                {
-                                    _consql.Open();
-                                }
-
-                                //_dtTblArticuloSql = _funcion.EstructuraTabla("dbf_articulo");
-                                _dtDbfTabla = _funcion.EstructuraTabla("dbf_" + tbldtTablas.ToString());
-
-                                //_dtTblArticuloSql = _funcion.llenar_dt("");
-                                actualProcesoDBF++;
-                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + tbldtTablas.ToString());
-                                String sqlBorrar = "DELETE FROM dbf_" + tbldtTablas.ToString() + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
-                                SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
-                                comando.CommandTimeout = 300;
-                                comando.ExecuteNonQuery();
-
-                                _tranSql = _consql.BeginTransaction();
-                                using (SqlBulkCopy bulkCopy =
-                                    new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tranSql))
-                                {
-
-                                    bulkCopy.DestinationTableName = _tabla;
-                                    bulkCopy.BulkCopyTimeout = 300;
-                                    try
+                                    if (_consqlOrigen.State == ConnectionState.Closed)
                                     {
-
-                                        string[] campos = _dtTablas.Rows[j]["campos"].ToString().Split(',');
-                                        for (int ii = 0; ii < campos.Count(); ii++)
-                                        {
-                                            _funcion.Cargando(this, barraProgreso, 0, ii, campos.Count(), lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
-                                            //MessageBox.Show(campos[ii]);
-                                            String[] campo = campos[ii].ToString().Split('-');
-                                            //MessageBox.Show(campo[0].ToString()+" "+campo[1].ToString());
-                                            bulkCopy.ColumnMappings.Add(campo[0].ToString(), campo[1].ToString());
-                                        }
-
-                                      
-
-                                        //bulkCopy.BatchSize = 5000;
-                                        actualProcesoDBF++;
-                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Copiando Información");
-                                        bulkCopy.WriteToServer(_dtTblTablaSql);
-                                        _tranSql.Commit();
-                                        //respuesta = true;
-                                        //actualProcesoDBF++;
-                                        //_funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
-                                        //_dtTablas.Rows[j]["dbf"] = false;
+                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Conectando a la base de tados");
+                                        _consqlOrigen.Open();
                                     }
-                                    catch (Exception exx)
+
+                                    SqlCommand sqlComTablas = new SqlCommand(_dtTablas.Rows[j]["tablassql"].ToString(), _consqlOrigen);
+                                    if (!(_dtTablas.Rows[j]["tablas"].ToString() == "estatus"))
                                     {
-                                        //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                        MessageBox.Show(exx.Message);
-                                        //respuesta = false;
+
+                                        sqlComTablas.Parameters.AddWithValue("@ORGANIZATION_ID", _dtSucursal.Rows[i]["ORGANIZATION_ID"]);
+                                    }
+
+                                    SqlDataAdapter myAdaptador = new SqlDataAdapter(sqlComTablas);
+                                    _dtTblTablaSql = new DataTable();
+                                    myAdaptador.Fill(_dtTblTablaSql);
+
+                                }
+
+
+                                _dtTblTablaSql.Columns.Add("ID_SUCURSALALM", typeof(String));
+
+                                for (int iAlm = 0; iAlm < _dtTblTablaSql.Rows.Count; iAlm++)
+                                {
+                                    _funcion.Cargando(this, barraProgreso, 0, iAlm, _dtTblTablaSql.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
+                                    _dtTblTablaSql.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
+                                }
+
+                                using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
+                                {
+
+                                    SqlTransaction _tranSql;
+                                    string _tabla = "dbf_" + tbldtTablas.ToString();
+                                    if (_consql.State == ConnectionState.Closed)
+                                    {
+                                        _consql.Open();
+                                    }
+
+                                    //_dtTblArticuloSql = _funcion.EstructuraTabla("dbf_articulo");
+                                    _dtDbfTabla = _funcion.EstructuraTabla("dbf_" + tbldtTablas.ToString());
+
+                                    //_dtTblArticuloSql = _funcion.llenar_dt("");
+                                    actualProcesoDBF++;
+                                    _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + tbldtTablas.ToString());
+                                    String sqlBorrar = "DELETE FROM dbf_" + tbldtTablas.ToString() + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
+                                    SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
+                                    comando.CommandTimeout = 300;
+                                    comando.ExecuteNonQuery();
+
+                                    _tranSql = _consql.BeginTransaction();
+                                    using (SqlBulkCopy bulkCopy =
+                                        new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tranSql))
+                                    {
+
+                                        bulkCopy.DestinationTableName = _tabla;
+                                        bulkCopy.BulkCopyTimeout = 300;
                                         try
                                         {
-                                            _tranSql.Rollback();
+
+                                            string[] campos = _dtTablas.Rows[j]["campos"].ToString().Split(',');
+                                            for (int ii = 0; ii < campos.Count(); ii++)
+                                            {
+                                                _funcion.Cargando(this, barraProgreso, 0, ii, campos.Count(), lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
+                                                //MessageBox.Show(campos[ii]);
+                                                String[] campo = campos[ii].ToString().Split('-');
+                                                //MessageBox.Show(campo[0].ToString()+" "+campo[1].ToString());
+                                                bulkCopy.ColumnMappings.Add(campo[0].ToString(), campo[1].ToString());
+                                            }
+
+
+
+                                            //bulkCopy.BatchSize = 5000;
+                                            actualProcesoDBF++;
+                                            _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Copiando Información");
+                                            bulkCopy.WriteToServer(_dtTblTablaSql);
+                                            _tranSql.Commit();
+                                            //respuesta = true;
+                                            //actualProcesoDBF++;
+                                            //_funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
+                                            //_dtTablas.Rows[j]["dbf"] = false;
                                         }
-                                        catch (Exception)
+                                        catch (Exception exx)
+                                        {
+                                            //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
+                                            MessageBox.Show(exx.Message);
+                                            //respuesta = false;
+                                            try
+                                            {
+                                                _tranSql.Rollback();
+                                            }
+                                            catch (Exception)
+                                            {
+
+                                                //throw;
+                                            }
+
+                                        }
+                                        finally
                                         {
 
-                                            //throw;
+                                            _consql.Close();
+                                            //copiarTablas = null;
+                                            //respuesta = true;
                                         }
-
                                     }
-                                    finally
-                                    {
 
-                                        _consql.Close();
-                                        //copiarTablas = null;
-                                        //respuesta = true;
-                                    }
                                 }
-
+                            }
+                            else
+                            {
+                                MessageBox.Show(_dtTablas.Rows[j]["tablas"].ToString()+" no esta disponible en esta opción");
                             }
                         }
 
