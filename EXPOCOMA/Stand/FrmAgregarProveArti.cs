@@ -21,7 +21,7 @@ namespace EXPOCOMA.Stand
         funciones _funcion = new funciones();
 
         String Sesion = "ALEX  CARDENAS";
-        String SesionLetra = "H";
+        String SesionLetra = "J";
 
         DataView _dvProveedor;
 
