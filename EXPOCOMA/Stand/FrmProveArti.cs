@@ -453,336 +453,253 @@ namespace EXPOCOMA.Stand
 
         public void GuardarProve()
         {
-            this.Invoke((MethodInvoker)delegate
-            {
+         
                 _funcion.DesabilitarControles(this, false);
-            });
+
             //Thread.Sleep(500);
 
-            String idsucursales = "";
-            int checkProve = 0;
-            for (int i = 0; i < _dtProveedor.Rows.Count; i++)
+
+            String sqlPartiProve = "(PARTICIPA = true AND RESP_COMA = '" + SesionLetra + "')";
+            DataRow[] drPartiProve = _dtProveedor.Select(sqlPartiProve);
+            DataTable dtPartiProve = _dtProveedor.Clone();
+            DataRow[] _drproveArti;
+
+            foreach (DataRow fila in drPartiProve)
             {
-
-                if (Convert.ToBoolean(_dtProveedor.Rows[i]["PARTICIPA"].ToString()) == true)
+                //dtPartiProve.ImportRow(fila);
+                //[0=id][1=idalmacen][2=c_clave]
+                _drproveArti = _dtArticulo.Select("(PARTICIPA = true AND ID_SUCURSALALM = " + fila[1].ToString() + " AND C_PROVE = '" + fila[2].ToString() + "') AND (STATUS <> '*' OR STATUS <> 'INACTIVO')");
+                if (_drproveArti.Count() > 0)
                 {
-                    checkProve++;
-                    //break;
-                    if (checkProve==1)
+                    dtPartiProve.ImportRow(fila);
+                }
+                else
+                {
+                    if (cBoxMostarProv.Checked)
                     {
-                        idsucursales += "ID_SUCURSALALM = " + _dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString();
+                        MessageBox.Show("El proveedor " + fila[2].ToString() + " (" + fila[1].ToString() + ") no tienen articulos disponibles");
                     }
-                    else
-                    {
-                        idsucursales += " OR ID_SUCURSALALM = " + _dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString();
-                    }
-                    
-                    //MessageBox.Show(sucursales);
-
 
                 }
-
             }
 
-            //MessageBox.Show("Listo =" +sucursales);
-
-            if (!(checkProve > 0))
+            if (!(drPartiProve.Count() > 0))
             {
                 MessageBox.Show("¡No tienes seleccionado ningún proveedor!", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                
-                int checkArti = 0;
-                this.Invoke((MethodInvoker)delegate
+
+                Int32 staGuardado = 0;
+                using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
                 {
-                    String sqlprove = "(" + idsucursales + ") AND participa = true AND RESP_COMA = '" + SesionLetra + "'";
-                    DataRow[] _drProveedor = _dtProveedor.Select(sqlprove);
-                    
-                    _dtGuardarProveedor = _dtProveedor.Clone();
-                    foreach (DataRow fila in _drProveedor)
+                    SqlTransaction _tran;
+                    string _tabla = "tbl_provexpo";
+
+                    if (_consql.State == ConnectionState.Closed)
                     {
-                        DataRow[] _drproveArti;
-                        //MessageBox.Show(fila[0].ToString() + " "+ fila[1].ToString() + " " + fila[2].ToString() + " " + fila[3].ToString());
-                        //19811[0-id],001[1-idalmacen],00034[2-c_clave]
-                        //String sql = ;
-                        //_drproveArti.;
-                        _drproveArti = _dtArticulo.Select("(PARTICIPA = true AND ID_SUCURSALALM = " + fila[1].ToString() + " AND C_PROVE = '" + fila[2].ToString() + "') AND (STATUS <> '*' OR STATUS <> 'INACTIVO')");
-                        if (_drproveArti.Count() > 0)
+                        _consql.Open();
+                    }
+
+                    _dtTblProveedor = _funcion.EstructuraTabla("tbl_provexpo");
+
+                    String sqlBorrar = "DELETE FROM tbl_provexpo WHERE COMPRADOR = '" + SesionLetra + "'";
+                    SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
+                    comando.CommandTimeout = 300;
+                    comando.ExecuteNonQuery();
+
+                    _tran = _consql.BeginTransaction();
+
+
+                    using (SqlBulkCopy bulkCopy =
+                        new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
+                    {
+                        bulkCopy.DestinationTableName = _tabla;
+                        bulkCopy.BulkCopyTimeout = 300;
+
+
+                        try
                         {
-                            _dtGuardarProveedor.ImportRow(fila);
-                        }
-                        else
-                        {
-                            if (cBoxMostarProv.Checked)
-                            {
-                                MessageBox.Show("El proveedor " + fila[2].ToString() + " (" + fila[1].ToString() + ") no tienen articulos disponibles");
-                            }
                             
+                        
+                            bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
+                            bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
+                            bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
+                            bulkCopy.ColumnMappings.Add("DESCRI", "DESCRI");
+                            bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
+
+                            //bulkCopy.BatchSize = 5000;
+                            bulkCopy.WriteToServer(dtPartiProve);
+                            _tran.Commit();
+                         
+
+                            staGuardado++;
                         }
-
-                    }
-                });
-
-                if (!(checkArti>0))
-                {
-
-                    Int32 staGuardado = 0;
-                    using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
-                    {
-                        SqlTransaction _tran;
-
-                        string _tabla = "tbl_provexpo";
-
-                        if (_consql.State == ConnectionState.Closed)
+                        catch (Exception ex)
                         {
-                            _consql.Open();
-                        }
-
-                        //this.Invoke((MethodInvoker)delegate
-                        //{
-                        //    DataRow[] _drProveedor = _dtProveedor.Select("ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + " AND participa = true AND RESP_COMA = '" + SesionLetra + "'");
-
-
-                        //    _dtGuardarProveedor = _dtProveedor.Clone();
-                        //    foreach (DataRow fila in _drProveedor)
-                        //    {
-                        //        DataRow[] _drproveArti;
-                        //        //MessageBox.Show(fila[0].ToString() + " "+ fila[1].ToString() + " " + fila[2].ToString() + " " + fila[3].ToString());
-                        //        //19811[0-id],001[1-idalmacen],00034[2-c_clave]
-                        //        //String sql = ;
-                        //        //_drproveArti.;
-                        //        _drproveArti = _dtArticulo.Select("(PARTICIPA = true AND ID_SUCURSALALM = " + fila[1].ToString() + " AND C_PROVE = '" + fila[2].ToString() + "') AND (STATUS <> '*' OR STATUS <> 'INACTIVO')");
-                        //        if (_drproveArti.Count() > 0)
-                        //        {
-                        //            _dtGuardarProveedor.ImportRow(fila);
-                        //        }
-
-                        //    }
-                        //});
-
-                        //DataTable _dtCProvedor = _funcion.llenar_dt("tbl_provexpo", "C_PROVE, C_PROVE2", "WHERE COMPRADOR = '" + SesionLetra + "'", "ORDER BY C_PROVE ASC");
-                        _dtTblProveedor = _funcion.EstructuraTabla("tbl_provexpo");
-
-
-
-
-
-                        String sqlBorrar = "DELETE FROM tbl_provexpo WHERE COMPRADOR = '" + SesionLetra + "'";
-                        SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
-                        comando.CommandTimeout = 300;
-                        comando.ExecuteNonQuery();
-
-
-
-
-
-                        _tran = _consql.BeginTransaction();
-
-                        using (SqlBulkCopy bulkCopy =
-                            new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
-                        {
-                            bulkCopy.DestinationTableName = _tabla;
-                            bulkCopy.BulkCopyTimeout = 300;
-
-
+                            //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
+                            MessageBox.Show(ex.Message);
+                            //respuesta = false;
                             try
                             {
-                                //dtDBF.Columns.Count
-                                //for (int i = 0; i < _dtTblProveedor.Columns.Count; i++)
-                                //{
-                                //    //_funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
-                                //    bulkCopy.ColumnMappings.Add(_dtTblProveedor.Columns[i].ColumnName.ToString(), _dtTblProveedor.Columns[i].ColumnName.ToString().ToUpper());
-
-                                //}
-
-                                bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
-                                bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
-                                bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
-                                bulkCopy.ColumnMappings.Add("DESCRI", "DESCRI");
-                                bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
-
-                                //bulkCopy.BatchSize = 5000;
-                                bulkCopy.WriteToServer(_dtGuardarProveedor);
-                                _tran.Commit();
-                                //respuesta = true;
-                                //actualProcesoDBF++;
-                                //_funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
-                                //_dtTablas.Rows[j]["dbf"] = false;
-
-                                staGuardado++;
+                                _tran.Rollback();
                             }
-                            catch (Exception ex)
-                            {
-                                //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                MessageBox.Show(ex.Message);
-                                //respuesta = false;
-                                try
-                                {
-                                    _tran.Rollback();
-                                }
-                                catch (Exception)
-                                {
-
-                                    //throw;
-                                }
-
-                            }
-                            finally
+                            catch (Exception)
                             {
 
-                                _consql.Close();
-                                //copiarTablas = null;
-                                //respuesta = true;
-                                //MessageBox.Show("Guardado");
+                                //throw;
                             }
 
-
                         }
-
-
-
-
-                    }
-
-                    using (SqlConnection _consqlArti = new SqlConnection(_CadenaConexion))
-                    {
-
-                        if (_consqlArti.State == ConnectionState.Closed)
-                        {
-                            _consqlArti.Open();
-                        }
-
-                        SqlTransaction _tranArticulos;
-                        string _tablaArticulo = "tbl_artiexpo";
-
-                        DataRow[] _drArticulo = _dtArticulo.Select("participa = true");
-                        _dtGuardarArticulo = _dtArticulo.Clone();
-                        foreach (DataRow fila in _drArticulo)
-                        {
-                            _dtGuardarArticulo.ImportRow(fila);
-                        }
-
-                        _dtTblArticulo = _funcion.EstructuraTabla("tbl_artiexpo");
-                        //tbl_provexpo
-                        DataTable _dtCProvedor = _funcion.llenar_dt("DBF_PROVEEDO", "C_PROVE, C_PROVE2", "WHERE RESP_COMA = '" + SesionLetra + "'", "ORDER BY C_PROVE ASC");
-
-                        for (int i = 0; i < _dtCProvedor.Rows.Count; i++)
+                        finally
                         {
 
-                            String sqlBorrarArticulo = "DELETE FROM tbl_artiexpo WHERE C_PROVE = '" + _dtCProvedor.Rows[i]["C_PROVE"].ToString() + "'";
-                            SqlCommand comandoArticulo = new SqlCommand(sqlBorrarArticulo, _consqlArti);
-                            comandoArticulo.CommandTimeout = 300;
-                            comandoArticulo.ExecuteNonQuery();
+                            _consql.Close();
+                            //copiarTablas = null;
+                            //respuesta = true;
+                            //MessageBox.Show("Guardado");
                         }
 
 
-                        _tranArticulos = _consqlArti.BeginTransaction();
-
-                        using (SqlBulkCopy bulkCopy =
-                            new SqlBulkCopy(_consqlArti, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tranArticulos))
-                        {
-                            bulkCopy.DestinationTableName = _tablaArticulo;
-                            bulkCopy.BulkCopyTimeout = 300;
-
-
-                            try
-                            {
-                                ////dtDBF.Columns.Count
-                                //for (int i = 0; i < _dtTblArticulo.Columns.Count; i++)
-                                //{
-                                //    //_funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
-                                //    bulkCopy.ColumnMappings.Add(_dtTblArticulo.Columns[i].ColumnName.ToString(), _dtTblArticulo.Columns[i].ColumnName.ToString().ToUpper());
-
-                                //}
-
-                                bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
-                                bulkCopy.ColumnMappings.Add("C_ARTI", "C_ARTI");
-                                bulkCopy.ColumnMappings.Add("FAMI_ARTI", "FAMI_ARTI");
-                                bulkCopy.ColumnMappings.Add("DES_ARTI", "DES_ARTI");
-                                bulkCopy.ColumnMappings.Add("CAP_ARTI", "CAP_ARTI");
-                                bulkCopy.ColumnMappings.Add("EMPAQUE2", "EMPAQUE2");
-                                //bulkCopy.ColumnMappings.Add("PRECIO_VEN", "PRECIO_VEN");
-                                //bulkCopy.ColumnMappings.Add("PRECIO_ESP", "PRECIO_ESP");
-                                bulkCopy.ColumnMappings.Add("STATUS", "STATUS");
-                                bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
-                                bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
-                                bulkCopy.ColumnMappings.Add("CANTIDAD", "CANTIDAD");
-                                bulkCopy.ColumnMappings.Add("CANCELA", "CANCELA");
-                                bulkCopy.ColumnMappings.Add("FALTANTE", "FALTANTE");
-                                //bulkCopy.ColumnMappings.Add("UNI_VEN", "UNI_VEN");
-                                bulkCopy.ColumnMappings.Add("COSTO", "COSTO");
-                                //    //bulkCopy.ColumnMappings.Add("MARGEN", "MARGEN");
-                                //    //bulkCopy.ColumnMappings.Add("IEPS", "IEPS");
-                                bulkCopy.ColumnMappings.Add("UNIDAD", "UNIDAD");
-                                bulkCopy.ColumnMappings.Add("CAJA", "CAJA");
-                                bulkCopy.ColumnMappings.Add("EXHIBIDOR", "EXHIBIDOR");
-                                //bulkCopy.ColumnMappings.Add("MARG_PRE4", "MARG_PRE4");
-                                bulkCopy.ColumnMappings.Add("MARG_PRE4", "MARGEN");
-                                //bulkCopy.ColumnMappings.Add("PORCENTAJE", "PORCENTAJE");
-                                //bulkCopy.ColumnMappings.Add("POR_CAJA", "POR_CAJA");
-                                //bulkCopy.ColumnMappings.Add("OFERTA", "OFERTA");
-
-
-
-
-
-                                //bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
-
-                                //bulkCopy.BatchSize = 5000;
-                                bulkCopy.WriteToServer(_dtGuardarArticulo);
-                                _tranArticulos.Commit();
-                                //respuesta = true;
-                                //actualProcesoDBF++;
-                                //_funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
-                                //_dtTablas.Rows[j]["dbf"] = false;
-
-                                staGuardado++;
-                            }
-                            catch (Exception ex)
-                            {
-                                //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                MessageBox.Show(ex.Message);
-                                //respuesta = false;
-                                try
-                                {
-                                    _tranArticulos.Rollback();
-                                }
-                                catch (Exception)
-                                {
-
-                                    //throw;
-                                }
-
-                            }
-                            finally
-                            {
-
-                                _consqlArti.Close();
-                                //copiarTablas = null;
-                                //respuesta = true;
-                                //MessageBox.Show("Guardado");
-                            }
-
-
-                        }
-
-                    }
-
-
-                    if (staGuardado == 2)
-                    {
-                        MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
                 }
-                
-                
+
+                using (SqlConnection _consqlArti = new SqlConnection(_CadenaConexion))
+                {
+
+                    if (_consqlArti.State == ConnectionState.Closed)
+                    {
+                        _consqlArti.Open();
+                    }
+
+                    SqlTransaction _tranArticulos;
+                    string _tablaArticulo = "tbl_artiexpo";
+
+                    DataRow[] _drArticulo = _dtArticulo.Select("participa = true");
+                    _dtGuardarArticulo = _dtArticulo.Clone();
+                    foreach (DataRow fila in _drArticulo)
+                    {
+                        _dtGuardarArticulo.ImportRow(fila);
+                    }
+
+                    _dtTblArticulo = _funcion.EstructuraTabla("tbl_artiexpo");
+                    //tbl_provexpo
+                    DataTable _dtCProvedor = _funcion.llenar_dt("DBF_PROVEEDO", "C_PROVE, C_PROVE2", "WHERE RESP_COMA = '" + SesionLetra + "'", "ORDER BY C_PROVE ASC");
+
+                    for (int i = 0; i < _dtCProvedor.Rows.Count; i++)
+                    {
+
+                        String sqlBorrarArticulo = "DELETE FROM tbl_artiexpo WHERE C_PROVE = '" + _dtCProvedor.Rows[i]["C_PROVE"].ToString() + "'";
+                        SqlCommand comandoArticulo = new SqlCommand(sqlBorrarArticulo, _consqlArti);
+                        comandoArticulo.CommandTimeout = 300;
+                        comandoArticulo.ExecuteNonQuery();
+                    }
+
+
+                    _tranArticulos = _consqlArti.BeginTransaction();
+
+                    using (SqlBulkCopy bulkCopy =
+                        new SqlBulkCopy(_consqlArti, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tranArticulos))
+                    {
+                        bulkCopy.DestinationTableName = _tablaArticulo;
+                        bulkCopy.BulkCopyTimeout = 300;
+
+
+                        try
+                        {
+                            ////dtDBF.Columns.Count
+                            //for (int i = 0; i < _dtTblArticulo.Columns.Count; i++)
+                            //{
+                            //    //_funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
+                            //    bulkCopy.ColumnMappings.Add(_dtTblArticulo.Columns[i].ColumnName.ToString(), _dtTblArticulo.Columns[i].ColumnName.ToString().ToUpper());
+
+                            //}
+
+                            bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
+                            bulkCopy.ColumnMappings.Add("C_ARTI", "C_ARTI");
+                            bulkCopy.ColumnMappings.Add("FAMI_ARTI", "FAMI_ARTI");
+                            bulkCopy.ColumnMappings.Add("DES_ARTI", "DES_ARTI");
+                            bulkCopy.ColumnMappings.Add("CAP_ARTI", "CAP_ARTI");
+                            bulkCopy.ColumnMappings.Add("EMPAQUE2", "EMPAQUE2");
+                            //bulkCopy.ColumnMappings.Add("PRECIO_VEN", "PRECIO_VEN");
+                            //bulkCopy.ColumnMappings.Add("PRECIO_ESP", "PRECIO_ESP");
+                            bulkCopy.ColumnMappings.Add("STATUS", "STATUS");
+                            bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
+                            bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
+                            bulkCopy.ColumnMappings.Add("CANTIDAD", "CANTIDAD");
+                            bulkCopy.ColumnMappings.Add("CANCELA", "CANCELA");
+                            bulkCopy.ColumnMappings.Add("FALTANTE", "FALTANTE");
+                            //bulkCopy.ColumnMappings.Add("UNI_VEN", "UNI_VEN");
+                            bulkCopy.ColumnMappings.Add("COSTO", "COSTO");
+                            //    //bulkCopy.ColumnMappings.Add("MARGEN", "MARGEN");
+                            //    //bulkCopy.ColumnMappings.Add("IEPS", "IEPS");
+                            bulkCopy.ColumnMappings.Add("UNIDAD", "UNIDAD");
+                            bulkCopy.ColumnMappings.Add("CAJA", "CAJA");
+                            bulkCopy.ColumnMappings.Add("EXHIBIDOR", "EXHIBIDOR");
+                            //bulkCopy.ColumnMappings.Add("MARG_PRE4", "MARG_PRE4");
+                            bulkCopy.ColumnMappings.Add("MARG_PRE4", "MARGEN");
+                            //bulkCopy.ColumnMappings.Add("PORCENTAJE", "PORCENTAJE");
+                            //bulkCopy.ColumnMappings.Add("POR_CAJA", "POR_CAJA");
+                            //bulkCopy.ColumnMappings.Add("OFERTA", "OFERTA");
+
+
+
+
+
+                            //bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
+
+                            //bulkCopy.BatchSize = 5000;
+                            bulkCopy.WriteToServer(_dtGuardarArticulo);
+                            _tranArticulos.Commit();
+                            //respuesta = true;
+                            //actualProcesoDBF++;
+                            //_funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
+                            //_dtTablas.Rows[j]["dbf"] = false;
+
+                            staGuardado++;
+                        }
+                        catch (Exception ex)
+                        {
+                            //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
+                            MessageBox.Show(ex.Message);
+                            //respuesta = false;
+                            try
+                            {
+                                _tranArticulos.Rollback();
+                            }
+                            catch (Exception)
+                            {
+
+                                //throw;
+                            }
+
+                        }
+                        finally
+                        {
+
+                            _consqlArti.Close();
+                            //copiarTablas = null;
+                            //respuesta = true;
+                            //MessageBox.Show("Guardado");
+                        }
+
+
+                    }
+
+                }
+
+
+                if (staGuardado == 2)
+                {
+                    MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }else
+                {
+                    MessageBox.Show("Los proveedores o los articulos no se guardaron",":S Algo ocurrio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
-
-            
-
-
+          
 
             _funcion.DesabilitarControles(this, true);
         }
