@@ -50,6 +50,7 @@
             this.txtBusArticulo = new System.Windows.Forms.TextBox();
             this.dgvArticulo = new System.Windows.Forms.DataGridView();
             this.picbCargando = new System.Windows.Forms.PictureBox();
+            this.cBoxMostarProv = new System.Windows.Forms.CheckBox();
             this.tabProveedor.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProveedor)).BeginInit();
@@ -65,7 +66,7 @@
             this.btnSalir.Location = new System.Drawing.Point(817, 462);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 29);
-            this.btnSalir.TabIndex = 12;
+            this.btnSalir.TabIndex = 13;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
@@ -76,7 +77,7 @@
             this.btnGuardar.Location = new System.Drawing.Point(731, 462);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(80, 29);
-            this.btnGuardar.TabIndex = 11;
+            this.btnGuardar.TabIndex = 12;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -305,11 +306,22 @@
             this.picbCargando.TabIndex = 31;
             this.picbCargando.TabStop = false;
             // 
+            // cBoxMostarProv
+            // 
+            this.cBoxMostarProv.AutoSize = true;
+            this.cBoxMostarProv.Location = new System.Drawing.Point(530, 467);
+            this.cBoxMostarProv.Name = "cBoxMostarProv";
+            this.cBoxMostarProv.Size = new System.Drawing.Size(197, 21);
+            this.cBoxMostarProv.TabIndex = 11;
+            this.cBoxMostarProv.Text = "Mostrar Prov. Sin Articulos";
+            this.cBoxMostarProv.UseVisualStyleBackColor = true;
+            // 
             // FrmProveArti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(909, 503);
+            this.Controls.Add(this.cBoxMostarProv);
             this.Controls.Add(this.picbCargando);
             this.Controls.Add(this.tabArticulo);
             this.Controls.Add(this.label1);
@@ -364,5 +376,6 @@
         private System.Windows.Forms.CheckBox chBoxArtiTodos;
         private System.Windows.Forms.PictureBox picbCargando;
         private System.Windows.Forms.Button btnAgregarArti;
+        private System.Windows.Forms.CheckBox cBoxMostarProv;
     }
 }
