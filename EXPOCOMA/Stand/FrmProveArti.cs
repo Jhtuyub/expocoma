@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,6 +41,7 @@ namespace EXPOCOMA.Stand
 
         private Thread CargarInfo;
         private Thread MarcarTodProv;
+        private Thread MarcarTodArti;
         private Thread GuardarProveedor;
 
         public FrmProveArti()
@@ -327,63 +329,196 @@ namespace EXPOCOMA.Stand
 
         private void dgvProveedor_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+            //int colIndex = e.ColumnIndex;
+            //MarcarTodArti = new Thread(TodosProveArti);
+            //MarcarTodArti.IsBackground = true;
+            //MarcarTodArti.Start(colIndex);
             if (dgvProveedor.Columns[e.ColumnIndex].Name == "PARTICIPA")
             {
-                //dgvProveedor.Enabled = false;
-                String consArti;
-                for (int i = 0; i < _dtProveedor.Rows.Count; i++)
-                {
-                    if (dgvProveedor.CurrentRow.Cells["RESP_COMA"].Value.ToString() == SesionLetra)
-                    {
-                        if ((_dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString())&&(_dtProveedor.Rows[i]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()))
-                        {
-                                                        
-                            consArti = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + _dtProveedor.Rows[i]["C_PROVE"].ToString() + " AND STATUS <> '*' OR STATUS <> 'INACTIVO')";
-                            //consArti = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + _dtProveedor.Rows[i]["C_PROVE"].ToString() + " AND (STATUS <> '*' OR STATUS <> 'INACTIVO'))";
-                            foundRows = _dtArticulo.Select(consArti);
-                            if (foundRows.LongCount() > 0)
-                            {
-                                //MessageBox.Show("hola");
-                                _dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
-                                //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value= !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                // Query the database for the row to be updated.
 
-                                for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
-                                {
-                                    if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
-                                    {
-                                        _dtArticulo.Rows[ii]["PARTICIPA"] = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
-                                        chBoxProvTodos.Checked=false;
-                                        chBoxArtiTodos.Checked = false;
-                                        //chBoxArtiTodos.Checked = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
-                                    }
-                                }
-                                
-                            }
-                            //else
-                            //{
-                            //    _dtProveedor.Rows[i]["PARTICIPA"] = false;
-                            //    dgvProveedor.CurrentRow.Cells["PARTICIPA"].ReadOnly = true;
-                            //}
-                            
-                          
+
+                //DataTable orders = _dtProveedor;
+
+                // Query the SalesOrderHeader table for orders placed 
+                // after August 8, 2001.
+                IEnumerable<DataRow> sql_dtProve =
+                    from dtProve in _dtProveedor.AsEnumerable()
+                    where dtProve.Field<String>("C_PROVE") == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() && dtProve.Field<String>("ID_SUCURSALALM") == cBoxSucursal.SelectedValue.ToString() && dtProve.Field<String>("RESP_COMA") == SesionLetra
+                    select dtProve;
+
+                foreach (DataRow rowstProve in sql_dtProve)
+                {
+                    //cust.SetField("C_PROVE","00000");
+                    //_dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                    rowstProve.SetField("PARTICIPA", !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value));
+                    rowstProve.AcceptChanges();
+                    //MessageBox.Show("" + rowstProve.Field<String>("C_PROVE"));
+                    //MessageBox.Show("Modificado");
+                    //query.Shi
+                    //cust.SetField<string>("Mariner") = "";
+                    //cust.ShipVia = 2;
+                    // Insert any additional changes to column values.
+
+                    IEnumerable<DataRow> sql_dtArti =
+                        from dtArti in _dtArticulo.AsEnumerable()
+                        where dtArti.Field<String>("C_PROVE") == rowstProve.Field<String>("C_PROVE") && dtArti.Field<String>("ID_SUCURSALALM") == rowstProve.Field<String>("ID_SUCURSALALM")
+                        select dtArti;
+
+                    
+                    foreach (DataRow rowdtArti in sql_dtArti)
+                    {
+                        //cust.SetField("C_PROVE","00000");
+                        //_dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                        if (!(rowdtArti.Field<String>("STATUS") == "*" || rowdtArti.Field<String>("STATUS") == "INACTIVO"))
+                        {
+                            rowdtArti.SetField("PARTICIPA", Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value));
+                            rowdtArti.AcceptChanges();
                         }
+                        
+                        //MessageBox.Show("Modificado");
+                        //query.Shi
+                        //cust.SetField<string>("Mariner") = "";
+                        //cust.ShipVia = 2;
+                        // Insert any additional changes to column values.
                     }
+
+                     //_dvArticulo = ();
+
+                    btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+
+
                 }
 
-                //if (Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value) == true)
+
+                //DataTable orders = _dtProveedor;
+
+                // Query the SalesOrderHeader table for orders placed 
+                // after August 8, 2001.
+                
+
+                // Submit the changes to the database.
+                //try
                 //{
-                btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                //    orders.AcceptChanges();
+                //    MessageBox.Show("Modificado en la datatable");
+                //    //db.SubmitChanges();
                 //}
-                //else
+                //catch (Exception ee)
                 //{
-                //    btnAgregarArti.Enabled = false;
+                //    //Console.WriteLine(ee);
+                //    MessageBox.Show(ee.Message);
+                //    // Provide for exceptions.
                 //}
 
-                //dgvProveedor.Enabled = true;
+
+
+
+                //EnumerableRowCollection query =
+                //    from ord in _dtProveedor.AsEnumerable()
+                //    where ord.Field<>("C_PROVE") == "00030"
+                //    select ord;
+
+                // Execute the query, and change the column values
+                // you want to change.
+
+                //foreach (DataRow cust in query)
+                //{
+                //    MessageBox.Show(""+ cust.Field<>("C_PROVE"));
+                //    //Console.WriteLine(/*cust.Field<>("C_PROVE")*/);
+                //}
+
+                //foreach (_dtProveedor ord in query)
+                //{
+                //    ord.ShipName = "Mariner";
+                //    ord.ShipVia = 2;
+                //    // Insert any additional changes to column values.
+                //}
+
+                //// Submit the changes to the database.
+                //try
+                //{
+                //    db.SubmitChanges();
+                //}
+                //catch (Exception e)
+                //{
+                //    Console.WriteLine(e);
+                //    // Provide for exceptions.
+                //}
+                //MessageBox.Show("");
 
             }
-       }
+
+        }
+
+        //public void TodosProveArti(Object _colIndex)
+        //{
+        //    int colIndex = Convert.ToInt32(_colIndex);
+        //    //btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+        //    if (dgvProveedor.Columns[colIndex].Name == "PARTICIPA")
+        //    {
+        //        //dgvProveedor.Enabled = false;
+        //        String consArti;
+        //        for (int i = 0; i < _dtProveedor.Rows.Count; i++)
+        //        {
+        //            if (dgvProveedor.CurrentRow.Cells["RESP_COMA"].Value.ToString() == SesionLetra)
+        //            {
+        //                this.Invoke((MethodInvoker)delegate
+        //                {
+        //                    if ((_dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) && (_dtProveedor.Rows[i]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()))
+        //                    {
+
+        //                        consArti = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + _dtProveedor.Rows[i]["C_PROVE"].ToString() + " AND STATUS <> '*' OR STATUS <> 'INACTIVO')";
+        //                        //consArti = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + _dtProveedor.Rows[i]["C_PROVE"].ToString() + " AND (STATUS <> '*' OR STATUS <> 'INACTIVO'))";
+        //                        foundRows = _dtArticulo.Select(consArti);
+        //                        if (foundRows.LongCount() > 0)
+        //                        {
+        //                            //MessageBox.Show("hola");
+        //                            _dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+        //                            //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value= !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+
+        //                            for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
+        //                            {
+        //                                if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
+        //                                {
+        //                                    _dtArticulo.Rows[ii]["PARTICIPA"] = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+        //                                    chBoxProvTodos.Checked = false;
+        //                                    chBoxArtiTodos.Checked = false;
+        //                                    //chBoxArtiTodos.Checked = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+        //                                }
+        //                            }
+
+        //                        }
+        //                        //else
+        //                        //{
+        //                        //    _dtProveedor.Rows[i]["PARTICIPA"] = false;
+        //                        //    dgvProveedor.CurrentRow.Cells["PARTICIPA"].ReadOnly = true;
+        //                        //}
+
+
+        //                    }
+        //                });
+                        
+        //            }
+        //        }
+
+        //        //if (Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value) == true)
+        //        //{
+        //        this.Invoke((MethodInvoker)delegate
+        //        {
+        //            
+
+        //        });
+        //        //}
+        //        //else
+        //        //{
+        //        //    btnAgregarArti.Enabled = false;
+        //        //}
+
+        //        //dgvProveedor.Enabled = true;
+
+        //    }
+        //}
 
         private void txtBusProve_KeyUp(object sender, KeyEventArgs e)
         {
@@ -699,7 +834,7 @@ namespace EXPOCOMA.Stand
                 }
 
             }
-          
+            GuardarProveedor = null;
 
             _funcion.DesabilitarControles(this, true);
         }
@@ -739,7 +874,7 @@ namespace EXPOCOMA.Stand
 
         private void dgvProveedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+
             FiltrarArticulo();
             //btnAgregarArti.Enabled = true;
         }
@@ -785,54 +920,108 @@ namespace EXPOCOMA.Stand
             _funcion.DesabilitarControles(this, false);
             //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, false);
             //Thread.Sleep(2000);
-
-
-            String consulta ="";
-            String _forProve = "";
-            String _cBoxSucursal = "";
-            for (int i = 0; i < dgvProveedor.Rows.Count; i++)
+            String idSucur = "";
+            this.Invoke((MethodInvoker)delegate
             {
-                
-                this.Invoke((MethodInvoker)delegate
+                 idSucur = cBoxSucursal.SelectedValue.ToString();
+            });
+            IEnumerable<DataRow> sql_dtProve =
+                    from dtProve in _dtProveedor.AsEnumerable()
+                    where dtProve.Field<String>("ID_SUCURSALALM") == idSucur && dtProve.Field<String>("RESP_COMA") == SesionLetra
+                    select dtProve;
+
+                foreach (DataRow rowstProve in sql_dtProve)
                 {
-                    consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString() + " AND STATUS <> '*' OR STATUS <> 'INACTIVO')";
-                    _forProve = dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString();
-                    _cBoxSucursal = cBoxSucursal.SelectedValue.ToString();
-                });
-                
+
+                //cust.SetField("C_PROVE","00000");
+                //_dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                //rowstProve.SetField("PARTICIPA", Convert.ToBoolean(rowstProve.Field<Boolean>("PARTICIPA")));
+                rowstProve.SetField("PARTICIPA", chBoxProvTodos.Checked);
+                rowstProve.AcceptChanges();
+                    //MessageBox.Show("" + rowstProve.Field<String>("C_PROVE"));
+                    //MessageBox.Show("Modificado");
+                    //query.Shi
+                    //cust.SetField<string>("Mariner") = "";
+                    //cust.ShipVia = 2;
+                    // Insert any additional changes to column values.
+
+                    IEnumerable<DataRow> sql_dtArti =
+                        from dtArti in _dtArticulo.AsEnumerable()
+                        where dtArti.Field<String>("C_PROVE") == rowstProve.Field<String>("C_PROVE") && dtArti.Field<String>("ID_SUCURSALALM") == rowstProve.Field<String>("ID_SUCURSALALM")
+                        select dtArti;
 
 
-                _dvArticuloTMP = _dtArticulo.DefaultView;
-                _dvArticuloTMP.RowFilter = consulta;
-                //_dvArticuloTMP.Sort = cBoxBusArticulo.SelectedValue.ToString() + " ASC";
-
-
-                if (_dvArticuloTMP.Count > 0)
-                {
-                    this.Invoke((MethodInvoker)delegate
+                    foreach (DataRow rowdtArti in sql_dtArti)
                     {
-                        dgvProveedor.Rows[i].Cells["PARTICIPA"].Value = chBoxProvTodos.Checked;
-                    });
-                    //
-
-                    for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
-                    {
-                        
-                        if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == _cBoxSucursal) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == _forProve) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
+                        //cust.SetField("C_PROVE","00000");
+                        //_dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                        if (!(rowdtArti.Field<String>("STATUS") == "*" || rowdtArti.Field<String>("STATUS") == "INACTIVO"))
                         {
-                            _dtArticulo.Rows[ii]["PARTICIPA"] = chBoxProvTodos.Checked;
+                            rowdtArti.SetField("PARTICIPA", Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value));
+                            rowdtArti.AcceptChanges();
                         }
+
+                        //MessageBox.Show("Modificado");
+                        //query.Shi
+                        //cust.SetField<string>("Mariner") = "";
+                        //cust.ShipVia = 2;
+                        // Insert any additional changes to column values.
                     }
                 }
 
-
-            }
-            this.Invoke((MethodInvoker)delegate
-            {
-                dgvArticulo.DataSource = _dtArticulo.Clone();
-            });
+            
+            
 
             
+
+
+            //String consulta ="";
+            //String _forProve = "";
+            //String _cBoxSucursal = "";
+            //for (int i = 0; i < dgvProveedor.Rows.Count; i++)
+            //{
+            //IEnumerable<DataRow> sql_dtProve =
+            //    from order in orders.AsEnumerable()
+            //    where order.Field<String>("C_PROVE") == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() && order.Field<String>("ID_SUCURSALALM") == cBoxSucursal.SelectedValue.ToString() && order.Field<String>("RESP_COMA") == SesionLetra
+            //    select order;
+            //    this.Invoke((MethodInvoker)delegate
+            //    {
+            //        consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString() + " AND STATUS <> '*' OR STATUS <> 'INACTIVO')";
+            //        _forProve = dgvProveedor.Rows[i].Cells["C_PROVE"].Value.ToString();
+            //        _cBoxSucursal = cBoxSucursal.SelectedValue.ToString();
+            //    });
+
+            //    _dvArticuloTMP = _dtArticulo.DefaultView;
+            //    _dvArticuloTMP.RowFilter = consulta;
+            //    //_dvArticuloTMP.Sort = cBoxBusArticulo.SelectedValue.ToString() + " ASC";
+
+
+            //    if (_dvArticuloTMP.Count > 0)
+            //    {
+            //        this.Invoke((MethodInvoker)delegate
+            //        {
+            //            dgvProveedor.Rows[i].Cells["PARTICIPA"].Value = chBoxProvTodos.Checked;
+            //        });
+            //        //
+
+            //        for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
+            //        {
+
+            //            if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == _cBoxSucursal) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == _forProve) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
+            //            {
+            //                _dtArticulo.Rows[ii]["PARTICIPA"] = chBoxProvTodos.Checked;
+            //            }
+            //        }
+            //    }
+
+
+            //}
+            //this.Invoke((MethodInvoker)delegate
+            //{
+            //    dgvArticulo.DataSource = _dtArticulo.Clone();
+            //});
+
+
             _funcion.DesabilitarControles(this, true);
 
         }
@@ -950,7 +1139,41 @@ namespace EXPOCOMA.Stand
 
         private void FrmProveArti_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!(GuardarProveedor == null))
+            {
+                MessageBox.Show("No puede cerrar esta ventana","Guardando Información", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                //copiarTablas.Suspend();
+                //var detener = MessageBox.Show("¿Desea detener la importación?", "¡Aviso!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                //if (detener == DialogResult.Yes)
+                //{
+                //    copiarTablas.Resume();
+                //    btnImportar.Text = "Importar";
+                //    copiarTablas.Abort();
+                //    copiarTablas = null;
+                //    lblMensaje.Text = "...";
+                //    barraProgreso.Value = 0;
+                //    this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar, "Importar");
+                //    //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar);
 
-        }
+                //    FrmIndex.opcPartSuc.Enabled = true;
+                //    FrmIndex.opcImporTabla.Enabled = true;
+
+                e.Cancel = true;
+                //    GC.Collect();
+            }
+                //else
+                //{
+                //    copiarTablas.Resume();
+                //    ee.Cancel = true;
+                //}
+
+            }
+            //else
+            //{
+            //    FrmIndex.opcPartSuc.Enabled = true;
+            //    FrmIndex.opcImporTabla.Enabled = true;
+            //    GC.Collect();
+            //}
+        //}
     }
 }
