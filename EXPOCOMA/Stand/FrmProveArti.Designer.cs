@@ -308,6 +308,7 @@
             // 
             // cBoxMostarProv
             // 
+            this.cBoxMostarProv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cBoxMostarProv.AutoSize = true;
             this.cBoxMostarProv.Location = new System.Drawing.Point(530, 467);
             this.cBoxMostarProv.Name = "cBoxMostarProv";
