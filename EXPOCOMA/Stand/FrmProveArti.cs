@@ -1183,19 +1183,19 @@ namespace EXPOCOMA.Stand
 
             //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
             
-            DataTable _dtAddArticulo;
+            DataTable _dtProve;
             DataRow[] _drProve = _dtProveedor.Select("ID_SUCURSALALM ="+ cBoxSucursal.SelectedValue.ToString() + " AND participa = false AND RESP_COMA = '" + SesionLetra + "'");
 
-            _dtAddArticulo = _dtProveedor.Clone();
+            _dtProve = _dtProveedor.Clone();
             foreach (DataRow fila in _drProve)
             {
-                _dtAddArticulo.ImportRow(fila);
+                _dtProve.ImportRow(fila);
             }
 
             FrmAgregarProveArti frmAgregarArti = new FrmAgregarProveArti();
             frmAgregarArti.MdiParent = this.MdiParent;
             frmAgregarArti._CadenaConexion = _CadenaConexion;
-            frmAgregarArti._dtAddArticulo = _dtAddArticulo;
+            frmAgregarArti._dtProve = _dtProve;
             //frmAgregarArti._dtProveedor = _dtProveedor;
             frmAgregarArti._dtArticulos = _dtArticulo;
             frmAgregarArti._CProve = dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString();
