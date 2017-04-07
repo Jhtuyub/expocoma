@@ -159,7 +159,6 @@
             this.dgvExpos.Name = "dgvExpos";
             this.dgvExpos.ReadOnly = true;
             this.dgvExpos.RowHeadersWidth = 4;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Empty;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvExpos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -170,6 +169,7 @@
             this.dgvExpos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpos_CellClick);
             this.dgvExpos.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvExpos_KeyUp);
             this.dgvExpos.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvExpos_MouseDoubleClick);
+            this.dgvExpos.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvExpos_MouseMove);
             // 
             // statusStrip1
             // 

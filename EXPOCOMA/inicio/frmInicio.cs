@@ -351,5 +351,10 @@ namespace EXPOCOMA.inicio
             frmAdminEmpresa _frmEmpresa = new frmAdminEmpresa();
             _frmEmpresa.ShowDialog();
         }
+
+        private void dgvExpos_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvExpos.Focus();
+        }
     }
 }

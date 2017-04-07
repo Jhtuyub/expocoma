@@ -399,5 +399,15 @@ namespace EXPOCOMA.Stand
                 btnPasar.Enabled = true;
             }
         }
+
+        private void dgvCatEmpresa_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvCatEmpresa.Focus();
+        }
+
+        private void dgvTblEmpresa_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvTblEmpresa.Focus();
+        }
     }
 }

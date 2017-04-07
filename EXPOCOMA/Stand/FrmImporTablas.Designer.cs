@@ -71,6 +71,7 @@
             this.dgvSucursal.TabStop = false;
             this.dgvSucursal.Tag = "";
             this.dgvSucursal.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSucursal_CellContentClick);
+            this.dgvSucursal.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvSucursal_MouseMove);
             // 
             // checkBTodosSucursales
             // 
@@ -102,6 +103,7 @@
             this.dgvTablas.TabStop = false;
             this.dgvTablas.Tag = "";
             this.dgvTablas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTablas_CellContentClick);
+            this.dgvTablas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvTablas_MouseMove);
             // 
             // checkbxDbfTodos
             // 

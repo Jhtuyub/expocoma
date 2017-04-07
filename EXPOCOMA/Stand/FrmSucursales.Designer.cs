@@ -71,6 +71,7 @@
             this.dgvCatEmpresa.Tag = "";
             this.dgvCatEmpresa.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCatEmpresa_CellClick);
             this.dgvCatEmpresa.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCatEmpresa_CellDoubleClick);
+            this.dgvCatEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvCatEmpresa_MouseMove);
             // 
             // dgvTblEmpresa
             // 
@@ -92,6 +93,7 @@
             this.dgvTblEmpresa.Tag = "";
             this.dgvTblEmpresa.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTblEmpresa_CellClick);
             this.dgvTblEmpresa.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTblEmpresa_CellDoubleClick);
+            this.dgvTblEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvTblEmpresa_MouseMove);
             // 
             // menuSucursal
             // 

@@ -950,6 +950,14 @@ namespace EXPOCOMA.Stand
             this.Close();
         }
 
+        private void dgvSucursal_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvSucursal.Focus();
+        }
 
+        private void dgvTablas_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvTablas.Focus();
+        }
     }
 }
