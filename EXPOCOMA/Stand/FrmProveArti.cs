@@ -36,6 +36,9 @@ namespace EXPOCOMA.Stand
         DataView _dvArticuloTMP;
         DataRow[] foundRows;
 
+        DataTable _dtProveGuardados;
+        DataTable _dtArtiGuardados;
+
         String Sesion = "ALEX  CARDENAS";
         String SesionLetra = "J";
 
@@ -216,10 +219,79 @@ namespace EXPOCOMA.Stand
                 cBoxSucursal.Focus();
             }));
 
+            //Aqui te quedaste weon
+            _dtProveGuardados = _funcion.llenar_dt("tbl_provexpo", "*", "WHERE COMPRADOR = '" + SesionLetra + "'");
 
-            //    }));
+            for (int i = 0; i < _dtProveGuardados.Rows.Count; i++)
+            {
+                IEnumerable<DataRow> sql_dtProve =
+                   from dtProveGuar in _dtProveedor.AsEnumerable()
+                   where dtProveGuar.Field<String>("C_PROVE") == _dtProveGuardados.Rows[i]["C_PROVE"].ToString() &&
+                   dtProveGuar.Field<String>("ID_SUCURSALALM") == _dtProveGuardados.Rows[i]["ID_SUCURSALALM"].ToString() &&
+                   dtProveGuar.Field<String>("RESP_COMA") == SesionLetra
+                   select dtProveGuar;
+
+                foreach (DataRow rowstProveGuar in sql_dtProve)
+                {
+                    rowstProveGuar.SetField("PARTICIPA", true);
+                    rowstProveGuar.AcceptChanges();
+
+
+                    _dtArtiGuardados = _funcion.llenar_dt("tbl_artiexpo", "*", "WHERE C_PROVE = '" + rowstProveGuar.Field<String>("C_PROVE") + "'" +
+                        " AND ID_SUCURSALALM = '" + rowstProveGuar.Field<String>("ID_SUCURSALALM") + "'");
+
+                    for (int ii = 0; ii < _dtArtiGuardados.Rows.Count; ii++)
+                    {
+                        IEnumerable<DataRow> sql_dtArtiGuar =
+                       from dtArtiGuar in _dtArticulo.AsEnumerable()
+                       where dtArtiGuar.Field<String>("C_ARTI") == _dtArtiGuardados.Rows[ii]["C_ARTI"].ToString() &&
+                       dtArtiGuar.Field<String>("C_PROVE2") == _dtArtiGuardados.Rows[ii]["C_PROVE2"].ToString() &&
+                       dtArtiGuar.Field<String>("ID_SUCURSALALM") == _dtArtiGuardados.Rows[ii]["ID_SUCURSALALM"].ToString()
+                       select dtArtiGuar;
+
+                        foreach (DataRow rowstArtiGuar in sql_dtArtiGuar)
+                        {
+                            if (rowstArtiGuar.Field<String>("C_PROVE") == _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString())
+                            {
+                                rowstArtiGuar.SetField("PARTICIPA", true);
+                                rowstArtiGuar.AcceptChanges();
+                            }
+                            else
+                            {
+                                rowstArtiGuar.SetField("C_PROVE", _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString());
+                                rowstArtiGuar.SetField("PARTICIPA", true);
+                                rowstArtiGuar.AcceptChanges();
+                                //MessageBox.Show(rowstArtiGuar.Field<String>("C_PROVE") +"=="+ _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString());
+                            }
+
+                            
+                        }
+                    }
+
+
+
+                }
+
+            }
+
+            //using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
+            //{
+            //    if (_consql.State == ConnectionState.Closed)
+            //    {
+            //        _consql.Open();
+            //    }
+
+            //    String sqlBorrar = "SELECT * FROM tbl_provexpo WHERE COMPRADOR = '" + SesionLetra + "'";
+            //    SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
+            //    comando.CommandTimeout = 300;
+            //    comando.ExecuteNonQuery();
+
+            //    if (_consql.State == ConnectionState.Open)
+            //    {
+            //        _consql.Close();
+            //    }
             //}
-            
+
         }
 
         private void FrmProveArti_Load(object sender, EventArgs e)
