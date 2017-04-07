@@ -86,6 +86,7 @@ namespace EXPOCOMA.Stand
         private void FrmAgregarProveArti_FormClosing(object sender, FormClosingEventArgs e)
         {
             FrmProveArti._frmProveArti.Enabled = true;
+            GC.Collect();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)

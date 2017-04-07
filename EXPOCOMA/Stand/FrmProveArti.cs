@@ -1233,13 +1233,12 @@ namespace EXPOCOMA.Stand
                 e.Cancel = true;
                 //    GC.Collect();
             }
-                //else
-                //{
-                //    copiarTablas.Resume();
-                //    ee.Cancel = true;
-                //}
-
+            else
+            {
+                GC.Collect();
             }
+
+        }
 
         private void dgvProveedor_MouseMove(object sender, MouseEventArgs e)
         {
