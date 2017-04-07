@@ -107,26 +107,19 @@ namespace EXPOCOMA
             
             
         }
-
-        public DataTable llenar_dt(String ___TABLA, String ___CAMPOS = "*", String ___CONDICION="WHERE campo ='campo'", String ___ORDEN = "ORDER BY id DESC")
+        /// <summary>
+        /// OBTIENE LOS DATOS DE UNA TABLA EN SQL
+        /// </summary>
+        /// <param name="___TABLA">NOMBRE DE LA TABLA</param>
+        /// <param name="___CAMPOS">NOMBRE(S) DEL(LOS) CAMPO(S)</param>
+        /// <param name="___CONDICION">WHERE CAMPO = 'DATA'</param>
+        /// <param name="___ORDEN">ORDER BY id DESC</param>
+        /// <returns></returns>
+        public DataTable llenar_dt(String ___TABLA, String ___CAMPOS = "*", String ___CONDICION="", String ___ORDEN = "")
         {
 
             String _sql = "SELECT "+ ___CAMPOS+" FROM "+___TABLA +" "+ ___CONDICION+" "+ ___ORDEN;
-            //if ((String.IsNullOrEmpty(___CAMPO) && (String.IsNullOrEmpty(___DATO))))
-            //{
-            //    if (___IDDATO > 0)
-            //    {
-            //        _sql = "SELECT " + ___CAMPOS + " FROM " + ___TABLA + " WHERE id = " + ___IDDATO + " ORDER BY " + ___ORDEN;
-            //    }
-            //    else
-            //    {
-            //        _sql = "SELECT " + ___CAMPOS + " FROM " + ___TABLA + " ORDER BY " + ___ORDEN;
-            //    }
-            //}
-            //else
-            //{
-            //    _sql = "SELECT " + ___CAMPOS + " FROM " + ___TABLA + " WHERE " + ___CAMPO + " LIKE '%" + ___DATO + "%' ORDER BY " + ___ORDEN;
-            //}
+          
 
             if (_TIPObasedatos == "sqlserver")
             {
