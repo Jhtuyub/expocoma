@@ -51,7 +51,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(248, 234);
+            this.btnSalir.Location = new System.Drawing.Point(287, 261);
             this.btnSalir.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 30);
@@ -63,7 +63,7 @@
             // btnAceptar
             // 
             this.btnAceptar.Enabled = false;
-            this.btnAceptar.Location = new System.Drawing.Point(128, 234);
+            this.btnAceptar.Location = new System.Drawing.Point(167, 261);
             this.btnAceptar.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(80, 30);
@@ -90,7 +90,7 @@
             this.ToolStripMenuItemSalir});
             this.menInicio.Location = new System.Drawing.Point(0, 0);
             this.menInicio.Name = "menInicio";
-            this.menInicio.Size = new System.Drawing.Size(463, 25);
+            this.menInicio.Size = new System.Drawing.Size(526, 25);
             this.menInicio.TabIndex = 6;
             this.menInicio.Text = "menInicio";
             // 
@@ -142,7 +142,7 @@
             this.txtExpo.Location = new System.Drawing.Point(63, 30);
             this.txtExpo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtExpo.Name = "txtExpo";
-            this.txtExpo.Size = new System.Drawing.Size(390, 25);
+            this.txtExpo.Size = new System.Drawing.Size(452, 25);
             this.txtExpo.TabIndex = 0;
             this.txtExpo.TextChanged += new System.EventHandler(this.txtExpo_TextChanged);
             this.txtExpo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtExpo_KeyUp);
@@ -162,7 +162,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
             this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvExpos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvExpos.Size = new System.Drawing.Size(442, 169);
+            this.dgvExpos.Size = new System.Drawing.Size(505, 195);
             this.dgvExpos.TabIndex = 7;
             this.dgvExpos.TabStop = false;
             this.dgvExpos.Tag = "";
@@ -177,11 +177,11 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stripPBEstatus,
             this.stripSLEstatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 268);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 294);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(13, 0, 1, 0);
             this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.statusStrip1.Size = new System.Drawing.Size(463, 23);
+            this.statusStrip1.Size = new System.Drawing.Size(526, 23);
             this.statusStrip1.TabIndex = 8;
             this.statusStrip1.Text = "stripEstatus";
             // 
@@ -200,7 +200,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 291);
+            this.ClientSize = new System.Drawing.Size(526, 317);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dgvExpos);
             this.Controls.Add(this.txtExpo);

@@ -48,11 +48,18 @@ namespace EXPOCOMA.Stand
             _dtcat = _funciondblocal.llenar_form("cat_sucursal");
             dgvCatEmpresa.DataSource = _dtcat;
             //dgvCatEmpresa.ClearSelection();
+            dgvCatEmpresa.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatEmpresa.Columns["id"].Visible = false;
             dgvCatEmpresa.Columns["dbf"].Visible = false;
             dgvCatEmpresa.Columns["usuario"].Visible = false;
             dgvCatEmpresa.Columns["contrasena"].Visible = false;
             dgvCatEmpresa.Columns["db"].Visible = false;
+            dgvCatEmpresa.Columns["almacen"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvCatEmpresa.Columns["almacen"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCatEmpresa.Columns["almacen"].HeaderText = "alm";
+            dgvCatEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvCatEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCatEmpresa.Columns["organization_id"].HeaderText = "alm sql";
 
             dgvCatEmpresa.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvCatEmpresa.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -64,10 +71,18 @@ namespace EXPOCOMA.Stand
             //dgvTblEmpresa.ClearSelection();
             //dgvTblEmpresa.CurrentCell = dgvTblEmpresa.Rows[0].Cells[0];
             //dgvTblEmpresa.Columns["anfitrion"].Visible = false;
+            dgvTblEmpresa.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvTblEmpresa.Columns["anfitrion"].ReadOnly = false;
+            dgvTblEmpresa.Columns["anfitrion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvTblEmpresa.Columns["id"].Visible = false;
             dgvTblEmpresa.Columns["id_catsucursal"].Visible = false;
             dgvTblEmpresa.Columns["almacen"].ReadOnly = true;
+            dgvTblEmpresa.Columns["almacen"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvTblEmpresa.Columns["almacen"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvTblEmpresa.Columns["almacen"].HeaderText = "alm";
+            dgvTblEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvTblEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvTblEmpresa.Columns["organization_id"].HeaderText = "alm sql";
             dgvTblEmpresa.Columns["sucursal"].ReadOnly = true;
             dgvTblEmpresa.Columns["servidor"].ReadOnly = true;
             dgvTblEmpresa.Columns["dbf"].Visible = false;

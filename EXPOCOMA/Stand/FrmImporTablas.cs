@@ -53,20 +53,31 @@ namespace EXPOCOMA.Stand
 
             //_dtSucursal.Columns["importar"].DefaultValue = false;
             dgvSucursal.DataSource = _dtSucursal;
+            dgvSucursal.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSucursal.Columns["importar"].DisplayIndex = 0;
-            //dgvSucursal.Columns["importar"].
+            dgvSucursal.Columns["importar"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvSucursal.Columns["id"].Visible = false;
             dgvSucursal.Columns["id_catsucursal"].Visible = false;
             dgvSucursal.Columns["anfitrion"].ReadOnly = true;
-            dgvSucursal.Columns["anfitrion"].Width = 55;
+            dgvSucursal.Columns["anfitrion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvSucursal.Columns["almacen"].ReadOnly = true;
+            dgvSucursal.Columns["almacen"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvSucursal.Columns["almacen"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvSucursal.Columns["almacen"].HeaderText = "alm";
+            dgvSucursal.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvSucursal.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvSucursal.Columns["organization_id"].HeaderText = "alm sql";
             dgvSucursal.Columns["sucursal"].ReadOnly = true;
             dgvSucursal.Columns["servidor"].ReadOnly = true;
             dgvSucursal.Columns["dbf"].ReadOnly = true;
-            dgvSucursal.Columns["usuario"].ReadOnly = true;
+            dgvSucursal.Columns["dbf"].Visible = false;
+            dgvSucursal.Columns["servidor"].Visible = false;
             dgvSucursal.Columns["db"].ReadOnly = true;
+            dgvSucursal.Columns["db"].Visible = false;
+            dgvSucursal.Columns["usuario"].ReadOnly = true;
+            dgvSucursal.Columns["usuario"].Visible = false;
             dgvSucursal.Columns["contrasena"].Visible = false;
-            dgvSucursal.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
 
             dgvSucursal.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvSucursal.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -132,8 +143,8 @@ namespace EXPOCOMA.Stand
             }
             
             dgvTablas.DataSource = _dtTablas;
-            //dgvTablas.Columns["tablassql"].Visible = false;
-            //dgvTablas.Columns["campos"].Visible = false;
+            dgvTablas.Columns["tablassql"].Visible = false;
+            dgvTablas.Columns["campos"].Visible = false;
             dgvTablas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvTablas.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;

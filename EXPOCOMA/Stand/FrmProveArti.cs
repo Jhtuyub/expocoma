@@ -78,7 +78,7 @@ namespace EXPOCOMA.Stand
             //*************************************PROVEEDOR
             String[,] _cbdatos = {
                 { "C_PROVE", "DESCRI" },
-                { "C_prove", "Descri" }
+                { "Clv. Proveedor", "Nombre" }
             };
             cboxBusProve.Invoke(new Action(delegate () {
                 _funcion.llenarCombobox(cboxBusProve, _cbdatos);
@@ -113,9 +113,12 @@ namespace EXPOCOMA.Stand
                 dgvProveedor.Columns["C_PROVE2"].Visible = false;
                 dgvProveedor.Columns["PARTICIPA"].DisplayIndex = 0;
                 dgvProveedor.Columns["PARTICIPA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                dgvProveedor.Columns["C_PROVE"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                dgvProveedor.Columns["RESP_COMA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                 dgvProveedor.Columns["C_PROVE"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgvProveedor.Columns["C_PROVE"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                dgvProveedor.Columns["C_PROVE"].HeaderText = "Clv. Proveedor";
+                dgvProveedor.Columns["DESCRI"].HeaderText = "Nombre";
+                dgvProveedor.Columns["RESP_COMA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                
 
                 dgvProveedor.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
                 dgvProveedor.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -134,7 +137,7 @@ namespace EXPOCOMA.Stand
             //*************************************ARTICULO
             String[,] _cbBusArtidatos = {
                 { "C_ARTI", "DES_ARTI", "EMPAQUE2", "CAP_ARTI" },
-                { "c_arti", "des_arti", "empaque2", "cap_arti" }
+                { "Clv. Articulo", "Nombre", "Empaque(2)", "Capacidad" }
             };
             cBoxBusArticulo.Invoke(new Action(delegate () {
                 _funcion.llenarCombobox(cBoxBusArticulo, _cbBusArtidatos);
@@ -162,27 +165,18 @@ namespace EXPOCOMA.Stand
             this.Invoke(new Action(delegate () {
                 dgvArticulo.DataSource = _dtArticulo.Clone();
 
-
-                //for (int i = 0; i < dgvArticulo.ColumnCount; i++)
-                //{
-                //    dgvArticulo.Columns[i].Visible = false;
-                //}
-
-
                 dgvArticulo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //dgvArticulo.Columns["id"].Visible = false;
-                //dgvArticulo.Columns["ID_SUCURSALALM"].Visible = false;
-                //dgvArticulo.Columns["PARTICIPA"].Visible = true;
                 dgvArticulo.Columns["id"].Visible = false;
                 dgvArticulo.Columns["ID_SUCURSALALM"].Visible = false;
                 dgvArticulo.Columns["FAMI_ARTI"].Visible = false;
+                dgvArticulo.Columns["C_ARTI"].HeaderText = "Clv. Articulo";
+                dgvArticulo.Columns["DES_ARTI"].HeaderText = "Nombre";
                 dgvArticulo.Columns["C_PROVE"].Visible = false;
                 dgvArticulo.Columns["C_PROVE2"].Visible = false;
                 dgvArticulo.Columns["CANTIDAD"].Visible = false;
                 dgvArticulo.Columns["CANCELA"].Visible = false;
                 dgvArticulo.Columns["FALTANTE"].Visible = false;
                 dgvArticulo.Columns["COSTO"].Visible = false;
-
                 dgvArticulo.Columns["PARTICIPA"].DisplayIndex = 0;
                 dgvArticulo.Columns["PARTICIPA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                 //dgvArticulo.Columns["C_ARTI"].Visible = true;
@@ -209,7 +203,6 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["EXHIBIDOR"].HeaderText = "E";
                 dgvArticulo.Columns["EXHIBIDOR"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["EXHIBIDOR"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-
                 dgvArticulo.Columns["MARG_PRE4"].Visible = false;
 
                 dgvArticulo.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
@@ -1029,7 +1022,7 @@ namespace EXPOCOMA.Stand
                         //_dtProveedor.Rows[i]["PARTICIPA"] = !Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
                         if (!(rowdtArti.Field<String>("STATUS") == "*" || rowdtArti.Field<String>("STATUS") == "INACTIVO"))
                         {
-                            rowdtArti.SetField("PARTICIPA", Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value));
+                            rowdtArti.SetField("PARTICIPA", rowstProve.Field<Boolean>("PARTICIPA"));
                             rowdtArti.AcceptChanges();
                         }
 

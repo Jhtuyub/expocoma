@@ -28,7 +28,17 @@ namespace EXPOCOMA.inicio
             _funciones.llenarCombobox(cbCampo, _cbdatos);
             //cbCampo.Items.Add("Lima");
             _funciones.cargar_datos(dgvEmpresa,"cat_sucursal");
+            dgvEmpresa.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvEmpresa.Columns["id"].Visible =false;
+            dgvEmpresa.Columns["almacen"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvEmpresa.Columns["almacen"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresa.Columns["almacen"].HeaderText = "alm";
+            dgvEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvEmpresa.Columns["organization_id"].HeaderText = "alm sql";
+            //SUCURSAL
+            dgvEmpresa.Columns["dbf"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dgvEmpresa.Columns["dbf"].HeaderText = "dir dbf";
             dgvEmpresa.Columns["contrasena"].Visible = false;
         }
 

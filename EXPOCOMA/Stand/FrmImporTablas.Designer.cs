@@ -247,7 +247,7 @@
             this.Name = "FrmImporTablas";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmImporTablas";
+            this.Text = "Importar Datos - FrmImporTablas";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmImporTablas_FormClosing);
             this.Load += new System.EventHandler(this.FrmImporTablas_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmImporTablas_KeyUp);

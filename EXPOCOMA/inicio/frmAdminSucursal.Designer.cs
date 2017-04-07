@@ -53,13 +53,13 @@
             // 
             this.txtNombre.Location = new System.Drawing.Point(229, 6);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(390, 25);
+            this.txtNombre.Size = new System.Drawing.Size(481, 25);
             this.txtNombre.TabIndex = 8;
             this.txtNombre.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtNombre_KeyUp);
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(538, 246);
+            this.btnSalir.Location = new System.Drawing.Point(630, 250);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 29);
             this.btnSalir.TabIndex = 12;
@@ -70,7 +70,7 @@
             // btnEliminar
             // 
             this.btnEliminar.Enabled = false;
-            this.btnEliminar.Location = new System.Drawing.Point(453, 246);
+            this.btnEliminar.Location = new System.Drawing.Point(545, 250);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(80, 29);
             this.btnEliminar.TabIndex = 11;
@@ -81,7 +81,7 @@
             // btnModificar
             // 
             this.btnModificar.Enabled = false;
-            this.btnModificar.Location = new System.Drawing.Point(367, 246);
+            this.btnModificar.Location = new System.Drawing.Point(459, 250);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(80, 29);
             this.btnModificar.TabIndex = 10;
@@ -91,7 +91,7 @@
             // 
             // btnNuevo
             // 
-            this.btnNuevo.Location = new System.Drawing.Point(282, 246);
+            this.btnNuevo.Location = new System.Drawing.Point(374, 250);
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(80, 29);
             this.btnNuevo.TabIndex = 9;
@@ -111,7 +111,7 @@
             this.dgvEmpresa.ReadOnly = true;
             this.dgvEmpresa.RowHeadersWidth = 4;
             this.dgvEmpresa.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmpresa.Size = new System.Drawing.Size(607, 206);
+            this.dgvEmpresa.Size = new System.Drawing.Size(699, 206);
             this.dgvEmpresa.TabIndex = 13;
             this.dgvEmpresa.TabStop = false;
             this.dgvEmpresa.Tag = "";
@@ -132,7 +132,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 291);
+            this.ClientSize = new System.Drawing.Size(722, 291);
             this.Controls.Add(this.cbCampo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNombre);
