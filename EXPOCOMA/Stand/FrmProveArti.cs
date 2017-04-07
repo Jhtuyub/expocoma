@@ -207,12 +207,7 @@ namespace EXPOCOMA.Stand
 
                 dgvArticulo.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
                 dgvArticulo.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
-
-                picbCargando.Visible = false;
-                cBoxSucursal.Focus();
-            }));
-
-            //Aqui te quedaste weon
+                
             _dtProveGuardados = _funcion.llenar_dt("tbl_provexpo", "*", "WHERE COMPRADOR = '" + SesionLetra + "'");
 
             for (int i = 0; i < _dtProveGuardados.Rows.Count; i++)
@@ -257,7 +252,7 @@ namespace EXPOCOMA.Stand
                                 //MessageBox.Show(rowstArtiGuar.Field<String>("C_PROVE") +"=="+ _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString());
                             }
 
-                            
+
                         }
                     }
 
@@ -266,6 +261,13 @@ namespace EXPOCOMA.Stand
                 }
 
             }
+
+                picbCargando.Visible = false;
+                cBoxSucursal.Focus();
+
+            }));
+
+            
 
             //using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
             //{
@@ -344,7 +346,7 @@ namespace EXPOCOMA.Stand
             
             String consulta = "(ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ")";
             
-                consulta += " AND (c_prove = " + dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() + " AND " + cBoxBusArticulo.SelectedValue.ToString() + " LIKE '%" + txtBusArticulo.Text + "%')";
+                consulta += " AND (C_PROVE = " + dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() + " AND " + cBoxBusArticulo.SelectedValue.ToString() + " LIKE '%" + txtBusArticulo.Text + "%')";
                
 
                 _dvArticulo = _dtArticulo.DefaultView;
@@ -939,8 +941,16 @@ namespace EXPOCOMA.Stand
 
         private void dgvProveedor_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+            {
+                FiltrarArticulo();
+            }
+            catch (Exception)
+            {
 
-            FiltrarArticulo();
+                //throw;
+            }
+            
             //btnAgregarArti.Enabled = true;
         }
 
