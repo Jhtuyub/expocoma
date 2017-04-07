@@ -117,6 +117,7 @@
             this.dgvEmpresa.Tag = "";
             this.dgvEmpresa.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpresa_CellClick);
             this.dgvEmpresa.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvEmpresa_MouseDoubleClick);
+            this.dgvEmpresa.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvEmpresa_MouseMove);
             // 
             // cbCampo
             // 

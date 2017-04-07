@@ -100,5 +100,10 @@ namespace EXPOCOMA.inicio
         {
             GC.Collect();
         }
+
+        private void dgvEmpresa_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvEmpresa.Focus();
+        }
     }
 }

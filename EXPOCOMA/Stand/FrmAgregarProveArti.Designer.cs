@@ -78,6 +78,8 @@
             this.dgvProveedor.TabIndex = 4;
             this.dgvProveedor.TabStop = false;
             this.dgvProveedor.Tag = "";
+            
+            this.dgvProveedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvProveedor_MouseMove);
             // 
             // btnGuardar
             // 

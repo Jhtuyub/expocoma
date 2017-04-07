@@ -1240,12 +1240,22 @@ namespace EXPOCOMA.Stand
                 //}
 
             }
-            //else
-            //{
-            //    FrmIndex.opcPartSuc.Enabled = true;
-            //    FrmIndex.opcImporTabla.Enabled = true;
-            //    GC.Collect();
-            //}
+
+        private void dgvProveedor_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvProveedor.Focus();
+        }
+
+        private void dgvArticulo_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvArticulo.Focus();
+        }
+        //else
+        //{
+        //    FrmIndex.opcPartSuc.Enabled = true;
+        //    FrmIndex.opcImporTabla.Enabled = true;
+        //    GC.Collect();
+        //}
         //}
     }
 }

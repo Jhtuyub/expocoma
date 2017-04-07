@@ -138,6 +138,11 @@ namespace EXPOCOMA.inicio
             __funciones.cargar_datos(dgvExpos, "cat_expo", "nombre", txtNombre.Text);
         }
 
+        private void dgvExpos_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgvExpos.Focus();
+        }
+
 
 
 

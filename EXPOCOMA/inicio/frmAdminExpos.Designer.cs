@@ -100,6 +100,7 @@
             this.dgvExpos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpos_CellClick);
             this.dgvExpos.Click += new System.EventHandler(this.dgvExpos_Click);
             this.dgvExpos.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgvExpos_MouseDoubleClick);
+            this.dgvExpos.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvExpos_MouseMove);
             // 
             // txtNombre
             // 
