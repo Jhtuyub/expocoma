@@ -59,12 +59,12 @@ namespace EXPOCOMA.Stand
 
         public void CargarInformacion()
         {
-
+            _funcion.DesabilitarControles(this, false);
             //if (InvokeRequired)
             //{
             //    Invoke(new Action(delegate ()
             //    {
-                
+
             //SUCURSAL
             _funcion._SQLCadenaConexion = _CadenaConexion;
             _dtSucursales = _funcion.llenar_form("tbl_sucursal", "anfitrion DESC", "almacen, sucursal");
@@ -341,6 +341,8 @@ namespace EXPOCOMA.Stand
             //}
 
             GC.Collect();
+
+            _funcion.DesabilitarControles(this, true);
 
         }
 
