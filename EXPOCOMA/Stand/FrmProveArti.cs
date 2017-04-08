@@ -75,6 +75,9 @@ namespace EXPOCOMA.Stand
             //id, ID_SUCURSALALM, C_PROVE, C_ARTI, DES_ARTI, EMPAQUE2, CAP_ARTI, STATUS
             this.Invoke((MethodInvoker)delegate
                 {
+                    cBoxSucursal.DataSource = _dtSucursales;
+                    cBoxSucursal.ValueMember = "ALMACEN";//"valor";
+                    cBoxSucursal.DisplayMember = "SUCURSAL"; //"opcion";
 
                     _dtProveedor.Columns.Add("PARTICIPA", typeof(Boolean));
                     for (int i = 0; i < _dtProveedor.Rows.Count; i++)
@@ -92,98 +95,98 @@ namespace EXPOCOMA.Stand
 
                     
 
-                foreach (DataRow row_dtProveGuardados in _dtProveGuardados.Rows)
+               
+
+
+
+
+                
+            });
+
+
+            foreach (DataRow row_dtProveGuardados in _dtProveGuardados.Rows)
+            {
+
+
+                sql_dtProve =
+              from dtProveGuar in _dtProveedor.AsEnumerable()
+              where dtProveGuar.Field<String>("C_PROVE") == row_dtProveGuardados["C_PROVE"].ToString() &&
+              dtProveGuar.Field<String>("ID_SUCURSALALM") == row_dtProveGuardados["ID_SUCURSALALM"].ToString() &&
+              dtProveGuar.Field<String>("RESP_COMA") == SesionLetra
+              select dtProveGuar;
+
+                //MessageBox.Show("primer ciclo: " + row_dtProveGuardados["C_PROVE"].ToString());
+
+                foreach (DataRow rowstProveGuar in sql_dtProve)
                 {
-                        
 
-                    sql_dtProve =
-                  from dtProveGuar in _dtProveedor.AsEnumerable()
-                  where dtProveGuar.Field<String>("C_PROVE") == row_dtProveGuardados["C_PROVE"].ToString() &&
-                  dtProveGuar.Field<String>("ID_SUCURSALALM") == row_dtProveGuardados["ID_SUCURSALALM"].ToString() &&
-                  dtProveGuar.Field<String>("RESP_COMA") == SesionLetra
-                  select dtProveGuar;
-
-                        //MessageBox.Show("primer ciclo: " + row_dtProveGuardados["C_PROVE"].ToString());
-
-                        foreach (DataRow rowstProveGuar in sql_dtProve)
-                    {
-                        
-                        rowstProveGuar.SetField("PARTICIPA", true);
-                        rowstProveGuar.AcceptChanges();
+                    rowstProveGuar.SetField("PARTICIPA", true);
+                    rowstProveGuar.AcceptChanges();
 
 
-                        //_dtArtiGuardados = _funcion.llenar_dt("tbl_artiexpo", "*", "WHERE C_PROVE = '" + rowstProveGuar.Field<String>("C_PROVE") + "'" +
-                        //    " AND ID_SUCURSALALM = '" + rowstProveGuar.Field<String>("ID_SUCURSALALM") + "'");
-                        sql_dtArtiGuardados =
-                  from dtArtiGuar in _dtArtiGuardados.AsEnumerable()
-                  where dtArtiGuar.Field<String>("C_PROVE") == rowstProveGuar["C_PROVE"].ToString() &&
-                  dtArtiGuar.Field<String>("ID_SUCURSALALM") == rowstProveGuar["ID_SUCURSALALM"].ToString()
+                    //_dtArtiGuardados = _funcion.llenar_dt("tbl_artiexpo", "*", "WHERE C_PROVE = '" + rowstProveGuar.Field<String>("C_PROVE") + "'" +
+                    //    " AND ID_SUCURSALALM = '" + rowstProveGuar.Field<String>("ID_SUCURSALALM") + "'");
+                    sql_dtArtiGuardados =
+              from dtArtiGuar in _dtArtiGuardados.AsEnumerable()
+              where dtArtiGuar.Field<String>("C_PROVE") == rowstProveGuar["C_PROVE"].ToString() &&
+              dtArtiGuar.Field<String>("ID_SUCURSALALM") == rowstProveGuar["ID_SUCURSALALM"].ToString()
                   //dtArtiGuar.Field<String>("RESP_COMA") == SesionLetra
                   select dtArtiGuar;
 
-                            //MessageBox.Show("segundo ciclo "+ rowstProveGuar["C_PROVE"].ToString());
+                    //MessageBox.Show("segundo ciclo "+ rowstProveGuar["C_PROVE"].ToString());
 
-                            foreach (DataRow row_dtArtiGuardados in sql_dtArtiGuardados)
+                    foreach (DataRow row_dtArtiGuardados in sql_dtArtiGuardados)
+                    {
+                        sql_dtArtiGuar =
+                       from dtArtiGuarr in _dtArticulo.AsEnumerable()
+                       where dtArtiGuarr.Field<String>("C_ARTI") == row_dtArtiGuardados["C_ARTI"].ToString() &&
+                       dtArtiGuarr.Field<String>("C_PROVE2") == row_dtArtiGuardados["C_PROVE2"].ToString() &&
+                       dtArtiGuarr.Field<String>("ID_SUCURSALALM") == row_dtArtiGuardados["ID_SUCURSALALM"].ToString()
+                       select dtArtiGuarr;
+
+                        //MessageBox.Show("tercero ciclo "+ row_dtArtiGuardados["C_ARTI"].ToString());
+
+                        foreach (DataRow rowstArtiGuar in sql_dtArtiGuar)
                         {
-                            sql_dtArtiGuar =
-                           from dtArtiGuarr in _dtArticulo.AsEnumerable()
-                           where dtArtiGuarr.Field<String>("C_ARTI") == row_dtArtiGuardados["C_ARTI"].ToString() &&
-                           dtArtiGuarr.Field<String>("C_PROVE2") == row_dtArtiGuardados["C_PROVE2"].ToString() &&
-                           dtArtiGuarr.Field<String>("ID_SUCURSALALM") == row_dtArtiGuardados["ID_SUCURSALALM"].ToString()
-                           select dtArtiGuarr;
-
-                                //MessageBox.Show("tercero ciclo "+ row_dtArtiGuardados["C_ARTI"].ToString());
-
-                                foreach (DataRow rowstArtiGuar in sql_dtArtiGuar)
+                            if (rowstArtiGuar["C_PROVE"].ToString() == row_dtArtiGuardados["C_PROVE"].ToString())
                             {
-                                if (rowstArtiGuar["C_PROVE"].ToString() == row_dtArtiGuardados["C_PROVE"].ToString())
-                                {
-                                    rowstArtiGuar.SetField("PARTICIPA", true);
-                                    rowstArtiGuar.AcceptChanges();
-                                }
-                                else
-                                {
-                                    rowstArtiGuar.SetField("C_PROVE", row_dtArtiGuardados["C_PROVE"].ToString());
-                                    rowstArtiGuar.SetField("PARTICIPA", true);
-                                    rowstArtiGuar.AcceptChanges();
-                                    //MessageBox.Show(rowstArtiGuar.Field<String>("C_PROVE") +"=="+ _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString());
-                                }
+                                rowstArtiGuar.SetField("PARTICIPA", true);
+                                rowstArtiGuar.AcceptChanges();
+                            }
+                            else
+                            {
+                                rowstArtiGuar.SetField("C_PROVE", row_dtArtiGuardados["C_PROVE"].ToString());
+                                rowstArtiGuar.SetField("PARTICIPA", true);
+                                rowstArtiGuar.AcceptChanges();
+                                //MessageBox.Show(rowstArtiGuar.Field<String>("C_PROVE") +"=="+ _dtArtiGuardados.Rows[ii]["C_PROVE"].ToString());
+                            }
 
-                                    //MessageBox.Show("cuarto ciclo " + rowstArtiGuar["C_ARTI"]);
-                                }
+                            //MessageBox.Show("cuarto ciclo " + rowstArtiGuar["C_ARTI"]);
                         }
-
-                        //for (int ii = 0; ii < _dtArtiGuardados.Rows.Count; ii++)
-                        //{
-
-                        //}
-
-                        //GC.Collect();
-
                     }
 
+                    //for (int ii = 0; ii < _dtArtiGuardados.Rows.Count; ii++)
+                    //{
 
+                    //}
+
+                    //GC.Collect();
 
                 }
 
 
 
-
-                cBoxSucursal.DataSource = _dtSucursales;
-                cBoxSucursal.ValueMember = "ALMACEN";//"valor";
-                cBoxSucursal.DisplayMember = "SUCURSAL"; //"opcion";
-            });
-            
-                                                     //cBoxSucursal.SelectedItem = _cbDatos[1, 0];
+            }
+            //cBoxSucursal.SelectedItem = _cbDatos[1, 0];
 
             //*************************************PROVEEDOR
             String[,] _cbdatos = {
                 { "C_PROVE", "DESCRI" },
                 { "Clv. Proveedor", "Nombre" }
             };
-            cboxBusProve.Invoke(new Action(delegate () {
+            this.Invoke((MethodInvoker)delegate { 
                 _funcion.llenarCombobox(cboxBusProve, _cbdatos);
-            }));
+            });
             
 
             String[,] _cbOrdDatos = {
@@ -191,17 +194,17 @@ namespace EXPOCOMA.Stand
                 { "Mis proveedores", "Todos" }
 
             };
-            cboxOrdProve.Invoke(new Action(delegate () {
+            this.Invoke((MethodInvoker)delegate {
                 _funcion.llenarCombobox(cboxOrdProve, _cbOrdDatos);
-            }));
+            });
 
             //FiltrarProveedor(_dtProveedor, "ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString());
             //this.Invoke(new Action(delegate () {
             //    FiltrarProveedor();
             //}));
 
-            dgvProveedor.Invoke(new Action(delegate () {
-                
+            this.Invoke((MethodInvoker)delegate {
+
 
                 dgvProveedor.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 //dgvProveedor.DataSource = _dtProveedorTMP;
@@ -219,7 +222,7 @@ namespace EXPOCOMA.Stand
 
                 dgvProveedor.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
                 dgvProveedor.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
-            }));
+            });
             
 
             for (int i = 0; i < dgvProveedor.Rows.Count; i++)
@@ -236,10 +239,10 @@ namespace EXPOCOMA.Stand
                 { "C_ARTI", "DES_ARTI", "EMPAQUE2", "CAP_ARTI" },
                 { "Clv. Articulo", "Nombre", "Empaque(2)", "Capacidad" }
             };
-            cBoxBusArticulo.Invoke(new Action(delegate () {
+            this.Invoke((MethodInvoker)delegate {
                 _funcion.llenarCombobox(cBoxBusArticulo, _cbBusArtidatos);
-            }));
-            
+            });
+
 
             //String[,] _cbOrdArtiDatos = {
             //    { SesionLetra, "" },
@@ -248,14 +251,14 @@ namespace EXPOCOMA.Stand
             //};
             //_funcion.llenarCombobox(cboxOrdProve, _cbOrdArtiDatos);
 
-            
+
 
             //FiltrarArticulo(_dtArticulo, "ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString());
 
             //_dtArticuloTMP = _dtArticulo.Clone();
             //FiltrarArticulo();
 
-            this.Invoke(new Action(delegate () {
+            this.Invoke((MethodInvoker)delegate {
                 dgvArticulo.DataSource = _dtArticulo.Clone();
 
                 dgvArticulo.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -313,9 +316,9 @@ namespace EXPOCOMA.Stand
 
                 picbCargando.Visible = false;
                 cBoxSucursal.Focus();
-                GC.Collect();
+                
 
-            }));
+            });
 
             
 
@@ -336,6 +339,8 @@ namespace EXPOCOMA.Stand
             //        _consql.Close();
             //    }
             //}
+
+            GC.Collect();
 
         }
 
@@ -386,9 +391,7 @@ namespace EXPOCOMA.Stand
           
 
             }
-
-
-            
+                       
         }
 
         public void FiltrarArticulo()
