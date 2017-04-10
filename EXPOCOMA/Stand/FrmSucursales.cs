@@ -125,9 +125,16 @@ namespace EXPOCOMA.Stand
 
         private void FrmSucursales_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            FrmIndex.opcPartSuc.Enabled = true;
-            FrmIndex.opcImporTabla.Enabled = true;
+            DataTable _dtTblSucu = _funciones.llenar_dt("tbl_sucursal", "id");
+            if (_dtTblSucu.Rows.Count > 0)
+            {
+                FrmIndex.opcPartSuc.Enabled = true;
+                FrmIndex.opcImporTabla.Enabled = true;
+            }else
+            {
+                FrmIndex.opcPartSuc.Enabled = true;
+            }
+            
             GC.Collect();
         }
 
@@ -334,6 +341,8 @@ namespace EXPOCOMA.Stand
                 {
                     dgvTblEmpresa.Sort(dgvTblEmpresa.Columns["anfitrion"], ListSortDirection.Descending);
                     MessageBox.Show("Se ha guardado las sucursales participantes", "¡Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //FrmIndex.opcPartSuc.Enabled = true;
+                    //FrmIndex.opcImporTabla.Enabled = true;
                 }
                 else
                 {

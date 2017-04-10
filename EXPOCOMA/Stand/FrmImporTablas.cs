@@ -154,6 +154,9 @@ namespace EXPOCOMA.Stand
 
         private void FrmImporTablas_FormClosing(object sender, FormClosingEventArgs ee)
         {
+            DataTable _prove = _funcion.llenar_dt("dbf_proveedo", "id");
+            DataTable _arti = _funcion.llenar_dt("dbf_articulo", "id");
+
             if (!(copiarTablas==null))
             {
                 copiarTablas.Suspend();
@@ -169,8 +172,12 @@ namespace EXPOCOMA.Stand
                     this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar, "Importar");
                     //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar);
 
-                    FrmIndex.opcPartSuc.Enabled = true;
-                    FrmIndex.opcImporTabla.Enabled = true;
+                    if ((_prove.Rows.Count > 0)&&(_arti.Rows.Count > 0))
+                    {
+                        FrmIndex.opcPartSuc.Enabled = true;
+                        FrmIndex.opcImporTabla.Enabled = true;
+                    }
+                   
 
                     ee.Cancel = false;
                     GC.Collect();
@@ -184,8 +191,11 @@ namespace EXPOCOMA.Stand
             }
             else
             {
-                FrmIndex.opcPartSuc.Enabled = true;
-                FrmIndex.opcImporTabla.Enabled = true;
+                if ((_prove.Rows.Count > 0) && (_arti.Rows.Count > 0))
+                {
+                    FrmIndex.opcPartSuc.Enabled = true;
+                    FrmIndex.opcImporTabla.Enabled = true;
+                }
                 GC.Collect();
             }
             

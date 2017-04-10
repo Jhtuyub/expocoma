@@ -21,11 +21,13 @@ namespace EXPOCOMA.Stand
 
         internal static ToolStripMenuItem opcPartSuc;
         internal static ToolStripMenuItem opcImporTabla;
+        internal static ToolStripMenuItem opcProveArti;
         public FrmIndex()
         {
             InitializeComponent();
             opcPartSuc = empresasParticipantesToolStripMenuItem;
             opcImporTabla = importacionDeTablasToolStripMenuItem;
+            opcProveArti = proveedoresYArticulosToolStripMenuItem;
         }
 
         private void FrmIndex_FormClosing(object sender, FormClosingEventArgs e)
@@ -37,6 +39,7 @@ namespace EXPOCOMA.Stand
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
+            _funcion._SQLCadenaConexion = _CadenaConexion;
             this.Text = "EXPOCOMA "+nomExpo+ " - FrmIndex";
             //_funcion._SQLCadenaConexion = _CadenaConexion;
             toolStripSLMensaje.Text = "";
@@ -44,32 +47,65 @@ namespace EXPOCOMA.Stand
             CrearTablasThread.IsBackground = true;
             CrearTablasThread.Start();
 
-            habiImportTablas();
+            //habiImportTablas("tbl_sucursal", importacionDeTablasToolStripMenuItem);
+            importacionDeTablasToolStripMenuItem.Enabled = habilitarSubMenu("tbl_sucursal");
+            //proveedoresYArticulosToolStripMenuItem.Enabled = habilitarSubMenu("dbf_articulo");
+            if (habilitarSubMenu("dbf_proveedo") && habilitarSubMenu("dbf_articulo"))
+            {
+                proveedoresYArticulosToolStripMenuItem.Enabled = true;
 
+            }else
+            {
+                proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            }
         }
 
-
-
-        public void habiImportTablas()
+        public Boolean habilitarSubMenu(String tabla)
         {
+            Boolean submenu = false;
             //_funcion._TIPObasedatos = "sqlserver";
-            _funcion._SQLCadenaConexion = _CadenaConexion;
+            
             try
             {
-                DataTable dttblSucursal = _funcion.llenar_form("tbl_sucursal");
+                DataTable dttblSucursal = _funcion.llenar_form(tabla);
                 if (dttblSucursal.Rows.Count > 0)
                 {
-                    importacionDeTablasToolStripMenuItem.Enabled = true;
+                    submenu = true;
                 }
                 else
                 {
-                    importacionDeTablasToolStripMenuItem.Enabled = false;
+                    submenu = false;
                 }
             }
             catch (Exception)
             {
 
-                importacionDeTablasToolStripMenuItem.Enabled = false;
+                submenu = false;
+            }
+            return submenu;
+        }
+
+
+        public void habiImportTablas(String tabla, ToolStripItem submenu)
+        {
+            //_funcion._TIPObasedatos = "sqlserver";
+            //_funcion._SQLCadenaConexion = _CadenaConexion;
+            try
+            {
+                DataTable dttblSucursal = _funcion.llenar_form(tabla);
+                if (dttblSucursal.Rows.Count > 0)
+                {
+                    submenu.Enabled = true;
+                }
+                else
+                {
+                    submenu.Enabled = false;
+                }
+            }
+            catch (Exception)
+            {
+
+                submenu.Enabled = false;
             }
 
 
@@ -561,8 +597,8 @@ namespace EXPOCOMA.Stand
             _frmProveArti._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmProveArti.Show();
-            //empresasParticipantesToolStripMenuItem.Enabled = false;
-            //importacionDeTablasToolStripMenuItem.Enabled = false;
+            proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            proveedoresYArticulosToolStripMenuItem.Enabled = false;
         }
     }
 }

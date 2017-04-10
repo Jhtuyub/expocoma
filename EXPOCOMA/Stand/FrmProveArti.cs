@@ -950,7 +950,10 @@ namespace EXPOCOMA.Stand
                 if (staGuardado == 2)
                 {
                     MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }else
+                    FrmIndex.opcProveArti.Enabled = true;
+                    
+                }
+                else
                 {
                     MessageBox.Show("Los proveedores o los articulos no se guardaron",":S Algo ocurrio", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -1293,6 +1296,19 @@ namespace EXPOCOMA.Stand
             }
             else
             {
+
+                //DataTable _dtTblprove = _funcion.llenar_dt("tbl_sucursal", "id");
+                //DataTable _dtTblArti = _funcion.llenar_dt("tbl_sucursal", "id");
+                //if (_dtTblSucu.Rows.Count > 0)
+                //{
+                FrmIndex.opcProveArti.Enabled = true;
+                //    FrmIndex.opcImporTabla.Enabled = true;
+                //}
+                //else
+                //{
+                //    FrmIndex.opcPartSuc.Enabled = true;
+                //}
+
                 GC.Collect();
             }
 
