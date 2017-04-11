@@ -648,5 +648,14 @@ namespace EXPOCOMA.Stand
         {
             //FondoPantalla();
         }
+
+        private void imprimirInvitacionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmImprimirInvita _frmImpInv = new FrmImprimirInvita();
+            _frmImpInv.MdiParent = this;
+            _frmImpInv._CadenaConexion = _CadenaConexion;
+            //_frmSucusal.Owner = this;
+            _frmImpInv.Show();
+        }
     }
 }
