@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSistema));
             this.tabSistema = new System.Windows.Forms.TabControl();
             this.tpSistema = new System.Windows.Forms.TabPage();
             this.checkBCerrar = new System.Windows.Forms.CheckBox();
@@ -90,10 +89,10 @@
             // 
             this.tpdb.Controls.Add(this.txtDblocal);
             this.tpdb.Controls.Add(this.label1);
-            this.tpdb.Location = new System.Drawing.Point(4, 25);
+            this.tpdb.Location = new System.Drawing.Point(4, 26);
             this.tpdb.Name = "tpdb";
             this.tpdb.Padding = new System.Windows.Forms.Padding(3);
-            this.tpdb.Size = new System.Drawing.Size(349, 303);
+            this.tpdb.Size = new System.Drawing.Size(349, 302);
             this.tpdb.TabIndex = 0;
             this.tpdb.Text = "DB local";
             this.tpdb.UseVisualStyleBackColor = true;
@@ -129,10 +128,10 @@
             this.tabsql.Controls.Add(this.label3);
             this.tabsql.Controls.Add(this.txtServidor);
             this.tabsql.Controls.Add(this.label2);
-            this.tabsql.Location = new System.Drawing.Point(4, 25);
+            this.tabsql.Location = new System.Drawing.Point(4, 26);
             this.tabsql.Name = "tabsql";
             this.tabsql.Padding = new System.Windows.Forms.Padding(3);
-            this.tabsql.Size = new System.Drawing.Size(349, 303);
+            this.tabsql.Size = new System.Drawing.Size(349, 302);
             this.tabsql.TabIndex = 2;
             this.tabsql.Text = "SQL";
             this.tabsql.UseVisualStyleBackColor = true;
@@ -243,7 +242,6 @@
             this.Controls.Add(this.tabSistema);
             this.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.MaximizeBox = false;

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmProveArti));
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.tabProveedor = new System.Windows.Forms.TabControl();
@@ -300,7 +299,6 @@
             // picbCargando
             // 
             this.picbCargando.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picbCargando.Image = global::EXPOCOMA.Properties.Resources.loader;
             this.picbCargando.Location = new System.Drawing.Point(853, 6);
             this.picbCargando.Name = "picbCargando";
             this.picbCargando.Size = new System.Drawing.Size(40, 40);
@@ -334,7 +332,6 @@
             this.Controls.Add(this.btnSalir);
             this.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "FrmProveArti";
             this.ShowInTaskbar = false;

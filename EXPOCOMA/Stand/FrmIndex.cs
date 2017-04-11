@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -37,9 +38,28 @@ namespace EXPOCOMA.Stand
             GC.Collect();
         }
 
+        public void FondoPantalla()
+        {
+            //Ruta donde se encuentra nuestra imagen
+            string ruta = Application.StartupPath + @"\recursos\EXPO_ COMA.JPG";
+
+            //Comprobamos que la ruta exista
+            if (File.Exists(ruta))
+            {
+                //Creamos un Bitmap con la imagen
+                Bitmap bmp = new Bitmap(ruta);
+
+                //Se la colocamos de fondo al formulario
+                this.BackgroundImage = bmp;
+            }
+        }
+
         private void FrmIndex_Load(object sender, EventArgs e)
         {
             //this.BackgroundImage = "";
+            _funcion.icono(this);
+            FondoPantalla();
+
 
             _funcion._SQLCadenaConexion = _CadenaConexion;
             this.Text = "EXPOCOMA "+nomExpo+ " - FrmIndex";

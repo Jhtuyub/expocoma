@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSucursales));
             this.dgvCatEmpresa = new System.Windows.Forms.DataGridView();
             this.dgvTblEmpresa = new System.Windows.Forms.DataGridView();
             this.menuSucursal = new System.Windows.Forms.MenuStrip();
@@ -225,7 +224,6 @@
             this.Controls.Add(this.menuSucursal);
             this.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuSucursal;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);

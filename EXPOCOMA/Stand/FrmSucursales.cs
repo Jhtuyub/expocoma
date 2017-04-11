@@ -39,6 +39,7 @@ namespace EXPOCOMA.Stand
         //}
         private void FrmSucursales_Load(object sender, EventArgs e)
         {
+            _funciones.icono(this);
             //validarSucursal();
 
             _funciones._SQLCadenaConexion = _CadenaConexion;//CONEXION PARA LA BASE DE DATOS SQLSERVER2015 EXPRESS

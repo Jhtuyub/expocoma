@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Threading;
 using EXPOCOMA.Stand;
 using EXPOCOMA.Funciones;
+using System.IO;
 
 namespace EXPOCOMA.inicio
 {
@@ -46,6 +47,12 @@ namespace EXPOCOMA.inicio
 
         private void frmInicio_Load(object sender, EventArgs e)
         {
+
+            _funciones.icono(this);
+
+
+
+
             stripSLEstatus.Text = "";
             //llenar_list(lbExpo);
             _funciones.cargar_datos(dgvExpos, "cat_expo");

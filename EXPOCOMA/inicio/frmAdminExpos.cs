@@ -27,7 +27,7 @@ namespace EXPOCOMA.inicio
 
         private void frmAdminExpos_Load(object sender, EventArgs e)
         {
-
+            __funciones.icono(this);
            
 
             __funciones.cargar_datos(dgvExpos, "cat_expo");

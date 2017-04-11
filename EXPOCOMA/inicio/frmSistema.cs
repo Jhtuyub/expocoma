@@ -25,6 +25,7 @@ namespace EXPOCOMA.inicio
 
         private void frmSistema_Load(object sender, EventArgs e)
         {
+            _funciones.icono(this);
             //SISTEMA
             checkBCerrar.Checked = Properties.Settings.Default.cerrarApp;
             //

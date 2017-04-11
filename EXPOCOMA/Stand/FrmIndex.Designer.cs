@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmIndex));
             this.menIndex = new System.Windows.Forms.MenuStrip();
             this.expoConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresasParticipantesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,11 +115,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(693, 371);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menIndex);
             this.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menIndex;
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);

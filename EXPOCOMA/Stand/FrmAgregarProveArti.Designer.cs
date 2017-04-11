@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAgregarProveArti));
             this.txtClProve = new System.Windows.Forms.TextBox();
             this.txtNomProve = new System.Windows.Forms.TextBox();
             this.dgvProveedor = new System.Windows.Forms.DataGridView();
@@ -78,7 +77,6 @@
             this.dgvProveedor.TabIndex = 4;
             this.dgvProveedor.TabStop = false;
             this.dgvProveedor.Tag = "";
-            
             this.dgvProveedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvProveedor_MouseMove);
             // 
             // btnGuardar
@@ -168,7 +166,6 @@
             this.Controls.Add(this.txtClProve);
             this.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

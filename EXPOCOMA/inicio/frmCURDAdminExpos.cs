@@ -33,6 +33,7 @@ namespace EXPOCOMA.inicio
 
         private void frmCURDAdminExpos_Load(object sender, EventArgs e)
         {
+            __funciones.icono(this);
             __funciones.reiniciar_campos(this);
             __funciones.nombre_form(this, ___accion, "NUEVO EXPO - frmCURDAdminExpos", "MODIFICAR EXPO ID:" + " " + ___idDato + " - frmCURDAdminExpos");
 

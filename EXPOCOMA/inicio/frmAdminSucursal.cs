@@ -21,6 +21,9 @@ namespace EXPOCOMA.inicio
 
         private void frmAdminSucursal_Load(object sender, EventArgs e)
         {
+
+            _funciones.icono(this);
+
             String[,] _cbdatos = {
                 { "almacen", "sucursal","servidor","dbf","usuario","contrasena", "db" },
                 { "Almacen", "Sucursal","Servidor","Dirección dbf ","Usuario","contraseña", "base de datos" }

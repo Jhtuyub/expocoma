@@ -32,6 +32,7 @@ namespace EXPOCOMA.Stand
 
         private void FrmAgregarProveArti_Load(object sender, EventArgs e)
         {
+            _funcion.icono(this);
             //_funcion._SQLCadenaConexion = _CadenaConexion;
             //_dtProveedor = _funcion.llenar_dt("dbf_proveedo", "id, ID_SUCURSALALM, C_PROVE, DESCRI, RESP_COMA,  C_PROVE2", "WHERE ID_SUCURSALALM = " + _NumAlmacen + " AND RESP_COMA = '"+ SesionLetra+"'", "ORDER BY C_PROVE");
 

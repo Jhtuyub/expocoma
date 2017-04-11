@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -1485,6 +1487,28 @@ namespace EXPOCOMA
                     c.Visible = !_Enabled;
                 }
 
+            }
+        }
+
+
+
+        public void icono(Form _FORM)
+        {
+            //La ruta de la imagen
+            string ruta = Application.StartupPath + @"\recursos\comita.ico";
+
+            //Comprobamos si existe
+            if (File.Exists(ruta))
+            {
+                //Limpiamos la imagen actual
+                _FORM.BackgroundImage = null;
+
+                //La cargamos de nuevo
+                //Bitmap bmp = new Bitmap(ruta);
+                Icon ico = new Icon(ruta);
+
+                //Y se la asignamos de nuevo al form
+                _FORM.Icon = ico;
             }
         }
 

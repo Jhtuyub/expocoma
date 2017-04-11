@@ -29,6 +29,8 @@ namespace EXPOCOMA.inicio
 
         private void frmCURDAdminSucursal_Load(object sender, EventArgs e)
         {
+            _funcion.icono(this);
+
             lblMenAlmacen.Text = "";
 
             _funcion.reiniciar_campos(this);
