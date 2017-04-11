@@ -1302,6 +1302,8 @@ namespace EXPOCOMA.Stand
                 //if (_dtTblSucu.Rows.Count > 0)
                 //{
                 FrmIndex.opcProveArti.Enabled = true;
+                FrmIndex.opcPartSuc.Enabled = true;
+                FrmIndex.opcImporTabla.Enabled = true;
                 //    FrmIndex.opcImporTabla.Enabled = true;
                 //}
                 //else

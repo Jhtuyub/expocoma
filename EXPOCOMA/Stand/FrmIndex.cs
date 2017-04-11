@@ -39,6 +39,8 @@ namespace EXPOCOMA.Stand
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
+            //this.BackgroundImage = "";
+
             _funcion._SQLCadenaConexion = _CadenaConexion;
             this.Text = "EXPOCOMA "+nomExpo+ " - FrmIndex";
             //_funcion._SQLCadenaConexion = _CadenaConexion;
@@ -47,17 +49,7 @@ namespace EXPOCOMA.Stand
             CrearTablasThread.IsBackground = true;
             CrearTablasThread.Start();
 
-            //habiImportTablas("tbl_sucursal", importacionDeTablasToolStripMenuItem);
-            importacionDeTablasToolStripMenuItem.Enabled = habilitarSubMenu("tbl_sucursal");
-            //proveedoresYArticulosToolStripMenuItem.Enabled = habilitarSubMenu("dbf_articulo");
-            if (habilitarSubMenu("dbf_proveedo") && habilitarSubMenu("dbf_articulo"))
-            {
-                proveedoresYArticulosToolStripMenuItem.Enabled = true;
-
-            }else
-            {
-                proveedoresYArticulosToolStripMenuItem.Enabled = false;
-            }
+            
         }
 
         public Boolean habilitarSubMenu(String tabla)
@@ -113,6 +105,10 @@ namespace EXPOCOMA.Stand
 
         public void Tablas()
         {
+
+            
+
+
             Int32 resultado;
 
             String _tblSucursal = "IF OBJECT_ID('tbl_sucursal') IS NULL "
@@ -565,6 +561,27 @@ namespace EXPOCOMA.Stand
               
             }
 
+
+
+            //this.Invoke((MethodInvoker)delegate
+            //{
+            //habiImportTablas("tbl_sucursal", importacionDeTablasToolStripMenuItem);
+            //_funcion.Cargando(this, toolStripPBar, 10, 1, 1, toolStripSLMensaje, "Listo");
+            importacionDeTablasToolStripMenuItem.Enabled = habilitarSubMenu("tbl_sucursal");
+            //proveedoresYArticulosToolStripMenuItem.Enabled = habilitarSubMenu("dbf_articulo");
+            if (habilitarSubMenu("dbf_proveedo") && habilitarSubMenu("dbf_articulo"))
+            {
+                proveedoresYArticulosToolStripMenuItem.Enabled = true;
+
+            }
+            else
+            {
+                proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            }
+            //});
+
+            _funcion.Cargando(this, toolStripPBar, 10, 0, 1, toolStripSLMensaje, "...");
+
         }
 
         private void empresasParticipantesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,8 +603,10 @@ namespace EXPOCOMA.Stand
             _frmImporTablas.nomExpo = nomExpo;
             //_frmSucusal.Owner = this;
             _frmImporTablas.Show();
+            
             empresasParticipantesToolStripMenuItem.Enabled = false;
             importacionDeTablasToolStripMenuItem.Enabled = false;
+            opcProveArti.Enabled = false;
         }
 
         private void proveedoresYArticulosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -597,7 +616,8 @@ namespace EXPOCOMA.Stand
             _frmProveArti._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmProveArti.Show();
-            proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            empresasParticipantesToolStripMenuItem.Enabled = false;
+            importacionDeTablasToolStripMenuItem.Enabled = false;
             proveedoresYArticulosToolStripMenuItem.Enabled = false;
         }
     }

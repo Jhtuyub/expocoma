@@ -176,6 +176,7 @@ namespace EXPOCOMA.Stand
                     {
                         FrmIndex.opcPartSuc.Enabled = true;
                         FrmIndex.opcImporTabla.Enabled = true;
+                        FrmIndex.opcProveArti.Enabled = true;
                     }
                    
 
@@ -195,6 +196,7 @@ namespace EXPOCOMA.Stand
                 {
                     FrmIndex.opcPartSuc.Enabled = true;
                     FrmIndex.opcImporTabla.Enabled = true;
+                    FrmIndex.opcProveArti.Enabled = true;
                 }
                 GC.Collect();
             }
