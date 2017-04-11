@@ -782,7 +782,7 @@ namespace EXPOCOMA.Stand
                                 {
                                     if (_consqlOrigen.State == ConnectionState.Closed)
                                     {
-                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Conectando a la base de tados");
+                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Conectando a la base de datos");
                                         _consqlOrigen.Open();
                                     }
 

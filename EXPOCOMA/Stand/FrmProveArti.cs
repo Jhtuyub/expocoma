@@ -952,7 +952,7 @@ namespace EXPOCOMA.Stand
                 if (staGuardado == 2)
                 {
                     MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    FrmIndex.opcProveArti.Enabled = true;
+                    //FrmIndex.opcProveArti.Enabled = true;
                     
                 }
                 else

@@ -51,6 +51,7 @@ namespace EXPOCOMA.Stand
 
                 //Se la colocamos de fondo al formulario
                 this.BackgroundImage = bmp;
+                this.BackgroundImageLayout = ImageLayout.Center;
             }
         }
 
@@ -59,6 +60,7 @@ namespace EXPOCOMA.Stand
             //this.BackgroundImage = "";
             _funcion.icono(this);
             FondoPantalla();
+            //this.bac = Color.White;
 
 
             _funcion._SQLCadenaConexion = _CadenaConexion;
@@ -640,6 +642,11 @@ namespace EXPOCOMA.Stand
             empresasParticipantesToolStripMenuItem.Enabled = false;
             importacionDeTablasToolStripMenuItem.Enabled = false;
             proveedoresYArticulosToolStripMenuItem.Enabled = false;
+        }
+
+        private void FrmIndex_SizeChanged(object sender, EventArgs e)
+        {
+            //FondoPantalla();
         }
     }
 }

@@ -115,7 +115,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(693, 371);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menIndex);
@@ -128,6 +128,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmIndex_FormClosing);
             this.Load += new System.EventHandler(this.FrmIndex_Load);
+            this.SizeChanged += new System.EventHandler(this.FrmIndex_SizeChanged);
             this.menIndex.ResumeLayout(false);
             this.menIndex.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
