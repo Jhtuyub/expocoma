@@ -299,9 +299,9 @@
             // picbCargando
             // 
             this.picbCargando.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picbCargando.Location = new System.Drawing.Point(853, 6);
+            this.picbCargando.Location = new System.Drawing.Point(843, 6);
             this.picbCargando.Name = "picbCargando";
-            this.picbCargando.Size = new System.Drawing.Size(40, 40);
+            this.picbCargando.Size = new System.Drawing.Size(50, 50);
             this.picbCargando.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picbCargando.TabIndex = 31;
             this.picbCargando.TabStop = false;

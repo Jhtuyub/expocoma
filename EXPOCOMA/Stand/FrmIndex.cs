@@ -72,14 +72,15 @@ namespace EXPOCOMA.Stand
             
         }
 
-        public Boolean habilitarSubMenu(String tabla)
+        public Boolean habilitarSubMenu(String tabla, String campo = "id")
         {
             Boolean submenu = false;
             //_funcion._TIPObasedatos = "sqlserver";
             
             try
             {
-                DataTable dttblSucursal = _funcion.llenar_form(tabla);
+                //DataTable dttblSucursal = _funcion.llenar_form(tabla);
+                DataTable dttblSucursal = _funcion.llenar_dt(tabla,"TOP 1 "+ campo);
                 if (dttblSucursal.Rows.Count > 0)
                 {
                     submenu = true;

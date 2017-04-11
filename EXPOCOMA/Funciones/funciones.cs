@@ -1512,6 +1512,28 @@ namespace EXPOCOMA
             }
         }
 
+        public void PicCargando(PictureBox picControl)
+        {
+            string ruta = Application.StartupPath + @"\recursos\loader.gif";
+
+            //Comprobamos si existe
+            if (File.Exists(ruta))
+            {
+
+                picControl.Image = Image.FromFile(ruta);
+                ////Limpiamos la imagen actual
+                //_FORM.BackgroundImage = null;
+
+                ////La cargamos de nuevo
+                ////Bitmap bmp = new Bitmap(ruta);
+                //Icon ico = new Icon(ruta);
+
+                ////Y se la asignamos de nuevo al form
+                //_FORM.Icon = ico;
+            }
+           
+        }
+
 
 
 

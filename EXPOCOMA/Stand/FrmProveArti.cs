@@ -349,6 +349,7 @@ namespace EXPOCOMA.Stand
         private void FrmProveArti_Load(object sender, EventArgs e)
         {
             _funcion.icono(this);
+            _funcion.PicCargando(picbCargando);
             //CargarInformacion();
             CargarInfo = new Thread(CargarInformacion);
             CargarInfo.IsBackground = true;

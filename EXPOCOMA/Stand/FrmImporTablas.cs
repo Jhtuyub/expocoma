@@ -38,6 +38,8 @@ namespace EXPOCOMA.Stand
         private void FrmImporTablas_Load(object sender, EventArgs e)
         {
             _funcion.icono(this);
+            _funcion.PicCargando(picbCargando);
+            //picbCargando.Image = Image.FromFile(Application.StartupPath + @"\recursos\loader.gif");
             //MessageBox.Show(_CadenaConexion);
             _funcion._SQLCadenaConexion = _CadenaConexion;
             //_funcion._TIPObasedatos = "sqlserver";
