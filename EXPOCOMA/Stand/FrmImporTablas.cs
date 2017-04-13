@@ -87,36 +87,54 @@ namespace EXPOCOMA.Stand
 
             String[,] _cbdatos = {
                 {
+                    "cliente",
+                    "agentes", //agentes
+                    "rutagen",//rutagen
+                    "rutas",//rutas
+                    "proveedo",
                     "articulo",
                     "fam_arti",
                     "porpieza",
-                    "cliente",
+                    
                     "prefijos",
-                    "proveedo",
+                    
                     "statarti",
-                    "estatus"
+                    "estatus",
+                    
                 },
-                { "false", "false", "false","false", "false", "false", "false", "false"},
+                { "false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
                 {
+                    "",//cliente
+                    "", //agentes
+                    "",//rutagen
+                    "",//rutas
+                    "SELECT * FROM VW_PO_VENDORS_INT WHERE organizacion = @ORGANIZATION_ID",//proveedo
                     "SELECT * FROM VW_MTL_SYSTEM_ITEMS_B_CMA_2 WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//articulo
                     "SELECT * FROM PO_FAMILIAS_COMA WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//fam_arti
                     "",//porpieza
-                    "",//cliente
+                    
                     "",//prefijos
-                    "SELECT * FROM VW_PO_VENDORS_INT WHERE organizacion = @ORGANIZATION_ID",//proveedo
+                    
                     "SELECT statarti.ITEM_NUMBER, statarti.STATUS_NUMBER, estatus.CONCEPTO, articulos.DESCRIPTION, articulos.ATTRIBUTE3, articulos.ATTRIBUTE2, articulos.NO_PROV_AFECTA_PRECIO FROM po_supp_item_status_int statarti INNER JOIN PO_CATALOG_STATUS estatus ON statarti.STATUS_NUMBER = estatus.STATUS_NUMBER INNER JOIN VW_MTL_SYSTEM_ITEMS_B_CMA_2 articulos ON statarti.ITEM_NUMBER = articulos.SEGMENT1 WHERE (statarti.ORGANIZATION_ID = @ORGANIZATION_ID) AND (statarti.STATUS_NUMBER <= 5 OR statarti.STATUS_NUMBER IN (12, 19, 20, 34)) AND (articulos.ORGANIZATION_ID = @ORGANIZATION_ID) ORDER BY statarti.ITEM_NUMBER, CONVERT(SMALLDATETIME, statarti.FECHA_CREACION, 105), CAST(statarti.STATUS_NUMBER AS numeric)",//statarti
-                    "SELECT * FROM po_catalog_status"//estatus
+                    "SELECT * FROM po_catalog_status",//estatus
+                    
                 },
-                { "false", "false", "false","false", "false", "false", "false", "false"},
+                { "false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
                 {
+                    "",//Cliente
+                    "", //agentes
+                    "",//rutagen
+                    "",//rutas
+                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA", //PROVEEDO
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR",
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
+                    
                     "",
-                    "",
-                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA", //
+                    
                     "ID_SUCURSALALM-ID_SUCURSALALM,ITEM_NUMBER-C_ARTI,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,DESCRIPTION-DES_ARTI,ATTRIBUTE3-EMPAQUE,ATTRIBUTE2-CAP_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE", //,status_number-STATUS
-                    "ID_SUCURSALALM-ID_SUCURSALALM,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,FECHA_ALTA-FECHA_ALT"
+                    "ID_SUCURSALALM-ID_SUCURSALALM,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,FECHA_ALTA-FECHA_ALT",
+                    
                 },
                
                 //"ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI",
@@ -228,6 +246,18 @@ namespace EXPOCOMA.Stand
                     {
                         DT.Rows[i]["dbf"] = CHECKED;
                     }
+                    else if (DT.Rows[i]["tablas"].ToString() == "agentes")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
+                    else if (DT.Rows[i]["tablas"].ToString() == "rutagen")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
+                    else if (DT.Rows[i]["tablas"].ToString() == "rutas")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
                     else if (DT.Rows[i]["tablas"].ToString() == "prefijos")
                     {
                         DT.Rows[i]["dbf"] = CHECKED;
@@ -315,6 +345,9 @@ namespace EXPOCOMA.Stand
                     //|| dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "porpieza" || dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos"
                     if ((_dtTablas.Rows[i]["tablas"].ToString() == "porpieza" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "porpieza") ||
                         (_dtTablas.Rows[i]["tablas"].ToString() == "cliente" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString()=="cliente") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "agentes" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "agentes") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "rutagen" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "rutagen") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "rutas" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "rutas") ||
                         (_dtTablas.Rows[i]["tablas"].ToString() == "prefijos" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos"))
                     {
                         MessageBox.Show(_dtTablas.Rows[i]["tablas"].ToString()+" no disponible en esta opción");
