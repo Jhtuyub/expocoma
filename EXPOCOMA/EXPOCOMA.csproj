@@ -54,6 +54,11 @@
     <ApplicationIcon>comita.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -61,6 +66,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +77,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DSReporte.cs">
+      <DependentUpon>DSReporte.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSReporte.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSReporte.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Funciones\funciones.cs" />
     <Compile Include="Funciones\funcionesdblocal.cs" />
     <Compile Include="inicio\frmAdminExpos.cs">
@@ -112,6 +127,18 @@
     <Compile Include="modelo\SQL2014.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reportes\CREtiquetas.cs">
+      <DependentUpon>CREtiquetas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="reportes\FrmVistaPrevia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportes\FrmVistaPrevia.Designer.cs">
+      <DependentUpon>FrmVistaPrevia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Stand\FrmAgregarProveArti.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +203,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="reportes\CREtiquetas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CREtiquetas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportes\FrmVistaPrevia.resx">
+      <DependentUpon>FrmVistaPrevia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Stand\FrmAgregarProveArti.resx">
       <DependentUpon>FrmAgregarProveArti.cs</DependentUpon>
     </EmbeddedResource>
@@ -195,6 +229,17 @@
       <DependentUpon>FrmSucursales.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="DSReporte.xsc">
+      <DependentUpon>DSReporte.xsd</DependentUpon>
+    </None>
+    <None Include="DSReporte.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSReporte.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DSReporte.xss">
+      <DependentUpon>DSReporte.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -230,7 +275,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="recursos\" />
-    <Folder Include="reportes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

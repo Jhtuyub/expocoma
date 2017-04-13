@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSReporte" targetNamespace="http://tempuri.org/DSReporte.xsd" xmlns:mstns="http://tempuri.org/DSReporte.xsd" xmlns="http://tempuri.org/DSReporte.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSReporte" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSReporte" msprop:Generator_UserDSName="DSReporte">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="dtEtiquetas" msprop:Generator_TableClassName="dtEtiquetasDataTable" msprop:Generator_TableVarName="tabledtEtiquetas" msprop:Generator_TablePropName="dtEtiquetas" msprop:Generator_RowDeletingName="dtEtiquetasRowDeleting" msprop:Generator_RowChangingName="dtEtiquetasRowChanging" msprop:Generator_RowEvHandlerName="dtEtiquetasRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEtiquetasRowDeleted" msprop:Generator_UserTableName="dtEtiquetas" msprop:Generator_RowChangedName="dtEtiquetasRowChanged" msprop:Generator_RowEvArgName="dtEtiquetasRowChangeEvent" msprop:Generator_RowClassName="dtEtiquetasRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="C_CLIEXPO" msprop:Generator_ColumnVarNameInTable="columnC_CLIEXPO" msprop:Generator_ColumnPropNameInRow="C_CLIEXPO" msprop:Generator_ColumnPropNameInTable="C_CLIEXPOColumn" msprop:Generator_UserColumnName="C_CLIEXPO" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
