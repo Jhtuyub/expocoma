@@ -41,8 +41,15 @@
             this.crvVistaPrevia.Cursor = System.Windows.Forms.Cursors.Default;
             this.crvVistaPrevia.Location = new System.Drawing.Point(0, 0);
             this.crvVistaPrevia.Name = "crvVistaPrevia";
+            this.crvVistaPrevia.ShowCloseButton = false;
+            this.crvVistaPrevia.ShowCopyButton = false;
+            this.crvVistaPrevia.ShowGroupTreeButton = false;
+            this.crvVistaPrevia.ShowLogo = false;
+            this.crvVistaPrevia.ShowParameterPanelButton = false;
+            this.crvVistaPrevia.ShowRefreshButton = false;
             this.crvVistaPrevia.Size = new System.Drawing.Size(725, 441);
             this.crvVistaPrevia.TabIndex = 0;
+            this.crvVistaPrevia.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
             // FrmVistaPrevia
             // 
@@ -53,7 +60,9 @@
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmVistaPrevia";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vista Previa - FrmVistaPrevia";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmVistaPrevia_FormClosing);
             this.Load += new System.EventHandler(this.FrmVistaPrevia_Load);
             this.ResumeLayout(false);
 

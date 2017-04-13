@@ -15,6 +15,7 @@ namespace EXPOCOMA.Stand
     {
         public String _CadenaConexion;
         funciones _funcion = new funciones();
+        //internal static Form _frmParent;
 
         DataTable _dtSucursales;
         DataTable _dtClientes;
@@ -38,6 +39,8 @@ namespace EXPOCOMA.Stand
             cBoxSucursal.DataSource = _dtSucursales;
             cBoxSucursal.ValueMember = "ALMACEN";//"valor";
             cBoxSucursal.DisplayMember = "SUCURSAL"; //"opcion";
+
+            //_frmParent = this;
 
         }
 
@@ -131,9 +134,11 @@ namespace EXPOCOMA.Stand
 
             FrmVistaPrevia frmVistaPre = new FrmVistaPrevia();
             frmVistaPre.MdiParent = this.MdiParent;
+            frmVistaPre._frmParent = this;
             frmVistaPre._crvReporte = "CREtiquetas";
             frmVistaPre._dtTabla = DSReport.Tables["dtEtiquetas"];
             frmVistaPre.Show();
+            this.Enabled = false;
 
 
             //FrmAgregarProveArti frmAgregarArti = new FrmAgregarProveArti();

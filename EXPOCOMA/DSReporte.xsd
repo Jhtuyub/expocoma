@@ -12,10 +12,11 @@
   <xs:element name="DSReporte" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSReporte" msprop:Generator_UserDSName="DSReporte">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="dtEtiquetas" msprop:Generator_TableClassName="dtEtiquetasDataTable" msprop:Generator_TableVarName="tabledtEtiquetas" msprop:Generator_TablePropName="dtEtiquetas" msprop:Generator_RowDeletingName="dtEtiquetasRowDeleting" msprop:Generator_RowChangingName="dtEtiquetasRowChanging" msprop:Generator_RowEvHandlerName="dtEtiquetasRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEtiquetasRowDeleted" msprop:Generator_UserTableName="dtEtiquetas" msprop:Generator_RowChangedName="dtEtiquetasRowChanged" msprop:Generator_RowEvArgName="dtEtiquetasRowChangeEvent" msprop:Generator_RowClassName="dtEtiquetasRow">
+        <xs:element name="dtEtiquetas" msprop:Generator_TableClassName="dtEtiquetasDataTable" msprop:Generator_TableVarName="tabledtEtiquetas" msprop:Generator_RowChangedName="dtEtiquetasRowChanged" msprop:Generator_TablePropName="dtEtiquetas" msprop:Generator_RowDeletingName="dtEtiquetasRowDeleting" msprop:Generator_RowChangingName="dtEtiquetasRowChanging" msprop:Generator_RowEvHandlerName="dtEtiquetasRowChangeEventHandler" msprop:Generator_RowDeletedName="dtEtiquetasRowDeleted" msprop:Generator_RowClassName="dtEtiquetasRow" msprop:Generator_UserTableName="dtEtiquetas" msprop:Generator_RowEvArgName="dtEtiquetasRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="C_CLIEXPO" msprop:Generator_ColumnVarNameInTable="columnC_CLIEXPO" msprop:Generator_ColumnPropNameInRow="C_CLIEXPO" msprop:Generator_ColumnPropNameInTable="C_CLIEXPOColumn" msprop:Generator_UserColumnName="C_CLIEXPO" type="xs:string" minOccurs="0" />
+              <xs:element name="NOM_CLIEN" msprop:Generator_ColumnVarNameInTable="columnNOM_CLIEN" msprop:Generator_ColumnPropNameInRow="NOM_CLIEN" msprop:Generator_ColumnPropNameInTable="NOM_CLIENColumn" msprop:Generator_UserColumnName="NOM_CLIEN" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

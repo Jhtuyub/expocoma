@@ -13,8 +13,11 @@ namespace EXPOCOMA.reportes
     public partial class FrmVistaPrevia : Form
     {
 
+        funciones _funcion = new funciones();
+
         public String _crvReporte;
         public DataTable _dtTabla;
+        public Form _frmParent;
 
         public FrmVistaPrevia()
         {
@@ -23,11 +26,19 @@ namespace EXPOCOMA.reportes
 
         private void FrmVistaPrevia_Load(object sender, EventArgs e)
         {
+            _funcion.icono(this);
             DSReporte DSReport = new DSReporte();
             ReportDocument cRep = new ReportDocument();
             cRep.Load(Application.StartupPath + "\\reportes\\"+ _crvReporte+".rpt"); //CREtiquetas.rpt"
             cRep.SetDataSource(_dtTabla);
             crvVistaPrevia.ReportSource = cRep;
+            //this.Enabled = false;
+        }
+
+        private void FrmVistaPrevia_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _frmParent.Enabled = true;
+            GC.Collect();
         }
     }
 }

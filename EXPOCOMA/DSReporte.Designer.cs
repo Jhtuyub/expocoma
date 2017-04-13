@@ -281,6 +281,8 @@ namespace EXPOCOMA {
             
             private global::System.Data.DataColumn columnC_CLIEXPO;
             
+            private global::System.Data.DataColumn columnNOM_CLIEN;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public dtEtiquetasDataTable() {
@@ -324,6 +326,14 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NOM_CLIENColumn {
+                get {
+                    return this.columnNOM_CLIEN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -359,10 +369,11 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRow AdddtEtiquetasRow(string C_CLIEXPO) {
+            public dtEtiquetasRow AdddtEtiquetasRow(string C_CLIEXPO, string NOM_CLIEN) {
                 dtEtiquetasRow rowdtEtiquetasRow = ((dtEtiquetasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        C_CLIEXPO};
+                        C_CLIEXPO,
+                        NOM_CLIEN};
                 rowdtEtiquetasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowdtEtiquetasRow);
                 return rowdtEtiquetasRow;
@@ -386,6 +397,7 @@ namespace EXPOCOMA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnC_CLIEXPO = base.Columns["C_CLIEXPO"];
+                this.columnNOM_CLIEN = base.Columns["NOM_CLIEN"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -393,6 +405,8 @@ namespace EXPOCOMA {
             private void InitClass() {
                 this.columnC_CLIEXPO = new global::System.Data.DataColumn("C_CLIEXPO", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnC_CLIEXPO);
+                this.columnNOM_CLIEN = new global::System.Data.DataColumn("NOM_CLIEN", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNOM_CLIEN);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -551,6 +565,22 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NOM_CLIEN {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtEtiquetas.NOM_CLIENColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOM_CLIEN\' de la tabla \'dtEtiquetas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtEtiquetas.NOM_CLIENColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsC_CLIEXPONull() {
                 return this.IsNull(this.tabledtEtiquetas.C_CLIEXPOColumn);
             }
@@ -559,6 +589,18 @@ namespace EXPOCOMA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetC_CLIEXPONull() {
                 this[this.tabledtEtiquetas.C_CLIEXPOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNOM_CLIENNull() {
+                return this.IsNull(this.tabledtEtiquetas.NOM_CLIENColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNOM_CLIENNull() {
+                this[this.tabledtEtiquetas.NOM_CLIENColumn] = global::System.Convert.DBNull;
             }
         }
         
