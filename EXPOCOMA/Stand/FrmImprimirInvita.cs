@@ -1,4 +1,5 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿using BarcodeFree;
+using CrystalDecisions.CrystalReports.Engine;
 using EXPOCOMA.reportes;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace EXPOCOMA.Stand
         DataTable _dtSucursales;
         DataTable _dtClientes;
 
-        DSReporte DSReport;
+        DSReportes DSReport;
         IEnumerable<DataRow> sql_dtProve;
 
 
@@ -31,6 +32,9 @@ namespace EXPOCOMA.Stand
 
         private void FrmImprimirInvita_Load(object sender, EventArgs e)
         {
+
+           
+
             _funcion.icono(this);
             _funcion._SQLCadenaConexion = _CadenaConexion;
             _dtSucursales = _funcion.llenar_dt("tbl_sucursal", "ALMACEN, SUCURSAL" ,"", "ORDER BY anfitrion DESC");
@@ -46,20 +50,25 @@ namespace EXPOCOMA.Stand
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
+            Code128 text = new Code128();
             String[] clvCliente;
             String clvNoCliente ="";
             String claves = txtClvClientes.Text.Trim();
-            DSReport = new DSReporte();
+            DSReport = new DSReportes();
             int fil_dtClien;
 
-
-            _dtClientes = _funcion.llenar_dt("dbf_cliente", "ID_SUCURSALALM, C_CLIENTE", "WHERE ID_SUCURSALALM = "+cBoxSucursal.SelectedValue.ToString());
+            //            SELECT clie.ID_SUCURSALALM, clie.C_CLIENTE, clie.NOM_CLIEN, clie.C_AGENTE, agen.C_AGENTE, agen.NOM_AGENTE
+            //FROM         dbf_cliente clie, dbf_agentes agen
+            //WHERE(clie.C_AGENTE = agen.C_AGENTE)AND(clie.ID_SUCURSALALM = '001' AND agen.ID_SUCURSALALM = '001')
+            _dtClientes = _funcion.llenar_dt("dbf_cliente clie, dbf_agentes agen", "clie.ID_SUCURSALALM, clie.C_CLIENTE, clie.NOM_CLIEN, clie.C_AGENTE AS CLIAGEN, agen.C_AGENTE AS AGENAGEN, agen.NOM_AGENTE, clie.NOM_TIENDA, clie.POBLACION, clie.TELEFONO", "WHERE (clie.C_AGENTE = agen.C_AGENTE)AND(clie.ID_SUCURSALALM = '" + cBoxSucursal.SelectedValue.ToString()+ "' AND agen.ID_SUCURSALALM = '" + cBoxSucursal.SelectedValue.ToString() + "')");// "WHERE ID_SUCURSALALM = "+cBoxSucursal.SelectedValue.ToString());
 
             _dtClientes.Columns.Add("C_CLIEXPO", typeof(String));
+            _dtClientes.Columns.Add("BARCODE", typeof(String));
             for (int i = 0; i < _dtClientes.Rows.Count; i++)
             {
                 //_funcion.Cargando(this, barraProgreso, 0, iAlm, dtDBF.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
                 _dtClientes.Rows[i]["C_CLIEXPO"] = _dtClientes.Rows[i]["ID_SUCURSALALM"].ToString().Substring(2) + _dtClientes.Rows[i]["C_CLIENTE"].ToString();
+                _dtClientes.Rows[i]["BARCODE"] = text.Encode( _dtClientes.Rows[i]["ID_SUCURSALALM"].ToString().Substring(2) + _dtClientes.Rows[i]["C_CLIENTE"].ToString());
             }
             //dtDBF.Columns.Add("id_sucursalalm", typeof(String));
 
@@ -93,6 +102,12 @@ namespace EXPOCOMA.Stand
                                 new Object[]
                                 {
                                     filClien["C_CLIEXPO"].ToString(),
+                                    filClien["NOM_CLIEN"].ToString(),
+                                    filClien["NOM_TIENDA"].ToString(),
+                                    filClien["POBLACION"].ToString(),
+                                    filClien["TELEFONO"].ToString(),
+                                    filClien["AGENAGEN"].ToString(),
+                                    filClien["NOM_AGENTE"].ToString(),
                                 }
                                 );
                         //}

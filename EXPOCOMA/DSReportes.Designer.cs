@@ -20,17 +20,17 @@ namespace EXPOCOMA {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("DSReporte")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DSReportes")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class DSReporte : global::System.Data.DataSet {
+    public partial class DSReportes : global::System.Data.DataSet {
         
-        private dtEtiquetasDataTable tabledtEtiquetas;
+        private dtInvitacionesDataTable tabledtInvitaciones;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public DSReporte() {
+        public DSReportes() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace EXPOCOMA {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected DSReporte(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DSReportes(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace EXPOCOMA {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["dtEtiquetas"] != null)) {
-                    base.Tables.Add(new dtEtiquetasDataTable(ds.Tables["dtEtiquetas"]));
+                if ((ds.Tables["dtInvitaciones"] != null)) {
+                    base.Tables.Add(new dtInvitacionesDataTable(ds.Tables["dtInvitaciones"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace EXPOCOMA {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public dtEtiquetasDataTable dtEtiquetas {
+        public dtInvitacionesDataTable dtInvitaciones {
             get {
-                return this.tabledtEtiquetas;
+                return this.tabledtInvitaciones;
             }
         }
         
@@ -127,7 +127,7 @@ namespace EXPOCOMA {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DSReporte cln = ((DSReporte)(base.Clone()));
+            DSReportes cln = ((DSReportes)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace EXPOCOMA {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["dtEtiquetas"] != null)) {
-                    base.Tables.Add(new dtEtiquetasDataTable(ds.Tables["dtEtiquetas"]));
+                if ((ds.Tables["dtInvitaciones"] != null)) {
+                    base.Tables.Add(new dtInvitacionesDataTable(ds.Tables["dtInvitaciones"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace EXPOCOMA {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tabledtEtiquetas = ((dtEtiquetasDataTable)(base.Tables["dtEtiquetas"]));
+            this.tabledtInvitaciones = ((dtInvitacionesDataTable)(base.Tables["dtInvitaciones"]));
             if ((initTable == true)) {
-                if ((this.tabledtEtiquetas != null)) {
-                    this.tabledtEtiquetas.InitVars();
+                if ((this.tabledtInvitaciones != null)) {
+                    this.tabledtInvitaciones.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace EXPOCOMA {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "DSReporte";
+            this.DataSetName = "DSReportes";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/DSReporte.xsd";
+            this.Namespace = "http://tempuri.org/DSReportes.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tabledtEtiquetas = new dtEtiquetasDataTable();
-            base.Tables.Add(this.tabledtEtiquetas);
+            this.tabledtInvitaciones = new dtInvitacionesDataTable();
+            base.Tables.Add(this.tabledtInvitaciones);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializedtEtiquetas() {
+        private bool ShouldSerializedtInvitaciones() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace EXPOCOMA {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DSReporte ds = new DSReporte();
+            DSReportes ds = new DSReportes();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,23 +270,35 @@ namespace EXPOCOMA {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void dtEtiquetasRowChangeEventHandler(object sender, dtEtiquetasRowChangeEvent e);
+        public delegate void dtInvitacionesRowChangeEventHandler(object sender, dtInvitacionesRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class dtEtiquetasDataTable : global::System.Data.TypedTableBase<dtEtiquetasRow> {
+        public partial class dtInvitacionesDataTable : global::System.Data.TypedTableBase<dtInvitacionesRow> {
             
             private global::System.Data.DataColumn columnC_CLIEXPO;
             
             private global::System.Data.DataColumn columnNOM_CLIEN;
             
+            private global::System.Data.DataColumn columnNOM_TIENDA;
+            
+            private global::System.Data.DataColumn columnPOBLACION;
+            
+            private global::System.Data.DataColumn columnTELEFONO;
+            
+            private global::System.Data.DataColumn columnC_AGENTE;
+            
+            private global::System.Data.DataColumn columnNOM_AGENTE;
+            
+            private global::System.Data.DataColumn columnBARCODE;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasDataTable() {
-                this.TableName = "dtEtiquetas";
+            public dtInvitacionesDataTable() {
+                this.TableName = "dtInvitaciones";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -294,7 +306,7 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal dtEtiquetasDataTable(global::System.Data.DataTable table) {
+            internal dtInvitacionesDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -311,7 +323,7 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected dtEtiquetasDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected dtInvitacionesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -334,6 +346,54 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NOM_TIENDAColumn {
+                get {
+                    return this.columnNOM_TIENDA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn POBLACIONColumn {
+                get {
+                    return this.columnPOBLACION;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TELEFONOColumn {
+                get {
+                    return this.columnTELEFONO;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn C_AGENTEColumn {
+                get {
+                    return this.columnC_AGENTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NOM_AGENTEColumn {
+                get {
+                    return this.columnNOM_AGENTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BARCODEColumn {
+                get {
+                    return this.columnBARCODE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -343,46 +403,52 @@ namespace EXPOCOMA {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRow this[int index] {
+            public dtInvitacionesRow this[int index] {
                 get {
-                    return ((dtEtiquetasRow)(this.Rows[index]));
+                    return ((dtInvitacionesRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtEtiquetasRowChangeEventHandler dtEtiquetasRowChanging;
+            public event dtInvitacionesRowChangeEventHandler dtInvitacionesRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtEtiquetasRowChangeEventHandler dtEtiquetasRowChanged;
+            public event dtInvitacionesRowChangeEventHandler dtInvitacionesRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtEtiquetasRowChangeEventHandler dtEtiquetasRowDeleting;
+            public event dtInvitacionesRowChangeEventHandler dtInvitacionesRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event dtEtiquetasRowChangeEventHandler dtEtiquetasRowDeleted;
+            public event dtInvitacionesRowChangeEventHandler dtInvitacionesRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AdddtEtiquetasRow(dtEtiquetasRow row) {
+            public void AdddtInvitacionesRow(dtInvitacionesRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRow AdddtEtiquetasRow(string C_CLIEXPO, string NOM_CLIEN) {
-                dtEtiquetasRow rowdtEtiquetasRow = ((dtEtiquetasRow)(this.NewRow()));
+            public dtInvitacionesRow AdddtInvitacionesRow(string C_CLIEXPO, string NOM_CLIEN, string NOM_TIENDA, string POBLACION, string TELEFONO, string C_AGENTE, string NOM_AGENTE, string BARCODE) {
+                dtInvitacionesRow rowdtInvitacionesRow = ((dtInvitacionesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         C_CLIEXPO,
-                        NOM_CLIEN};
-                rowdtEtiquetasRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowdtEtiquetasRow);
-                return rowdtEtiquetasRow;
+                        NOM_CLIEN,
+                        NOM_TIENDA,
+                        POBLACION,
+                        TELEFONO,
+                        C_AGENTE,
+                        NOM_AGENTE,
+                        BARCODE};
+                rowdtInvitacionesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowdtInvitacionesRow);
+                return rowdtInvitacionesRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                dtEtiquetasDataTable cln = ((dtEtiquetasDataTable)(base.Clone()));
+                dtInvitacionesDataTable cln = ((dtInvitacionesDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -390,7 +456,7 @@ namespace EXPOCOMA {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new dtEtiquetasDataTable();
+                return new dtInvitacionesDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -398,6 +464,12 @@ namespace EXPOCOMA {
             internal void InitVars() {
                 this.columnC_CLIEXPO = base.Columns["C_CLIEXPO"];
                 this.columnNOM_CLIEN = base.Columns["NOM_CLIEN"];
+                this.columnNOM_TIENDA = base.Columns["NOM_TIENDA"];
+                this.columnPOBLACION = base.Columns["POBLACION"];
+                this.columnTELEFONO = base.Columns["TELEFONO"];
+                this.columnC_AGENTE = base.Columns["C_AGENTE"];
+                this.columnNOM_AGENTE = base.Columns["NOM_AGENTE"];
+                this.columnBARCODE = base.Columns["BARCODE"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -407,32 +479,44 @@ namespace EXPOCOMA {
                 base.Columns.Add(this.columnC_CLIEXPO);
                 this.columnNOM_CLIEN = new global::System.Data.DataColumn("NOM_CLIEN", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNOM_CLIEN);
+                this.columnNOM_TIENDA = new global::System.Data.DataColumn("NOM_TIENDA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNOM_TIENDA);
+                this.columnPOBLACION = new global::System.Data.DataColumn("POBLACION", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPOBLACION);
+                this.columnTELEFONO = new global::System.Data.DataColumn("TELEFONO", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTELEFONO);
+                this.columnC_AGENTE = new global::System.Data.DataColumn("C_AGENTE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnC_AGENTE);
+                this.columnNOM_AGENTE = new global::System.Data.DataColumn("NOM_AGENTE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNOM_AGENTE);
+                this.columnBARCODE = new global::System.Data.DataColumn("BARCODE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBARCODE);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRow NewdtEtiquetasRow() {
-                return ((dtEtiquetasRow)(this.NewRow()));
+            public dtInvitacionesRow NewdtInvitacionesRow() {
+                return ((dtInvitacionesRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new dtEtiquetasRow(builder);
+                return new dtInvitacionesRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(dtEtiquetasRow);
+                return typeof(dtInvitacionesRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.dtEtiquetasRowChanged != null)) {
-                    this.dtEtiquetasRowChanged(this, new dtEtiquetasRowChangeEvent(((dtEtiquetasRow)(e.Row)), e.Action));
+                if ((this.dtInvitacionesRowChanged != null)) {
+                    this.dtInvitacionesRowChanged(this, new dtInvitacionesRowChangeEvent(((dtInvitacionesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -440,8 +524,8 @@ namespace EXPOCOMA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.dtEtiquetasRowChanging != null)) {
-                    this.dtEtiquetasRowChanging(this, new dtEtiquetasRowChangeEvent(((dtEtiquetasRow)(e.Row)), e.Action));
+                if ((this.dtInvitacionesRowChanging != null)) {
+                    this.dtInvitacionesRowChanging(this, new dtInvitacionesRowChangeEvent(((dtInvitacionesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -449,8 +533,8 @@ namespace EXPOCOMA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.dtEtiquetasRowDeleted != null)) {
-                    this.dtEtiquetasRowDeleted(this, new dtEtiquetasRowChangeEvent(((dtEtiquetasRow)(e.Row)), e.Action));
+                if ((this.dtInvitacionesRowDeleted != null)) {
+                    this.dtInvitacionesRowDeleted(this, new dtInvitacionesRowChangeEvent(((dtInvitacionesRow)(e.Row)), e.Action));
                 }
             }
             
@@ -458,14 +542,14 @@ namespace EXPOCOMA {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.dtEtiquetasRowDeleting != null)) {
-                    this.dtEtiquetasRowDeleting(this, new dtEtiquetasRowChangeEvent(((dtEtiquetasRow)(e.Row)), e.Action));
+                if ((this.dtInvitacionesRowDeleting != null)) {
+                    this.dtInvitacionesRowDeleting(this, new dtInvitacionesRowChangeEvent(((dtInvitacionesRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovedtEtiquetasRow(dtEtiquetasRow row) {
+            public void RemovedtInvitacionesRow(dtInvitacionesRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -474,7 +558,7 @@ namespace EXPOCOMA {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DSReporte ds = new DSReporte();
+                DSReportes ds = new DSReportes();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -492,7 +576,7 @@ namespace EXPOCOMA {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "dtEtiquetasDataTable";
+                attribute2.FixedValue = "dtInvitacionesDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -536,15 +620,15 @@ namespace EXPOCOMA {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class dtEtiquetasRow : global::System.Data.DataRow {
+        public partial class dtInvitacionesRow : global::System.Data.DataRow {
             
-            private dtEtiquetasDataTable tabledtEtiquetas;
+            private dtInvitacionesDataTable tabledtInvitaciones;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal dtEtiquetasRow(global::System.Data.DataRowBuilder rb) : 
+            internal dtInvitacionesRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tabledtEtiquetas = ((dtEtiquetasDataTable)(this.Table));
+                this.tabledtInvitaciones = ((dtInvitacionesDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -552,14 +636,14 @@ namespace EXPOCOMA {
             public string C_CLIEXPO {
                 get {
                     try {
-                        return ((string)(this[this.tabledtEtiquetas.C_CLIEXPOColumn]));
+                        return ((string)(this[this.tabledtInvitaciones.C_CLIEXPOColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'C_CLIEXPO\' de la tabla \'dtEtiquetas\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'C_CLIEXPO\' de la tabla \'dtInvitaciones\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtEtiquetas.C_CLIEXPOColumn] = value;
+                    this[this.tabledtInvitaciones.C_CLIEXPOColumn] = value;
                 }
             }
             
@@ -568,39 +652,207 @@ namespace EXPOCOMA {
             public string NOM_CLIEN {
                 get {
                     try {
-                        return ((string)(this[this.tabledtEtiquetas.NOM_CLIENColumn]));
+                        return ((string)(this[this.tabledtInvitaciones.NOM_CLIENColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOM_CLIEN\' de la tabla \'dtEtiquetas\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOM_CLIEN\' de la tabla \'dtInvitaciones\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tabledtEtiquetas.NOM_CLIENColumn] = value;
+                    this[this.tabledtInvitaciones.NOM_CLIENColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NOM_TIENDA {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.NOM_TIENDAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOM_TIENDA\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.NOM_TIENDAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string POBLACION {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.POBLACIONColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'POBLACION\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.POBLACIONColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TELEFONO {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.TELEFONOColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TELEFONO\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.TELEFONOColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string C_AGENTE {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.C_AGENTEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'C_AGENTE\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.C_AGENTEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NOM_AGENTE {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.NOM_AGENTEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOM_AGENTE\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.NOM_AGENTEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string BARCODE {
+                get {
+                    try {
+                        return ((string)(this[this.tabledtInvitaciones.BARCODEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'BARCODE\' de la tabla \'dtInvitaciones\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tabledtInvitaciones.BARCODEColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsC_CLIEXPONull() {
-                return this.IsNull(this.tabledtEtiquetas.C_CLIEXPOColumn);
+                return this.IsNull(this.tabledtInvitaciones.C_CLIEXPOColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetC_CLIEXPONull() {
-                this[this.tabledtEtiquetas.C_CLIEXPOColumn] = global::System.Convert.DBNull;
+                this[this.tabledtInvitaciones.C_CLIEXPOColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsNOM_CLIENNull() {
-                return this.IsNull(this.tabledtEtiquetas.NOM_CLIENColumn);
+                return this.IsNull(this.tabledtInvitaciones.NOM_CLIENColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetNOM_CLIENNull() {
-                this[this.tabledtEtiquetas.NOM_CLIENColumn] = global::System.Convert.DBNull;
+                this[this.tabledtInvitaciones.NOM_CLIENColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNOM_TIENDANull() {
+                return this.IsNull(this.tabledtInvitaciones.NOM_TIENDAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNOM_TIENDANull() {
+                this[this.tabledtInvitaciones.NOM_TIENDAColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPOBLACIONNull() {
+                return this.IsNull(this.tabledtInvitaciones.POBLACIONColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPOBLACIONNull() {
+                this[this.tabledtInvitaciones.POBLACIONColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTELEFONONull() {
+                return this.IsNull(this.tabledtInvitaciones.TELEFONOColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTELEFONONull() {
+                this[this.tabledtInvitaciones.TELEFONOColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsC_AGENTENull() {
+                return this.IsNull(this.tabledtInvitaciones.C_AGENTEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetC_AGENTENull() {
+                this[this.tabledtInvitaciones.C_AGENTEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNOM_AGENTENull() {
+                return this.IsNull(this.tabledtInvitaciones.NOM_AGENTEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNOM_AGENTENull() {
+                this[this.tabledtInvitaciones.NOM_AGENTEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBARCODENull() {
+                return this.IsNull(this.tabledtInvitaciones.BARCODEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBARCODENull() {
+                this[this.tabledtInvitaciones.BARCODEColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -608,22 +860,22 @@ namespace EXPOCOMA {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class dtEtiquetasRowChangeEvent : global::System.EventArgs {
+        public class dtInvitacionesRowChangeEvent : global::System.EventArgs {
             
-            private dtEtiquetasRow eventRow;
+            private dtInvitacionesRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRowChangeEvent(dtEtiquetasRow row, global::System.Data.DataRowAction action) {
+            public dtInvitacionesRowChangeEvent(dtInvitacionesRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public dtEtiquetasRow Row {
+            public dtInvitacionesRow Row {
                 get {
                     return this.eventRow;
                 }

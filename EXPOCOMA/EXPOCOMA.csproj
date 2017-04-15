@@ -54,6 +54,9 @@
     <ApplicationIcon>comita.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BarcodeFree">
+      <HintPath>..\..\..\..\..\Downloads\BarcodeFree.dll</HintPath>
+    </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
@@ -77,13 +80,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DSReporte.cs">
-      <DependentUpon>DSReporte.xsd</DependentUpon>
+    <Compile Include="DSReportes.cs">
+      <DependentUpon>DSReportes.xsd</DependentUpon>
     </Compile>
-    <Compile Include="DSReporte.Designer.cs">
+    <Compile Include="DSReportes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DSReporte.xsd</DependentUpon>
+      <DependentUpon>DSReportes.xsd</DependentUpon>
     </Compile>
     <Compile Include="Funciones\funciones.cs" />
     <Compile Include="Funciones\funcionesdblocal.cs" />
@@ -229,16 +232,16 @@
       <DependentUpon>FrmSucursales.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="DSReporte.xsc">
-      <DependentUpon>DSReporte.xsd</DependentUpon>
+    <None Include="DSReportes.xsc">
+      <DependentUpon>DSReportes.xsd</DependentUpon>
     </None>
-    <None Include="DSReporte.xsd">
+    <None Include="DSReportes.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSReporte.Designer.cs</LastGenOutput>
+      <LastGenOutput>DSReportes.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DSReporte.xss">
-      <DependentUpon>DSReporte.xsd</DependentUpon>
+    <None Include="DSReportes.xss">
+      <DependentUpon>DSReportes.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -27,7 +27,7 @@ namespace EXPOCOMA.reportes
         private void FrmVistaPrevia_Load(object sender, EventArgs e)
         {
             _funcion.icono(this);
-            DSReporte DSReport = new DSReporte();
+            DSReportes DSReport = new DSReportes();
             ReportDocument cRep = new ReportDocument();
             cRep.Load(Application.StartupPath + "\\reportes\\"+ _crvReporte+".rpt"); //CREtiquetas.rpt"
             cRep.SetDataSource(_dtTabla);
