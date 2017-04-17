@@ -1043,6 +1043,224 @@ namespace EXPOCOMA
             //MessageBox.Show("Listo para guardae");
         }
 
+        public void guardar_datos(String[,] ___DATOS, String ___TABLA, String ___ACCION, int _IDDATO)
+        {
+            var _totalArray = ___DATOS.GetLength(0);
+            var _totalDatos = ___DATOS.GetLength(1);
+            string _sql;
+
+
+            if (___ACCION == "nuevo")
+            {
+                _sql = "INSERT INTO " + ___TABLA + "(";
+                var _countDatos = 1;
+                for (int i = 0; i < _totalArray; i++)
+                {
+                    for (int j = 0; j < _totalDatos; j++)
+                    {
+                        if (i == 0)
+                        {
+                            if (_countDatos == _totalDatos)
+                            {
+                                _sql = _sql + ___DATOS[i, j] + ") VALUES (";
+                                _countDatos = 1;
+                            }
+                            else
+                            {
+                                _sql = _sql + ___DATOS[i, j] + ", ";
+                                _countDatos++;
+                            }
+                        }
+                        else if (i == 1)
+                        {
+                            if (_countDatos == _totalDatos)
+                            {
+                                if (___DATOS[2, j] == "varchar")
+                                {
+                                    _sql = _sql + "'" + ___DATOS[i, j] + "')";
+                                }
+                                else if (___DATOS[2, j] == "int")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + ")";
+                                }
+                                else if (___DATOS[2, j] == "bit")
+                                {
+                                    var valor = 0;
+                                    if (Convert.ToBoolean(___DATOS[i, j]) == true)
+                                    {
+                                        valor = 1;
+                                    }
+                                    else
+                                    {
+                                        valor = 0;
+                                    }
+                                    _sql = _sql + valor + ")";
+                                    //_sql = _sql + Convert.ToBoolean(___DATOS[i, j]) + ")";
+                                }
+
+                                _countDatos = 1;
+                            }
+                            else
+                            {
+                                if (___DATOS[2, j] == "varchar")
+                                {
+                                    _sql = _sql + "'" + ___DATOS[i, j] + "', ";
+                                }
+                                else if (___DATOS[2, j] == "int")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + ", ";
+
+                                }
+                                else if (___DATOS[2, j] == "bit")
+                                {
+                                    var valor = 0;
+                                    if (Convert.ToBoolean(___DATOS[i, j]) == true)
+                                    {
+                                        valor = 1;
+                                    }
+                                    else
+                                    {
+                                        valor = 0;
+                                    }
+                                    _sql = _sql + valor + ", ";
+
+                                }
+
+                                _countDatos++;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (___ACCION == "modificar")
+            {
+
+
+
+
+                _sql = "UPDATE " + ___TABLA + " SET ";
+                var countDatos = 1;
+                for (int i = 0; i < _totalArray - 1; i++)
+                {
+                    for (int j = 0; j < _totalDatos; j++)
+                    {
+                        if (i == 0)
+                        {
+                            if (countDatos == _totalDatos)
+                            {
+                                if (___DATOS[2, j] == "varchar")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + "='" + ___DATOS[1, j] + "'";
+                                }
+                                else if (___DATOS[2, j] == "int")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + "=" + ___DATOS[1, j] + "";
+                                }
+                                else if (___DATOS[2, j] == "bit")
+                                {
+                                    var valor = 0;
+                                    if (Convert.ToBoolean(___DATOS[i, j]) == true)
+                                    {
+                                        valor = 1;
+                                    }
+                                    else
+                                    {
+                                        valor = 0;
+                                    }
+                                    _sql = _sql + ___DATOS[i, j] + "=" + valor + "";
+                                }
+
+                            }
+                            else
+                            {
+                                if (___DATOS[2, j] == "varchar")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + "='" + ___DATOS[1, j] + "', ";
+                                }
+                                else if (___DATOS[2, j] == "int")
+                                {
+                                    _sql = _sql + ___DATOS[i, j] + "=" + ___DATOS[1, j] + ", ";
+                                }
+                                else if (___DATOS[2, j] == "bit")
+                                {
+                                    var valor = 0;
+                                    if (Convert.ToBoolean(___DATOS[i, j]) == true)
+                                    {
+                                        valor = 1;
+                                    }
+                                    else
+                                    {
+                                        valor = 0;
+                                    }
+                                    _sql = _sql + ___DATOS[i, j] + "=" + valor + ", ";
+                                    //_sql = _sql + ___DATOS[i, j] + "=" + ___DATOS[1, j] + ", ";
+                                }
+                            }
+
+                            countDatos++;
+                        }
+
+
+                    }
+                    //countDatos = 0;
+                }
+                _sql = _sql + " WHERE id = " + _IDDATO;
+
+
+
+
+            }
+            else
+            {
+                _sql = "";
+            }
+
+
+
+
+            //MessageBox.Show(sql);
+
+            int resultado = 0;
+            if (_TIPObasedatos == "sqlserver")
+            {
+                using (SqlConnection _con = new SqlConnection(_SQLCadenaConexion))
+                {
+                    _con.Open();
+                    SqlCommand comando = new SqlCommand(_sql, _con);
+                    resultado = comando.ExecuteNonQuery();
+                    //            __dblocal.Close();
+                }
+            }
+            //else if (_TIPObasedatos == "dbcompaq")
+            //{
+            //    using (SqlCeConnection _con = CeConexion())
+            //    {
+            //        SqlCeCommand comando = new SqlCeCommand(_sql, _con);
+            //        resultado = comando.ExecuteNonQuery();
+            //        //            __dblocal.Close();
+            //    }
+            //}
+            else
+            {
+                resultado = 0;
+            }
+
+
+            if (resultado == 1)
+            {
+
+                //cargar_datos(___DGVDATOS, ___TABLA);
+                //MessageBox.Show("Se ha almacenado la información", "¡EXITO!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //reiniciar_campos(___FORMULARIO);
+                //___FORMULARIO.Close();
+            }
+            else
+            {
+                MessageBox.Show("No logro guardarse");
+            }
+            //MessageBox.Show("Listo para guardae");
+        }
+
         /// <summary>
         /// GUARDA O ACTULIZAR INFORMACION DE LA BASE DE DATOS, PENSADO PARA GUARDAR FILAS DE UN DATATABLE, FUNCIONANDO CON UN CICLO
         /// </summary>
