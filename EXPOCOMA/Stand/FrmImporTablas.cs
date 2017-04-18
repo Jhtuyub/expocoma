@@ -80,6 +80,8 @@ namespace EXPOCOMA.Stand
             dgvSucursal.Columns["usuario"].ReadOnly = true;
             dgvSucursal.Columns["usuario"].Visible = false;
             dgvSucursal.Columns["contrasena"].Visible = false;
+            dgvSucursal.Columns["ruta_baja"].Visible = false;
+            dgvSucursal.Columns["agen_baja"].Visible = false;
 
 
             dgvSucursal.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
@@ -166,6 +168,7 @@ namespace EXPOCOMA.Stand
             dgvTablas.DataSource = _dtTablas;
             dgvTablas.Columns["tablassql"].Visible = false;
             dgvTablas.Columns["campos"].Visible = false;
+            
             dgvTablas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvTablas.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;

@@ -61,6 +61,8 @@ namespace EXPOCOMA.Stand
             dgvCatEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvCatEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatEmpresa.Columns["organization_id"].HeaderText = "alm sql";
+            dgvCatEmpresa.Columns["ruta_baja"].Visible = false;
+            dgvCatEmpresa.Columns["agen_baja"].Visible = false;
 
             dgvCatEmpresa.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvCatEmpresa.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -90,7 +92,8 @@ namespace EXPOCOMA.Stand
             dgvTblEmpresa.Columns["usuario"].Visible = false;
             dgvTblEmpresa.Columns["contrasena"].Visible = false;
             dgvTblEmpresa.Columns["db"].Visible = false;
-
+            dgvTblEmpresa.Columns["ruta_baja"].Visible = false;
+            dgvTblEmpresa.Columns["agen_baja"].Visible = false;
 
             dgvTblEmpresa.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvTblEmpresa.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
