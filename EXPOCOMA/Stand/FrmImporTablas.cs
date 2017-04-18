@@ -470,7 +470,6 @@ namespace EXPOCOMA.Stand
 
         public void PasarTablas()
         {
-            
             this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled),this,false,btnImportar, "Detener");
 
             for (int i = 0; i < _dtSucursal.Rows.Count; i++)
@@ -934,6 +933,7 @@ namespace EXPOCOMA.Stand
             }
             _funcion.Cargando(this, barraProgreso, 0, 1, 1, lblMensaje, "Proceso terminado: ");
             MessageBox.Show("Proceso terminado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Invoke(new PosicionTablaDelegate(PosicionTabla), 0);
             copiarTablas = null;
             //btnImportar.Text = "Importar";
             _funcion.Cargando(this, barraProgreso, 0, 0,1, lblMensaje, "...");

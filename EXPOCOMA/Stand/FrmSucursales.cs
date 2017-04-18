@@ -199,6 +199,8 @@ namespace EXPOCOMA.Stand
                 String usuario = dgvCatEmpresa.CurrentRow.Cells["usuario"].Value.ToString();
                 String contrasena = dgvCatEmpresa.CurrentRow.Cells["contrasena"].Value.ToString();
                 String db = dgvCatEmpresa.CurrentRow.Cells["db"].Value.ToString();
+                String rutaBaja = dgvCatEmpresa.CurrentRow.Cells["ruta_baja"].Value.ToString();
+                String agenBaja = dgvCatEmpresa.CurrentRow.Cells["agen_baja"].Value.ToString();
 
                 _drtbl = _dtbl.NewRow();
                 _drtbl["id_catsucursal"] = _idDato;
@@ -211,6 +213,8 @@ namespace EXPOCOMA.Stand
                 _drtbl["usuario"] = usuario;
                 _drtbl["contrasena"] = contrasena;
                 _drtbl["db"] = db;
+                _drtbl["ruta_baja"] = rutaBaja;
+                _drtbl["agen_baja"] = agenBaja;
                 _dtbl.Rows.Add(_drtbl);
 
                
@@ -253,7 +257,8 @@ namespace EXPOCOMA.Stand
                 String usuario = dgvTblEmpresa.CurrentRow.Cells["usuario"].Value.ToString();
                 String contrasena = dgvTblEmpresa.CurrentRow.Cells["contrasena"].Value.ToString();
                 String db = dgvTblEmpresa.CurrentRow.Cells["db"].Value.ToString();
-
+                String rutaBaja = dgvTblEmpresa.CurrentRow.Cells["ruta_baja"].Value.ToString();
+                String agenBaja = dgvTblEmpresa.CurrentRow.Cells["agen_baja"].Value.ToString();
 
                 _drcat = _dtcat.NewRow();
                 _drcat["id"] = _idDato;
@@ -266,6 +271,8 @@ namespace EXPOCOMA.Stand
                 _drcat["usuario"] = usuario;
                 _drcat["contrasena"] = contrasena;
                 _drcat["db"] = db;
+                _drcat["ruta_baja"] = rutaBaja;
+                _drcat["agen_baja"] = agenBaja;
                 _dtcat.Rows.Add(_drcat);
 
                 _dtbl.Rows.RemoveAt(dgvTblEmpresa.CurrentRow.Index);
@@ -326,12 +333,20 @@ namespace EXPOCOMA.Stand
                     String usuario = _dtbl.Rows[i]["usuario"].ToString();
                     String contrasena = _dtbl.Rows[i]["contrasena"].ToString();
                     String db = _dtbl.Rows[i]["db"].ToString();
+                    String rutaBaja = _dtbl.Rows[i]["ruta_baja"].ToString();
+                    String agenBaja = _dtbl.Rows[i]["agen_baja"].ToString();
 
                     String[,] _datosSQL =
                         {
-                    {"id_catsucursal", "anfitrion","almacen", "organization_id","sucursal", "servidor","dbf","usuario","contrasena", "db"},
-                    {_idDato,anfitrion,almacen, organization,sucursal,servidor,dbf,usuario,contrasena, db},
-                    {"int","bit","varchar","varchar","varchar","varchar","varchar","varchar","varchar","varchar"}
+                    {"id_catsucursal", "anfitrion","almacen", "organization_id","sucursal",
+                            "servidor","dbf","usuario","contrasena", "db",
+                        "ruta_baja", "agen_baja"},
+                    {_idDato,anfitrion,almacen, organization,sucursal,
+                            servidor,dbf,usuario,contrasena, db,
+                        rutaBaja, agenBaja},
+                    {"int","bit","varchar","varchar","varchar",
+                            "varchar","varchar","varchar","varchar","varchar",
+                        "varchar","varchar"}
                     };
 
                     _funciones.guardar_datos(_datosSQL, "tbl_sucursal", "nuevo", 0, dgvTblEmpresa);

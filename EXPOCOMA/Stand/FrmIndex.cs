@@ -146,7 +146,9 @@ namespace EXPOCOMA.Stand
                   + "[servidor] [varchar](100) NOT NULL,"
                   + "[usuario] [varchar](100) NOT NULL,"
                   + "[contrasena] [varchar](100) NOT NULL,"
-                  + "[db] [varchar](100) NOT NULL"
+                  + "[db] [varchar](100) NOT NULL,"
+                  + "[ruta_baja] [varchar](10) NOT NULL,"
+                  + "[agen_baja] [varchar](10) NOT NULL"
                   + ") ON[PRIMARY]";
 
             String _dbfArticulo = "IF OBJECT_ID('dbf_articulo') IS NULL "
@@ -670,11 +672,21 @@ namespace EXPOCOMA.Stand
                 + "[SERFISCAL] [varchar](5) NULL"
                 + ");";
 
-
+            String _tblCtesInvitados = "IF OBJECT_ID('tbl_ctesinvitados') IS NULL "
+                + "CREATE TABLE[tbl_ctesinvitados] ("
+                + "[id][int] IDENTITY(1, 1) NOT NULL,"
+                + "[ID_SUCURSALALM][varchar](5) NOT NULL,"
+                + "[C_CLIENTE] [varchar](5) NULL,"
+                + "[C_CLIEXPO] [varchar](6) NULL,"
+                + ");";
 
             String[,] tablas = {
-                { "tbl_sucursal", "dbf_articulo", "dbf_fam_arti", "dbf_porpieza", "dbf_cliente", "dbf_prefijos", "dbf_proveedo", "dbf_statarti", "dbf_estatus", "tbl_provexpo","tbl_artiexpo", "dbf_agentes", "dbf_rutagen","dbf_rutas" },
-                {_tblSucursal, _dbfArticulo, _dbfFamArti, _dbfPorpieza, _dbfCliente,_dbfPrefijos, _dbfProveedo, _dbfStatarti, _dbfEstatus,_tblprovexpo, _tblartiexpo, _dbfAgentes, _dbfRutagen,_dbfRutas }
+                { "tbl_sucursal", "dbf_articulo", "dbf_fam_arti", "dbf_porpieza", "dbf_cliente",
+                    "dbf_prefijos", "dbf_proveedo", "dbf_statarti", "dbf_estatus", "tbl_provexpo",
+                    "tbl_artiexpo", "dbf_agentes", "dbf_rutagen","dbf_rutas","tbl_ctesinvitados" },
+                {_tblSucursal, _dbfArticulo, _dbfFamArti, _dbfPorpieza, _dbfCliente,
+                    _dbfPrefijos, _dbfProveedo, _dbfStatarti, _dbfEstatus,_tblprovexpo,
+                    _tblartiexpo, _dbfAgentes, _dbfRutagen,_dbfRutas, _tblCtesInvitados }
             };
             //MessageBox.Show(_CadenaConexion);
 

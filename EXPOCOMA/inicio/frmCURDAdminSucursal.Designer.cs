@@ -49,12 +49,16 @@
             this.txtAlmacenSql = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.lblMenAlmacenSql = new System.Windows.Forms.Label();
+            this.txtRutaBaja = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtAgenBaja = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 8);
+            this.label1.Location = new System.Drawing.Point(9, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 17);
             this.label1.TabIndex = 0;
@@ -62,7 +66,7 @@
             // 
             // txtAlmacen
             // 
-            this.txtAlmacen.Location = new System.Drawing.Point(11, 28);
+            this.txtAlmacen.Location = new System.Drawing.Point(12, 29);
             this.txtAlmacen.MaxLength = 3;
             this.txtAlmacen.Name = "txtAlmacen";
             this.txtAlmacen.Size = new System.Drawing.Size(357, 25);
@@ -73,7 +77,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 104);
+            this.label2.Location = new System.Drawing.Point(9, 105);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 17);
             this.label2.TabIndex = 5;
@@ -81,7 +85,7 @@
             // 
             // txtSucursal
             // 
-            this.txtSucursal.Location = new System.Drawing.Point(11, 124);
+            this.txtSucursal.Location = new System.Drawing.Point(12, 125);
             this.txtSucursal.Name = "txtSucursal";
             this.txtSucursal.Size = new System.Drawing.Size(357, 25);
             this.txtSucursal.TabIndex = 6;
@@ -90,98 +94,99 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 198);
+            this.label3.Location = new System.Drawing.Point(372, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 17);
-            this.label3.TabIndex = 9;
+            this.label3.TabIndex = 13;
             this.label3.Text = "Servidor sql:";
             // 
             // txtServidor
             // 
-            this.txtServidor.Location = new System.Drawing.Point(11, 218);
+            this.txtServidor.Location = new System.Drawing.Point(375, 77);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(357, 25);
-            this.txtServidor.TabIndex = 10;
+            this.txtServidor.TabIndex = 14;
             this.txtServidor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtServidor_KeyUp);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 151);
+            this.label4.Location = new System.Drawing.Point(372, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 17);
-            this.label4.TabIndex = 7;
+            this.label4.TabIndex = 11;
             this.label4.Text = "Dirección dbf:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtdbf
             // 
-            this.txtdbf.Location = new System.Drawing.Point(11, 171);
+            this.txtdbf.Location = new System.Drawing.Point(375, 29);
             this.txtdbf.Name = "txtdbf";
             this.txtdbf.Size = new System.Drawing.Size(357, 25);
-            this.txtdbf.TabIndex = 8;
+            this.txtdbf.TabIndex = 12;
             this.txtdbf.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtfacturacion_KeyUp);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 245);
+            this.label5.Location = new System.Drawing.Point(372, 105);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 17);
-            this.label5.TabIndex = 11;
+            this.label5.TabIndex = 15;
             this.label5.Text = "Usuario sql:";
             // 
             // txtUsudb
             // 
-            this.txtUsudb.Location = new System.Drawing.Point(11, 265);
+            this.txtUsudb.Location = new System.Drawing.Point(375, 125);
             this.txtUsudb.Name = "txtUsudb";
             this.txtUsudb.Size = new System.Drawing.Size(357, 25);
-            this.txtUsudb.TabIndex = 12;
+            this.txtUsudb.TabIndex = 16;
             this.txtUsudb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCopyFiles_KeyUp);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 293);
+            this.label6.Location = new System.Drawing.Point(372, 153);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(111, 17);
-            this.label6.TabIndex = 13;
+            this.label6.TabIndex = 17;
             this.label6.Text = "Contraseña sql:";
             // 
             // txtPassdb
             // 
-            this.txtPassdb.Location = new System.Drawing.Point(11, 312);
+            this.txtPassdb.Location = new System.Drawing.Point(375, 173);
             this.txtPassdb.Name = "txtPassdb";
             this.txtPassdb.PasswordChar = '*';
             this.txtPassdb.Size = new System.Drawing.Size(358, 25);
-            this.txtPassdb.TabIndex = 14;
+            this.txtPassdb.TabIndex = 18;
             this.txtPassdb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPath_KeyUp);
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(289, 410);
+            this.btnSalir.Location = new System.Drawing.Point(652, 252);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 29);
-            this.btnSalir.TabIndex = 19;
+            this.btnSalir.TabIndex = 23;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(204, 410);
+            this.btnLimpiar.Location = new System.Drawing.Point(567, 252);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(80, 29);
-            this.btnLimpiar.TabIndex = 18;
+            this.btnLimpiar.TabIndex = 22;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(118, 410);
+            this.btnGuardar.Location = new System.Drawing.Point(481, 252);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(80, 29);
-            this.btnGuardar.TabIndex = 17;
+            this.btnGuardar.TabIndex = 21;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -190,7 +195,7 @@
             // 
             this.lblMenAlmacen.AutoSize = true;
             this.lblMenAlmacen.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMenAlmacen.Location = new System.Drawing.Point(127, 7);
+            this.lblMenAlmacen.Location = new System.Drawing.Point(139, 8);
             this.lblMenAlmacen.Name = "lblMenAlmacen";
             this.lblMenAlmacen.Size = new System.Drawing.Size(125, 19);
             this.lblMenAlmacen.TabIndex = 1;
@@ -199,24 +204,24 @@
             // 
             // txtDb
             // 
-            this.txtDb.Location = new System.Drawing.Point(11, 360);
+            this.txtDb.Location = new System.Drawing.Point(375, 221);
             this.txtDb.Name = "txtDb";
             this.txtDb.Size = new System.Drawing.Size(358, 25);
-            this.txtDb.TabIndex = 16;
+            this.txtDb.TabIndex = 20;
             this.txtDb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtDb_KeyUp);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 340);
+            this.label7.Location = new System.Drawing.Point(372, 201);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 17);
-            this.label7.TabIndex = 15;
+            this.label7.TabIndex = 19;
             this.label7.Text = "Base de datos:";
             // 
             // txtAlmacenSql
             // 
-            this.txtAlmacenSql.Location = new System.Drawing.Point(11, 76);
+            this.txtAlmacenSql.Location = new System.Drawing.Point(12, 77);
             this.txtAlmacenSql.MaxLength = 3;
             this.txtAlmacenSql.Name = "txtAlmacenSql";
             this.txtAlmacenSql.Size = new System.Drawing.Size(357, 25);
@@ -227,7 +232,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 56);
+            this.label8.Location = new System.Drawing.Point(9, 57);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(158, 17);
             this.label8.TabIndex = 3;
@@ -237,18 +242,56 @@
             // 
             this.lblMenAlmacenSql.AutoSize = true;
             this.lblMenAlmacenSql.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMenAlmacenSql.Location = new System.Drawing.Point(161, 56);
+            this.lblMenAlmacenSql.Location = new System.Drawing.Point(173, 55);
             this.lblMenAlmacenSql.Name = "lblMenAlmacenSql";
             this.lblMenAlmacenSql.Size = new System.Drawing.Size(150, 19);
             this.lblMenAlmacenSql.TabIndex = 20;
             this.lblMenAlmacenSql.Tag = "mensaje";
             this.lblMenAlmacenSql.Text = "lblMenAlmacenSql";
             // 
+            // txtRutaBaja
+            // 
+            this.txtRutaBaja.Location = new System.Drawing.Point(12, 173);
+            this.txtRutaBaja.Name = "txtRutaBaja";
+            this.txtRutaBaja.Size = new System.Drawing.Size(357, 25);
+            this.txtRutaBaja.TabIndex = 8;
+            this.txtRutaBaja.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtRutaBaja_KeyUp);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 153);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(76, 17);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Ruta Baja:";
+            // 
+            // txtAgenBaja
+            // 
+            this.txtAgenBaja.Location = new System.Drawing.Point(12, 221);
+            this.txtAgenBaja.Name = "txtAgenBaja";
+            this.txtAgenBaja.Size = new System.Drawing.Size(357, 25);
+            this.txtAgenBaja.TabIndex = 10;
+            this.txtAgenBaja.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtAgenBaja_KeyUp);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(9, 201);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(90, 17);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "Agente Baja:";
+            // 
             // frmCURDAdminSucursal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 451);
+            this.ClientSize = new System.Drawing.Size(745, 294);
+            this.Controls.Add(this.txtAgenBaja);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtRutaBaja);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.lblMenAlmacenSql);
             this.Controls.Add(this.txtAlmacenSql);
             this.Controls.Add(this.label8);
@@ -311,5 +354,9 @@
         private System.Windows.Forms.TextBox txtAlmacenSql;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblMenAlmacenSql;
+        private System.Windows.Forms.TextBox txtRutaBaja;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtAgenBaja;
+        private System.Windows.Forms.Label label10;
     }
 }

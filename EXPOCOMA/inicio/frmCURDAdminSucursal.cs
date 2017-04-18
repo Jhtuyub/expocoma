@@ -48,6 +48,8 @@ namespace EXPOCOMA.inicio
                 txtUsudb.Text = _datos.Rows[0]["usuario"].ToString();
                 txtPassdb.Text = _datos.Rows[0]["contrasena"].ToString();
                 txtDb.Text = _datos.Rows[0]["db"].ToString();
+                txtRutaBaja.Text = _datos.Rows[0]["ruta_baja"].ToString();
+                txtAgenBaja.Text = _datos.Rows[0]["agen_baja"].ToString();
 
                 _validarAlmacen = _datos.Rows[0]["almacen"].ToString();
                 _validarAlmacenSql = _datos.Rows[0]["organization_id"].ToString();
@@ -79,9 +81,9 @@ namespace EXPOCOMA.inicio
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string[,] _datos = {
-                {"almacen","organization_id", "sucursal","servidor","dbf","usuario","contrasena", "db"},
-                {txtAlmacen.Text, txtAlmacenSql.Text, txtSucursal.Text, txtServidor.Text,txtdbf.Text,txtUsudb.Text,txtPassdb.Text, txtDb.Text},
-                {"varchar", "varchar", "varchar", "varchar", "varchar", "varchar", "varchar","varchar"}
+                {"almacen","organization_id", "sucursal","servidor","dbf","usuario","contrasena", "db", "ruta_baja","agen_baja"},
+                {txtAlmacen.Text, txtAlmacenSql.Text, txtSucursal.Text, txtServidor.Text,txtdbf.Text,txtUsudb.Text,txtPassdb.Text, txtDb.Text, txtRutaBaja.Text, txtAgenBaja.Text},
+                {"varchar", "varchar", "varchar", "varchar", "varchar", "varchar", "varchar","varchar", "varchar","varchar"}
             };
 
             _funcion.validar_campo(this, _datos, "cat_sucursal", ___accion, ___idDato);
@@ -243,6 +245,21 @@ namespace EXPOCOMA.inicio
         private void txtDb_KeyUp(object sender, KeyEventArgs e)
         {
             _funcion.key_campo(txtDb);
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtRutaBaja_KeyUp(object sender, KeyEventArgs e)
+        {
+            _funcion.key_campo(txtRutaBaja);
+        }
+
+        private void txtAgenBaja_KeyUp(object sender, KeyEventArgs e)
+        {
+            _funcion.key_campo(txtAgenBaja);
         }
     }
 }

@@ -39,6 +39,8 @@ namespace EXPOCOMA.inicio
             dgvEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvEmpresa.Columns["organization_id"].HeaderText = "alm sql";
+            dgvEmpresa.Columns["ruta_baja"].Visible = false;
+            dgvEmpresa.Columns["agen_baja"].Visible = false;
             //SUCURSAL
             dgvEmpresa.Columns["dbf"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvEmpresa.Columns["dbf"].HeaderText = "dir dbf";
