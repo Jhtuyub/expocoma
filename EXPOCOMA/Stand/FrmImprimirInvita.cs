@@ -74,20 +74,6 @@ namespace EXPOCOMA.Stand
             ThreadImprimir.Start();
 
 
-            
-
-
-            //FrmAgregarProveArti frmAgregarArti = new FrmAgregarProveArti();
-            //frmAgregarArti.MdiParent = this.MdiParent;
-            //frmAgregarArti._CadenaConexion = _CadenaConexion;
-            //frmAgregarArti._dtProve = _dtProve;
-            ////frmAgregarArti._dtProveedor = _dtProveedor;
-            //frmAgregarArti._dtArticulos = _dtArticulo;
-            //frmAgregarArti._CProve = dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString();
-            //frmAgregarArti._NomProve = dgvProveedor.CurrentRow.Cells["DESCRI"].Value.ToString();
-            //frmAgregarArti._NumAlmacen = cBoxSucursal.SelectedValue.ToString();
-            ////_frmSucusal.Owner = this;
-            //frmAgregarArti.Show();
 
         }
 
@@ -228,30 +214,7 @@ namespace EXPOCOMA.Stand
                                 //__funciones.validar_campo(this, _datos, "cat_expo", timMensaje, ___accion, ___idDato);
                                 _funcion.guardar_datos(_datos, "tbl_ctesinvitados", "nuevo", 0);
                             }
-                            //}
-
-
-
-                            //}
-                            //    for (int i = 0; i <= filas - 2; i++)
-                            //    {
-                            //        dsReport.Tables[0].Rows.Add
-                            //            (
-                            //            new object[]
-                            //            {
-                            //   dtDatos.Rows[i]["C_CLIENTE"].ToString(),
-                            //   dtDatos.Rows[i]["NOM_CLIEN"].ToString(),
-                            //   dtDatos.Rows[i]["NOM_TIENDA"].ToString(),
-                            //   dtDatos.Rows[i]["POBLACION"].ToString(),
-                            //   dtDatos.Rows[i]["TELEFONO"].ToString(),
-                            //   dtDatos.Rows[i]["C_AGENTE"].ToString(),
-
-                            //            }
-                            //            );
-
-
-
-
+                   
 
                         }
 

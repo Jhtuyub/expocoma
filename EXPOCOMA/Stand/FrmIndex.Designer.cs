@@ -32,11 +32,11 @@
             this.expoConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.empresasParticipantesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importacionDeTablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imprimirInvitacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proveedoresYArticulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripPBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSLMensaje = new System.Windows.Forms.ToolStripStatusLabel();
-            this.imprimirInvitacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menIndex.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +81,14 @@
             this.importacionDeTablasToolStripMenuItem.Text = "2.Importación de tablas";
             this.importacionDeTablasToolStripMenuItem.Click += new System.EventHandler(this.importacionDeTablasToolStripMenuItem_Click);
             // 
+            // imprimirInvitacionesToolStripMenuItem
+            // 
+            this.imprimirInvitacionesToolStripMenuItem.Name = "imprimirInvitacionesToolStripMenuItem";
+            this.imprimirInvitacionesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
+            this.imprimirInvitacionesToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
+            this.imprimirInvitacionesToolStripMenuItem.Text = "3.Imprimir invitaciones";
+            this.imprimirInvitacionesToolStripMenuItem.Click += new System.EventHandler(this.imprimirInvitacionesToolStripMenuItem_Click);
+            // 
             // proveedoresYArticulosToolStripMenuItem
             // 
             this.proveedoresYArticulosToolStripMenuItem.Name = "proveedoresYArticulosToolStripMenuItem";
@@ -113,18 +121,11 @@
             this.toolStripSLMensaje.Size = new System.Drawing.Size(108, 18);
             this.toolStripSLMensaje.Text = "toolStripSLMensaje";
             // 
-            // imprimirInvitacionesToolStripMenuItem
-            // 
-            this.imprimirInvitacionesToolStripMenuItem.Name = "imprimirInvitacionesToolStripMenuItem";
-            this.imprimirInvitacionesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
-            this.imprimirInvitacionesToolStripMenuItem.Size = new System.Drawing.Size(292, 22);
-            this.imprimirInvitacionesToolStripMenuItem.Text = "3.Imprimir invitaciones";
-            this.imprimirInvitacionesToolStripMenuItem.Click += new System.EventHandler(this.imprimirInvitacionesToolStripMenuItem_Click);
-            // 
             // FrmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(693, 371);
             this.Controls.Add(this.statusStrip1);

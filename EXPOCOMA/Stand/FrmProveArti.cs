@@ -461,7 +461,7 @@ namespace EXPOCOMA.Stand
             {
                 // Query the database for the row to be updated.
 
-
+                
                 //DataTable orders = _dtProveedor;
 
                 // Query the SalesOrderHeader table for orders placed 

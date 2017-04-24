@@ -42,6 +42,24 @@ namespace EXPOCOMA.Stand
         {
             //Ruta donde se encuentra nuestra imagen
             string ruta = Application.StartupPath + @"\recursos\EXPO_ COMA.JPG";
+            MdiClient ctlMDI;
+            // Loop through all of the form's controls looking
+            // for the control of type MdiClient.
+            foreach (Control ctl in this.Controls)
+            {
+                try
+                {
+                    // Attempt to cast the control to type MdiClient.
+                    ctlMDI = (MdiClient)ctl;
+
+                    // Set the BackColor of the MdiClient control.
+                    ctlMDI.BackColor = this.BackColor;
+                }
+                catch (InvalidCastException exc)
+                {
+                    // Catch and ignore the error if casting failed.
+                }
+            }
 
             //Comprobamos que la ruta exista
             if (File.Exists(ruta))
@@ -51,7 +69,8 @@ namespace EXPOCOMA.Stand
 
                 //Se la colocamos de fondo al formulario
                 this.BackgroundImage = bmp;
-                this.BackgroundImageLayout = ImageLayout.Center;
+                //this.BackgroundImageLayout = ImageLayout.Center;
+                this.BackgroundImageLayout = ImageLayout.Zoom;
             }
         }
 
