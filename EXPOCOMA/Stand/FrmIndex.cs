@@ -809,5 +809,13 @@ namespace EXPOCOMA.Stand
             //_frmSucusal.Owner = this;
             _frmImpInv.Show();
         }
+
+        private void importarMargenesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmImpMargenes _frmImpMarge = new FrmImpMargenes();
+            _frmImpMarge.MdiParent = this;
+            _frmImpMarge._CadenaConexion = _CadenaConexion;
+            _frmImpMarge.Show();
+        }
     }
 }

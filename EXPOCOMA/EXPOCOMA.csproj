@@ -145,6 +145,12 @@
     <Compile Include="Stand\FrmAgregarProveArti.Designer.cs">
       <DependentUpon>FrmAgregarProveArti.cs</DependentUpon>
     </Compile>
+    <Compile Include="Stand\FrmImpMargenes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stand\FrmImpMargenes.Designer.cs">
+      <DependentUpon>FrmImpMargenes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Stand\FrmImporTablas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Stand\FrmAgregarProveArti.resx">
       <DependentUpon>FrmAgregarProveArti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stand\FrmImpMargenes.resx">
+      <DependentUpon>FrmImpMargenes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Stand\FrmImporTablas.resx">
       <DependentUpon>FrmImporTablas.cs</DependentUpon>

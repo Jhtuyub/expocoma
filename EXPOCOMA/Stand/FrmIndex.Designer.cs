@@ -37,6 +37,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripPBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSLMensaje = new System.Windows.Forms.ToolStripStatusLabel();
+            this.importarMargenesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menIndex.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +60,8 @@
             this.empresasParticipantesToolStripMenuItem,
             this.importacionDeTablasToolStripMenuItem,
             this.imprimirInvitacionesToolStripMenuItem,
-            this.proveedoresYArticulosToolStripMenuItem});
+            this.proveedoresYArticulosToolStripMenuItem,
+            this.importarMargenesToolStripMenuItem});
             this.expoConfigToolStripMenuItem.Name = "expoConfigToolStripMenuItem";
             this.expoConfigToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
             this.expoConfigToolStripMenuItem.Size = new System.Drawing.Size(96, 21);
@@ -121,6 +123,14 @@
             this.toolStripSLMensaje.Size = new System.Drawing.Size(108, 18);
             this.toolStripSLMensaje.Text = "toolStripSLMensaje";
             // 
+            // importarMargenesToolStripMenuItem
+            // 
+            this.importarMargenesToolStripMenuItem.Name = "importarMargenesToolStripMenuItem";
+            this.importarMargenesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
+            this.importarMargenesToolStripMenuItem.Size = new System.Drawing.Size(340, 22);
+            this.importarMargenesToolStripMenuItem.Text = "5.Importar Margenes Proveedores";
+            this.importarMargenesToolStripMenuItem.Click += new System.EventHandler(this.importarMargenesToolStripMenuItem_Click);
+            // 
             // FrmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -160,5 +170,6 @@
         private System.Windows.Forms.ToolStripMenuItem importacionDeTablasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem proveedoresYArticulosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imprimirInvitacionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importarMargenesToolStripMenuItem;
     }
 }
