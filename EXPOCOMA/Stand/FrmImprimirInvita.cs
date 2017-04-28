@@ -1,5 +1,5 @@
 ﻿using BarcodeFree;
-using CrystalDecisions.CrystalReports.Engine;
+
 using EXPOCOMA.reportes;
 using OfficeOpenXml;
 using System;
@@ -249,7 +249,7 @@ namespace EXPOCOMA.Stand
                 FrmVistaPrevia frmVistaPre = new FrmVistaPrevia();
                 frmVistaPre.MdiParent = this.MdiParent;
                 frmVistaPre._frmParent = this;
-                frmVistaPre._crvReporte = "CREtiquetas";
+                frmVistaPre._crvReporte = "rvInvitacion";
                 frmVistaPre._dtTabla = DSReport.Tables["dtInvitaciones"];
                 frmVistaPre.Show();
                 this.Enabled = false;
