@@ -28,37 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.crvVistaPrevia = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.rvReporte = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
             // 
-            // crvVistaPrevia
+            // rvReporte
             // 
-            this.crvVistaPrevia.ActiveViewIndex = -1;
-            this.crvVistaPrevia.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.crvVistaPrevia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.crvVistaPrevia.Cursor = System.Windows.Forms.Cursors.Default;
-            this.crvVistaPrevia.Location = new System.Drawing.Point(0, 0);
-            this.crvVistaPrevia.Name = "crvVistaPrevia";
-            this.crvVistaPrevia.ShowCloseButton = false;
-            this.crvVistaPrevia.ShowCopyButton = false;
-            this.crvVistaPrevia.ShowGroupTreeButton = false;
-            this.crvVistaPrevia.ShowLogo = false;
-            this.crvVistaPrevia.ShowParameterPanelButton = false;
-            this.crvVistaPrevia.ShowRefreshButton = false;
-            this.crvVistaPrevia.Size = new System.Drawing.Size(725, 441);
-            this.crvVistaPrevia.TabIndex = 0;
-            this.crvVistaPrevia.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
+            this.rvReporte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rvReporte.IsDocumentMapWidthFixed = true;
+            this.rvReporte.Location = new System.Drawing.Point(0, 0);
+            this.rvReporte.Name = "rvReporte";
+            this.rvReporte.ShowBackButton = false;
+            this.rvReporte.ShowRefreshButton = false;
+            this.rvReporte.ShowStopButton = false;
+            this.rvReporte.Size = new System.Drawing.Size(783, 441);
+            this.rvReporte.TabIndex = 0;
             // 
             // FrmVistaPrevia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(725, 441);
-            this.Controls.Add(this.crvVistaPrevia);
+            this.ClientSize = new System.Drawing.Size(783, 441);
+            this.Controls.Add(this.rvReporte);
             this.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmVistaPrevia";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vista Previa - FrmVistaPrevia";
@@ -70,6 +62,6 @@
 
         #endregion
 
-        private CrystalDecisions.Windows.Forms.CrystalReportViewer crvVistaPrevia;
+        private Microsoft.Reporting.WinForms.ReportViewer rvReporte;
     }
 }
