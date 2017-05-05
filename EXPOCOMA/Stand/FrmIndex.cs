@@ -805,6 +805,7 @@ namespace EXPOCOMA.Stand
         {
             FrmImprimirInvita _frmImpInv = new FrmImprimirInvita();
             _frmImpInv.MdiParent = this;
+            _frmImpInv.nomExpo = nomExpo;
             _frmImpInv._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmImpInv.Show();
