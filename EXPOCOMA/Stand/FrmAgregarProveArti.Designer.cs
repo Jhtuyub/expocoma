@@ -106,20 +106,20 @@
             this.cboxBuscarCampo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cboxBuscarCampo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxBuscarCampo.FormattingEnabled = true;
-            this.cboxBuscarCampo.Location = new System.Drawing.Point(536, 77);
+            this.cboxBuscarCampo.Location = new System.Drawing.Point(12, 77);
             this.cboxBuscarCampo.Name = "cboxBuscarCampo";
             this.cboxBuscarCampo.Size = new System.Drawing.Size(206, 25);
-            this.cboxBuscarCampo.TabIndex = 3;
+            this.cboxBuscarCampo.TabIndex = 2;
             this.cboxBuscarCampo.SelectedIndexChanged += new System.EventHandler(this.cboxBuscarCampo_SelectedIndexChanged);
             // 
             // txtBuscar
             // 
             this.txtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBuscar.Location = new System.Drawing.Point(12, 77);
+            this.txtBuscar.Location = new System.Drawing.Point(224, 77);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(518, 25);
-            this.txtBuscar.TabIndex = 2;
+            this.txtBuscar.TabIndex = 3;
             this.txtBuscar.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtBuscar_KeyUp);
             // 
             // label1
