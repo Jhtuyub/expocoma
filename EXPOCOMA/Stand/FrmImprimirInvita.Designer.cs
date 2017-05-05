@@ -52,6 +52,7 @@
             this.txtClvClientes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtClvClientes.Size = new System.Drawing.Size(163, 259);
             this.txtClvClientes.TabIndex = 3;
+            this.txtClvClientes.Click += new System.EventHandler(this.txtClvClientes_Click);
             this.txtClvClientes.Enter += new System.EventHandler(this.txtClvClientes_Enter);
             // 
             // label1
