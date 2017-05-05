@@ -17,6 +17,7 @@ namespace EXPOCOMA.Stand
 {
     public partial class FrmImprimirInvita : Form
     {
+        public String nomExpo;
         public String _CadenaConexion;
         funciones _funcion = new funciones();
         //internal static Form _frmParent;
@@ -68,10 +69,13 @@ namespace EXPOCOMA.Stand
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-
-            ThreadImprimir = new Thread(Imprimir);
-            ThreadImprimir.IsBackground = true;
-            ThreadImprimir.Start();
+            if (!(String.IsNullOrWhiteSpace(txtClvClientes.Text)))
+            {
+                ThreadImprimir = new Thread(Imprimir);
+                ThreadImprimir.IsBackground = true;
+                ThreadImprimir.Start();
+            }
+            
 
 
 
@@ -270,6 +274,9 @@ namespace EXPOCOMA.Stand
             txtClvClientes.Text = "";
             txtNoImpre.Text = "";
             txtCliRutBaja.Text = "";
+            _dtCliInvitaciones.Clear();
+            _dtClientes.Clear();
+            _dtCliBaja.Clear();
         }
 
         private void btnGenerarxls_Click(object sender, EventArgs e)
@@ -278,45 +285,74 @@ namespace EXPOCOMA.Stand
             {
                 try
                 {
-                    SaveFileDialog selectCarpeta = new SaveFileDialog();
-                    selectCarpeta.FileName = "Clientes_ruta_baja";
-                    selectCarpeta.Filter = "xls|*.xls";
-                    selectCarpeta.Title = "Guardar clientes ruta de baja";
-                    if (selectCarpeta.ShowDialog() == DialogResult.OK)
+
+                    String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo+"\\";
+                    String Archivo = "TMPbajas_clientes_"+nomExpo+".xls";
+                    String ArcExcel = carpetaLocal + Archivo;
+                    if (!Directory.Exists(carpetaLocal))
                     {
-                        //textBox1.Text = selectCarpeta.FileName;
-                        File.Delete(selectCarpeta.FileName);
-                        string rutaArchivo = selectCarpeta.FileName;
-                        String[] col = { "A", "B", "C", "D", "E" };
-                        int row;
-                        using (ExcelPackage package = new ExcelPackage(new FileInfo(rutaArchivo)))
-                        {
-                            var worksheet = package.Workbook.Worksheets.Add("Contenido");
-                            worksheet.Cells["A1"].Value = "C_CLIENTE";
-                            worksheet.Cells["B1"].Value = "NOMBRE";
-                            worksheet.Cells["C1"].Value = "C_AGENTE";
-                            worksheet.Cells["D1"].Value = "NOMBRE AGENTE";
-                            worksheet.Cells["E1"].Value = "C_RUTA";
+                        Directory.CreateDirectory(carpetaLocal);
+                    }
+
+                    if (!Directory.Exists(ArcExcel))
+                    {
+                        File.Delete(ArcExcel);
+                    }
+
+                    //textBox1.Text = selectCarpeta.FileName;
+                    //File.Delete(selectCarpeta.FileName);
+                    //string rutaArchivo = selectCarpeta.FileName;
+                    //String[] col = { "A", "B", "C", "D", "E" };
+                    //int row;
+                    using (ExcelPackage package = new ExcelPackage(new FileInfo(ArcExcel)))
+                    {
+                        //GUARDA EXCEL CON LOS DATOS DE UN DATATABLE
+                        var worksheet = package.Workbook.Worksheets.Add("Hoja 1");
+                        worksheet.Cells["A1"].LoadFromDataTable(_dtCliBaja, true);
+                        package.Save();
+                        System.Diagnostics.Process.Start(ArcExcel);
+
+                        //GUARDAR EXCEL SELECCIONANDO UNA RUTA
+                        //SaveFileDialog selectCarpeta = new SaveFileDialog();
+                        //selectCarpeta.FileName = "Clientes_ruta_baja";
+                        //selectCarpeta.Filter = "xls|*.xls";
+                        //selectCarpeta.Title = "Guardar clientes ruta de baja";
+                        //if (selectCarpeta.ShowDialog() == DialogResult.OK)
+                        //{
+                        //    //textBox1.Text = selectCarpeta.FileName;
+                        //    File.Delete(selectCarpeta.FileName);
+                        //    string rutaArchivo = selectCarpeta.FileName;
+                        //    String[] col = { "A", "B", "C", "D", "E" };
+                        //    int row;
+                        //    using (ExcelPackage package = new ExcelPackage(new FileInfo(rutaArchivo)))
+                        //    {
+                        //        var worksheet = package.Workbook.Worksheets.Add("Contenido");
+                        //        worksheet.Cells["A1"].Value = "C_CLIENTE";
+                        //        worksheet.Cells["B1"].Value = "NOMBRE";
+                        //        worksheet.Cells["C1"].Value = "C_AGENTE";
+                        //        worksheet.Cells["D1"].Value = "NOMBRE AGENTE";
+                        //        worksheet.Cells["E1"].Value = "C_RUTA";
 
 
 
-                            for (int ii = 0; ii < _dtCliBaja.Rows.Count; ii++)
-                            {
-                                row = 0;
-                                for (int jj = 0; jj < _dtCliBaja.Columns.Count; jj++)
-                                {
-                                    row = ii + 2;
-                                    //MessageBox.Show(dtDatos.Rows[i][j].ToString());
-                                    worksheet.Cells[col[jj].ToString() + row].Value = _dtCliBaja.Rows[ii][jj].ToString();
-                                    //texto += dtDatos.Rows[i][j].ToString() + "\t";
-                                }
-                                //worksheet.Cells["A"+i].Value = dtDatos.Rows[i][j].ToString()
-                            }
+                        //        for (int ii = 0; ii < _dtCliBaja.Rows.Count; ii++)
+                        //        {
+                        //            row = 0;
+                        //            for (int jj = 0; jj < _dtCliBaja.Columns.Count; jj++)
+                        //            {
+                        //                row = ii + 2;
+                        //                //MessageBox.Show(dtDatos.Rows[i][j].ToString());
+                        //                worksheet.Cells[col[jj].ToString() + row].Value = _dtCliBaja.Rows[ii][jj].ToString();
+                        //                //texto += dtDatos.Rows[i][j].ToString() + "\t";
+                        //            }
+                        //            //worksheet.Cells["A"+i].Value = dtDatos.Rows[i][j].ToString()
+                        //        }
 
 
-                            package.Save();
-                        }
+                        //        package.Save();
+                        //    }
 
+                        //}
                     }
                 }
                 catch (Exception ee)
@@ -332,6 +368,11 @@ namespace EXPOCOMA.Stand
 
 
         private void txtClvClientes_Enter(object sender, EventArgs e)
+        {
+            txtClvClientes.SelectAll();
+        }
+
+        private void txtClvClientes_Click(object sender, EventArgs e)
         {
             txtClvClientes.SelectAll();
         }
