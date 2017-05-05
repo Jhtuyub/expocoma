@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -101,8 +101,8 @@
             this.ToolStripMenuItemConfiguracion});
             this.ToolStripMenuItemArchivo.Name = "ToolStripMenuItemArchivo";
             this.ToolStripMenuItemArchivo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
-            this.ToolStripMenuItemArchivo.Size = new System.Drawing.Size(68, 21);
-            this.ToolStripMenuItemArchivo.Text = "Archivo";
+            this.ToolStripMenuItemArchivo.Size = new System.Drawing.Size(94, 21);
+            this.ToolStripMenuItemArchivo.Text = "Administrar";
             // 
             // ToolStripMenuItemAdminExpo
             // 
@@ -158,8 +158,8 @@
             this.dgvExpos.Name = "dgvExpos";
             this.dgvExpos.ReadOnly = true;
             this.dgvExpos.RowHeadersWidth = 4;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvExpos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpos.Size = new System.Drawing.Size(505, 195);
             this.dgvExpos.TabIndex = 7;
