@@ -219,6 +219,9 @@
     <EmbeddedResource Include="reportes\FrmVistaPrevia.resx">
       <DependentUpon>FrmVistaPrevia.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="reportes\rvInvitacion.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Stand\FrmAgregarProveArti.resx">
       <DependentUpon>FrmAgregarProveArti.cs</DependentUpon>
     </EmbeddedResource>
