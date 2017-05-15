@@ -1083,7 +1083,6 @@ namespace EXPOCOMA.Funciones
                 if (c is TextBox)
                 {
                     c.Enabled = _Enabled;
-
                 }
                 else if (c is Button)
                 {
@@ -1092,6 +1091,22 @@ namespace EXPOCOMA.Funciones
                 else if (c is DataGridView)
                 {
                     c.Enabled = _Enabled;
+                }
+                else if (c is CheckBox)
+                {
+                    c.Enabled = _Enabled;
+                }
+                else if (c is TabControl)
+                {
+                    c.Enabled = _Enabled;
+                }
+                else if (c is ComboBox)
+                {
+                    c.Enabled = _Enabled;
+                }
+                else if (c is PictureBox)
+                {
+                    c.Visible = !_Enabled;
                 }
 
             }
@@ -1117,7 +1132,27 @@ namespace EXPOCOMA.Funciones
             }
         }
 
+        public void PicCargando(PictureBox picControl)
+        {
+            string ruta = Application.StartupPath + @"\recursos\loader.gif";
 
+            //Comprobamos si existe
+            if (File.Exists(ruta))
+            {
+
+                picControl.Image = Image.FromFile(ruta);
+                ////Limpiamos la imagen actual
+                //_FORM.BackgroundImage = null;
+
+                ////La cargamos de nuevo
+                ////Bitmap bmp = new Bitmap(ruta);
+                //Icon ico = new Icon(ruta);
+
+                ////Y se la asignamos de nuevo al form
+                //_FORM.Icon = ico;
+            }
+
+        }
 
     }
 }

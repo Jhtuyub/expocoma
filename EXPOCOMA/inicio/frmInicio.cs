@@ -19,13 +19,15 @@ namespace EXPOCOMA.inicio
     {
 
         funcionesdblocal _funciones = new funcionesdblocal();
+        private Thread CargarInfo;
         private Thread currentThread;
         delegate void RefreshProgressDelegate(decimal percent);
         delegate void ControlesDelegate(Boolean valor);
 
         delegate void AbrirIndexDelegate();
 
-
+        private Int32 totalArchi = 0;
+        private Int32 TotalDll = 0;
 
         public frmInicio()
         {
@@ -47,23 +49,103 @@ namespace EXPOCOMA.inicio
 
         private void frmInicio_Load(object sender, EventArgs e)
         {
+            //this.Enabled = false;
+            menInicio.Enabled = false;
+            CargarInfo = new Thread(CargarInformacion);
+            CargarInfo.IsBackground = true;
+            CargarInfo.Start();
 
+
+            //_funciones.PicCargando(picbCargando);
             _funciones.icono(this);
 
 
 
 
-            stripSLEstatus.Text = "";
-            //llenar_list(lbExpo);
-            _funciones.cargar_datos(dgvExpos, "cat_expo");
-            //___DGVDATOS.DataSource = dt;
-            dgvExpos.Columns["id"].Visible = false;
-            dgvExpos.Columns["db"].Visible = false;
-
-            dgvExpos.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
-            dgvExpos.AlternatingRowsDefaultCellStyle.BackColor =Properties.Settings.Default.filaAltern;
+           
 
         }
+
+
+        void CargarInformacion()
+        {
+
+            _funciones.DesabilitarControles(this, false);
+            stripSLEstatus.Text = "Analizando";
+            Thread.Sleep(500);
+
+            String[] Archi = {
+                "sqlceca40.dll", "sqlcecompact40.dll","sqlceer40EN.dll","sqlceer40ES.dll", "sqlceme40.dll", "sqlceoledb40.dll","sqlceqp40.dll","sqlcese40.dll", "System.Data.SqlServerCe.dll", "dbexpo.sdf",
+                "Microsoft.SqlServer.Types.dll", "Microsoft.ReportViewer.Common.dll","Microsoft.ReportViewer.ProcessingObjectModel.DLL","Microsoft.ReportViewer.WinForms.DLL",
+                "EPPlus.dll","BarcodeFree.dll","zh-Hant\\Microsoft.SqlServer.Types.resources.dll","zh-Hans\\Microsoft.SqlServer.Types.resources.dll","ru\\Microsoft.SqlServer.Types.resources.dll",
+                "pt\\Microsoft.SqlServer.Types.resources.dll","ko\\Microsoft.SqlServer.Types.resources.dll","ja\\Microsoft.SqlServer.Types.resources.dll","it\\Microsoft.SqlServer.Types.resources.dll","fr\\Microsoft.SqlServer.Types.resources.dll",
+                "ES\\Microsoft.SqlServer.Types.resources.dll","ES\\System.Data.SqlServerCe.resources.dll","de\\Microsoft.SqlServer.Types.resources.dll","recursos\\comita.ico","recursos\\EXPO_ COMA.JPG",
+                "recursos\\loader.gif"
+            };
+            TotalDll = Archi.Count();
+
+            for (int i = 0; i < TotalDll; i++)
+            {
+                _funciones.Cargando(this, stripPBEstatus, 10, i, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
+                if (!(File.Exists(Archi[i].ToString())))
+                {
+                    
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show("No encontre el archivo " + Archi[i].ToString(), "¡Upssss!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        this.Close();
+                    });
+
+                    break;
+
+                }
+                else
+                {
+
+                    totalArchi++;
+
+                }
+                _funciones.Cargando(this, stripPBEstatus, 10, i + 1, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
+            }
+
+            Thread.Sleep(500);
+            stripSLEstatus.Text = "Cargando Datos";
+
+            this.Invoke((MethodInvoker)delegate
+            {
+
+                //stripSLEstatus.Text = "";
+                //llenar_list(lbExpo);
+                _funciones.cargar_datos(dgvExpos, "cat_expo");
+                //___DGVDATOS.DataSource = dt;
+                dgvExpos.Columns["id"].Visible = false;
+                dgvExpos.Columns["db"].Visible = false;
+
+                dgvExpos.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
+                dgvExpos.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
+
+            });
+
+            Thread.Sleep(1000);
+            //stripSLEstatus.Text = "Listo";
+            _funciones.Cargando(this, stripPBEstatus, 0, 0 , 1, stripSLEstatus, "");
+            _funciones.DesabilitarControles(this, true);
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                menInicio.Enabled = true;
+            });
+                
+
+
+            CargarInfo =null;
+            GC.Collect();
+
+
+
+            //_funcion.Cargando(this, pbCargando, 0, 1, 3, lblCargando, "Preparando dbf ");
+        }
+
 
         private void ToolStripMenuItemAdminExpo_Click(object sender, EventArgs e)
         {
@@ -199,9 +281,11 @@ namespace EXPOCOMA.inicio
                     //}
                     //MessageBox.Show("Se conecto: " +_con);
                 }
-                currentThread = null;
+
+            _funciones.DesabilitarControles(this, true);
+            currentThread = null;
                 //this.Invoke(new ControlesDelegate(Controles), true);
-                _funciones.DesabilitarControles(this, true);
+                
            
 }
 
