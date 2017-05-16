@@ -12,6 +12,7 @@ using System.Threading;
 using EXPOCOMA.Stand;
 using EXPOCOMA.Funciones;
 using System.IO;
+using EXPOCOMA.login;
 
 namespace EXPOCOMA.inicio
 {
@@ -49,6 +50,10 @@ namespace EXPOCOMA.inicio
 
         private void frmInicio_Load(object sender, EventArgs e)
         {
+
+            FrmLogin _frmLogin = new FrmLogin();
+            _frmLogin.ShowDialog();
+
             //this.Enabled = false;
             menInicio.Enabled = false;
             CargarInfo = new Thread(CargarInformacion);
@@ -86,7 +91,7 @@ namespace EXPOCOMA.inicio
 
             for (int i = 0; i < TotalDll; i++)
             {
-                _funciones.Cargando(this, stripPBEstatus, 10, i, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
+                _funciones.Cargando(this, stripPBEstatus, 0, i, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
                 if (!(File.Exists(Archi[i].ToString())))
                 {
                     
@@ -105,7 +110,7 @@ namespace EXPOCOMA.inicio
                     totalArchi++;
 
                 }
-                _funciones.Cargando(this, stripPBEstatus, 10, i + 1, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
+                _funciones.Cargando(this, stripPBEstatus, 0, i + 1, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
             }
 
             Thread.Sleep(500);
