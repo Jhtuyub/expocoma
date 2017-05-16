@@ -30,6 +30,8 @@ namespace EXPOCOMA.inicio
         private Int32 totalArchi = 0;
         private Int32 TotalDll = 0;
 
+        //public Boolean _respuestaLogin =false;
+
         public frmInicio()
         {
             //_funciones._TIPObasedatos = "dbcompaq";
@@ -50,15 +52,26 @@ namespace EXPOCOMA.inicio
 
         private void frmInicio_Load(object sender, EventArgs e)
         {
-
+            //Boolean _respuestaLogin = false;
             FrmLogin _frmLogin = new FrmLogin();
+            _frmLogin._ejecutando= true;
             _frmLogin.ShowDialog();
+            var _respuestaLogin = _frmLogin._respuestaLogin;
 
-            //this.Enabled = false;
-            menInicio.Enabled = false;
-            CargarInfo = new Thread(CargarInformacion);
-            CargarInfo.IsBackground = true;
-            CargarInfo.Start();
+            if (_respuestaLogin)
+            {
+                //this.Enabled = false;
+                menInicio.Enabled = false;
+                CargarInfo = new Thread(CargarInformacion);
+                CargarInfo.IsBackground = true;
+                CargarInfo.Start();
+            }
+            else
+            {
+                this.Close();
+            }
+
+            
 
 
             //_funciones.PicCargando(picbCargando);
@@ -76,45 +89,7 @@ namespace EXPOCOMA.inicio
         {
 
             _funciones.DesabilitarControles(this, false);
-            stripSLEstatus.Text = "Analizando";
             Thread.Sleep(500);
-
-            String[] Archi = {
-                "sqlceca40.dll", "sqlcecompact40.dll","sqlceer40EN.dll","sqlceer40ES.dll", "sqlceme40.dll", "sqlceoledb40.dll","sqlceqp40.dll","sqlcese40.dll", "System.Data.SqlServerCe.dll", "dbexpo.sdf",
-                "Microsoft.SqlServer.Types.dll", "Microsoft.ReportViewer.Common.dll","Microsoft.ReportViewer.ProcessingObjectModel.DLL","Microsoft.ReportViewer.WinForms.DLL",
-                "EPPlus.dll","BarcodeFree.dll","zh-Hant\\Microsoft.SqlServer.Types.resources.dll","zh-Hans\\Microsoft.SqlServer.Types.resources.dll","ru\\Microsoft.SqlServer.Types.resources.dll",
-                "pt\\Microsoft.SqlServer.Types.resources.dll","ko\\Microsoft.SqlServer.Types.resources.dll","ja\\Microsoft.SqlServer.Types.resources.dll","it\\Microsoft.SqlServer.Types.resources.dll","fr\\Microsoft.SqlServer.Types.resources.dll",
-                "ES\\Microsoft.SqlServer.Types.resources.dll","ES\\System.Data.SqlServerCe.resources.dll","de\\Microsoft.SqlServer.Types.resources.dll","recursos\\comita.ico","recursos\\EXPO_ COMA.JPG",
-                "recursos\\loader.gif"
-            };
-            TotalDll = Archi.Count();
-
-            for (int i = 0; i < TotalDll; i++)
-            {
-                _funciones.Cargando(this, stripPBEstatus, 0, i, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
-                if (!(File.Exists(Archi[i].ToString())))
-                {
-                    
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        MessageBox.Show("No encontre el archivo " + Archi[i].ToString(), "¡Upssss!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        this.Close();
-                    });
-
-                    break;
-
-                }
-                else
-                {
-
-                    totalArchi++;
-
-                }
-                _funciones.Cargando(this, stripPBEstatus, 0, i + 1, TotalDll, stripSLEstatus, "" + Archi[i].ToString());
-            }
-
-            Thread.Sleep(500);
-            stripSLEstatus.Text = "Cargando Datos";
 
             this.Invoke((MethodInvoker)delegate
             {

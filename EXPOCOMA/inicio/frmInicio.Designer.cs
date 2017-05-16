@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -158,8 +158,8 @@
             this.dgvExpos.Name = "dgvExpos";
             this.dgvExpos.ReadOnly = true;
             this.dgvExpos.RowHeadersWidth = 4;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            this.dgvExpos.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvExpos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpos.Size = new System.Drawing.Size(505, 195);
             this.dgvExpos.TabIndex = 7;
@@ -192,8 +192,8 @@
             // stripSLEstatus
             // 
             this.stripSLEstatus.Name = "stripSLEstatus";
-            this.stripSLEstatus.Size = new System.Drawing.Size(88, 18);
-            this.stripSLEstatus.Text = "stripSLEstatus";
+            this.stripSLEstatus.Size = new System.Drawing.Size(16, 18);
+            this.stripSLEstatus.Text = "...";
             // 
             // frmInicio
             // 
