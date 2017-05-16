@@ -136,6 +136,12 @@
     <Compile Include="inicio\frmSistema.Designer.cs">
       <DependentUpon>frmSistema.cs</DependentUpon>
     </Compile>
+    <Compile Include="login\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="login\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="modelo\dbconexion.cs" />
     <Compile Include="modelo\SQL2014.cs" />
     <Compile Include="Program.cs" />
@@ -229,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="inicio\frmSistema.resx">
       <DependentUpon>frmSistema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="login\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
