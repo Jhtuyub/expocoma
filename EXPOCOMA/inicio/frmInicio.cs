@@ -77,9 +77,7 @@ namespace EXPOCOMA.inicio
             //_funciones.PicCargando(picbCargando);
             _funciones.icono(this);
 
-
-
-
+            
            
 
         }
@@ -93,26 +91,25 @@ namespace EXPOCOMA.inicio
 
             this.Invoke((MethodInvoker)delegate
             {
-
                 //stripSLEstatus.Text = "";
                 //llenar_list(lbExpo);
                 _funciones.cargar_datos(dgvExpos, "cat_expo");
-                //___DGVDATOS.DataSource = dt;
-                dgvExpos.Columns["id"].Visible = false;
-                dgvExpos.Columns["db"].Visible = false;
-
-                dgvExpos.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
-                dgvExpos.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
-
+                //___DGVDATOS.DataSource = dt;   
             });
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
             //stripSLEstatus.Text = "Listo";
             _funciones.Cargando(this, stripPBEstatus, 0, 0 , 1, stripSLEstatus, "");
             _funciones.DesabilitarControles(this, true);
 
             this.Invoke((MethodInvoker)delegate
             {
+                dgvExpos.Columns["id"].Visible = false;
+                dgvExpos.Columns["db"].Visible = false;
+
+                dgvExpos.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
+                dgvExpos.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
+
                 menInicio.Enabled = true;
             });
                 

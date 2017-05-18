@@ -192,6 +192,7 @@
             // stripSLEstatus
             // 
             this.stripSLEstatus.Name = "stripSLEstatus";
+            this.stripSLEstatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.stripSLEstatus.Size = new System.Drawing.Size(16, 18);
             this.stripSLEstatus.Text = "...";
             // 
