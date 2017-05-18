@@ -20,9 +20,13 @@ namespace EXPOCOMA.login
         public Boolean _ejecutando; //true = EJECUTANDO EL SISTEMA. false = SISTEMA EN EJECUCIÓN.
       
         private Thread CargarInfo;
+        private Thread ThreadIniciarSesion;
+
         private Int32 totalArchi = 0;
         private Int32 TotalDll = 0;
+
         public Boolean _respuestaLogin = false;
+        
         public FrmLogin()
         {
             InitializeComponent();
@@ -157,6 +161,18 @@ namespace EXPOCOMA.login
 
         private void btnIniciar_Click(object sender, EventArgs e)
         {
+
+            ThreadIniciarSesion = new Thread(IniciarSesion);
+            ThreadIniciarSesion.IsBackground = true;
+            ThreadIniciarSesion.Start();
+
+            
+        }
+
+        public void IniciarSesion()
+        {
+            _funciones.DesabilitarControles(this, false);
+            _funciones.Cargando(this, stripPBEstatus, 5, 1, 2, stripSLEstatus, "Validando...");
             DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://servdc2", txtUsuario.Text, txtPass.Text);
             DirectorySearcher searcher = new DirectorySearcher(directoryEntry)
             {
@@ -171,17 +187,27 @@ namespace EXPOCOMA.login
             {
                 result = searcher.FindOne();
                 _respuestaLogin = true;
+            this.Invoke((MethodInvoker)delegate
+            {
+                _funciones.Cargando(this, stripPBEstatus, 5, 2, 2, stripSLEstatus, "Bienvenido");
+                //_funciones.DesabilitarControles(this, true);
                 this.Close();
-            }
+            });
+
+        }
             catch (Exception ee)
             {
                 //stripSLEstatus.Text = ee.Message;
-                stripSLEstatus.Text = "Usuario o contraseña incorrecta";
-
-                //MessageBox.Show(ee.Message);
+                //stripSLEstatus.Text = "Usuario o contraseña incorrecta";
+                //_funciones.Cargando(this, stripPBEstatus, 5, 0, 2, stripSLEstatus, "Usuario o contraseña incorrecta");
+                _funciones.DesabilitarControles(this, true);
+                MessageBox.Show(ee.Message);
                 _respuestaLogin = false;
                 //this.Close();
             }
+
+    
+
         }
     }
 }

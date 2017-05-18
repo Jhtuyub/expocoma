@@ -61,6 +61,7 @@
             // stripSLEstatus
             // 
             this.stripSLEstatus.Name = "stripSLEstatus";
+            this.stripSLEstatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.stripSLEstatus.Size = new System.Drawing.Size(16, 17);
             this.stripSLEstatus.Text = "...";
             // 
@@ -81,6 +82,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(244, 25);
             this.txtUsuario.TabIndex = 0;
+            this.txtUsuario.Text = "jtuyub";
             // 
             // txtPass
             // 
@@ -89,6 +91,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(244, 25);
             this.txtPass.TabIndex = 1;
+            this.txtPass.Text = "Unity2016";
             this.txtPass.UseSystemPasswordChar = true;
             // 
             // btnIniciar
@@ -151,7 +154,7 @@
             this.MinimizeBox = false;
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmLogin";
+            this.Text = "EXPO COMA - (FrmLogin)";
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.SStripLogin.ResumeLayout(false);
             this.SStripLogin.PerformLayout();
