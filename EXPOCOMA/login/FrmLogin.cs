@@ -8,6 +8,7 @@ using System.DirectoryServices;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -25,6 +26,7 @@ namespace EXPOCOMA.login
         private Int32 totalArchi = 0;
         private Int32 TotalDll = 0;
 
+        private Boolean _pingServ;
         public Boolean _respuestaLogin = false;
         
         public FrmLogin()
@@ -38,6 +40,18 @@ namespace EXPOCOMA.login
             FondoPantalla();
             if (_ejecutando)
             {
+                //_pingServ = PingServ("servdc2"); //VARIABLE QUE SE LE ASIGNA UN VALOR BOOLEAN AL HACER PING A UN SERVIDOR
+                //if (_pingServ)
+                //{
+                //    MessageBox.Show("Exito");
+                //}else
+                //{
+                //    MessageBox.Show("no hizo ping");
+                //}
+
+
+
+
                 CargarInfo = new Thread(CargarInformacion);
                 CargarInfo.IsBackground = true;
                 CargarInfo.Start();
@@ -50,6 +64,31 @@ namespace EXPOCOMA.login
 
 
         }
+
+        /// <summary>
+        /// FUNCIÓN PARA HACER PING A ALGÚN SERVIDOR
+        /// </summary>
+        /// <param name="IP"></param>
+        /// <returns></returns>
+        public static bool PingServ(string IP)
+        {
+            bool result = false;
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingReply = ping.Send(IP, 12000);
+
+                if (pingReply.Status == IPStatus.Success && (pingReply.Options.Ttl == 126 || pingReply.Options.Ttl == 128) /*&& pingReply.RoundtripTime == 0.0360*/)
+                    result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
 
         public void FondoPantalla()
         {
