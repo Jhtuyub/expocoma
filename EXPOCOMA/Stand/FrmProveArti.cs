@@ -39,8 +39,8 @@ namespace EXPOCOMA.Stand
         DataTable _dtProveGuardados;
         DataTable _dtArtiGuardados;
 
-        String Sesion = "ALEX  CARDENAS";
-        String SesionLetra = "J";
+        String Sesion = "ANA";
+        String SesionLetra = "N";
 
         private Thread CargarInfo;
         private Thread MarcarTodProv;
