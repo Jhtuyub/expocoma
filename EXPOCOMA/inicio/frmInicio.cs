@@ -30,6 +30,9 @@ namespace EXPOCOMA.inicio
         private Int32 totalArchi = 0;
         private Int32 TotalDll = 0;
 
+        Boolean _respuestaLogin;
+        String _nomUsuario;
+
         //public Boolean _respuestaLogin =false;
 
         public frmInicio()
@@ -56,7 +59,10 @@ namespace EXPOCOMA.inicio
             FrmLogin _frmLogin = new FrmLogin();
             _frmLogin._ejecutando= true;
             _frmLogin.ShowDialog();
-            var _respuestaLogin = _frmLogin._respuestaLogin;
+             _respuestaLogin = _frmLogin._respuestaLogin;
+            _nomUsuario = _frmLogin._nomUsuario;
+
+            //MessageBox.Show(_nomUsuario);
 
             if (_respuestaLogin)
             {
@@ -274,9 +280,11 @@ namespace EXPOCOMA.inicio
             FrmIndex _Index = new FrmIndex();
             _Index._CadenaConexion = _funciones.SqlConexion(dgvExpos.CurrentRow.Cells["db"].Value.ToString());
             _Index.nomExpo = dgvExpos.CurrentRow.Cells["nombre"].Value.ToString();
+            _Index._nomUsuario = _nomUsuario;
             _Index.Owner=this;
             if (Properties.Settings.Default.cerrarApp)
             {
+                
                 _Index.ShowDialog();
                 this.Close();
             }

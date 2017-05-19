@@ -17,6 +17,7 @@ namespace EXPOCOMA.Stand
     {
         funciones _funcion = new funciones();
         public String nomExpo;
+        public String _nomUsuario;
         public String _CadenaConexion;
         private Thread CrearTablasThread;
 
@@ -806,6 +807,7 @@ namespace EXPOCOMA.Stand
             FrmImprimirInvita _frmImpInv = new FrmImprimirInvita();
             _frmImpInv.MdiParent = this;
             _frmImpInv.nomExpo = nomExpo;
+            _frmImpInv._nomUsuario = _nomUsuario;
             _frmImpInv._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmImpInv.Show();

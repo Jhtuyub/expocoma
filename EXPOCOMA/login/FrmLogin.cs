@@ -28,6 +28,7 @@ namespace EXPOCOMA.login
 
         private Boolean _pingServ;
         public Boolean _respuestaLogin = false;
+        public String _nomUsuario;
         
         public FrmLogin()
         {
@@ -226,6 +227,7 @@ namespace EXPOCOMA.login
             {
                 result = searcher.FindOne();
                 _respuestaLogin = true;
+                _nomUsuario = txtUsuario.Text;
             this.Invoke((MethodInvoker)delegate
             {
                 _funciones.Cargando(this, stripPBEstatus, 5, 2, 2, stripSLEstatus, "Bienvenido");
