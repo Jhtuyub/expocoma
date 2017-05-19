@@ -1588,9 +1588,22 @@ namespace EXPOCOMA
         {
             _Formulario.Invoke(new CamposEnableDelegate(CamposEnabled), _Formulario, _Enabled, _btnHilo);
         }
-        
+
+        public String btnTextoPrevio;
         public void CamposEnabled(Form _Formulario, Boolean _Enabled, Button _btnHilo)
         {
+
+            if (_Enabled)
+            {
+                _btnHilo.Text = btnTextoPrevio;
+                
+            }
+            else
+            {
+                btnTextoPrevio = _btnHilo.Text;
+                _btnHilo.Text = "Detener";
+            }
+
             //var _focus = 0;
             foreach (Control c in _Formulario.Controls)
             {
@@ -1625,6 +1638,8 @@ namespace EXPOCOMA
 
 
                 _btnHilo.Enabled = true;
+
+
             }
         }
         
@@ -1753,7 +1768,7 @@ namespace EXPOCOMA
         }
 
 
-
+        
 
     }
 }
