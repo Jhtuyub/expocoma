@@ -3,11 +3,14 @@ Application.Visible = .F.
 *!*	WAIT WINDOW "¡Preparando dbf &_tabla.!" AT 10,50 TIMEOUT 1
 *!*	ALINES(arreglo, _rutaTabla, 0, '/')
 
+*!*	_rutaTabla = "EXPOCOMA\bin\Debug\tmp_expo\a\jtuyub\004\cliente"
+
 ALINES(arreglo, _rutaTabla, 0, '\')
-*!*	MESSAGEBOX(arreglo[4])
+*!*	MESSAGEBOX(ALEN(arreglo))
+*!*	MESSAGEBOX(arreglo[ALEN(arreglo)])
 
 USE &_rutaTabla. EXCLUSIVE
-IF arreglo[4] =="cliente"
+IF arreglo[ALEN(arreglo)] =="cliente"
 	ALTER TABLE &_rutaTabla ALTER COLUMN motivo c(250)
 ENDIF
 
@@ -17,7 +20,7 @@ DELETE FILE &_rutaTabla..txt
 ENDIF 
 
 COPY TO &_rutaTabla..txt delimiter  WITH CHARACTER TAB
-
+CLOSE all
 
 
 *!*	WAIT WINDOW "¡Listo dbf &_tabla.!" AT 10,50 TIMEOUT 1
