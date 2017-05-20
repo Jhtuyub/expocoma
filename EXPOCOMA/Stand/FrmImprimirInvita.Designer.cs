@@ -41,7 +41,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtCliRutBaja = new System.Windows.Forms.TextBox();
             this.btnGenerarxls = new System.Windows.Forms.Button();
+            this.btnActualizar = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stripPBEstatus = new System.Windows.Forms.ToolStripProgressBar();
+            this.stripSLEstatus = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtClvClientes
@@ -70,7 +75,7 @@
             this.btnImprimir.Location = new System.Drawing.Point(359, 390);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(75, 29);
-            this.btnImprimir.TabIndex = 10;
+            this.btnImprimir.TabIndex = 11;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
@@ -119,7 +124,7 @@
             this.btnSalir.Location = new System.Drawing.Point(440, 390);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 29);
-            this.btnSalir.TabIndex = 11;
+            this.btnSalir.TabIndex = 12;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
@@ -174,11 +179,48 @@
             this.btnGenerarxls.UseVisualStyleBackColor = true;
             this.btnGenerarxls.Click += new System.EventHandler(this.btnGenerarxls_Click);
             // 
+            // btnActualizar
+            // 
+            this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnActualizar.Location = new System.Drawing.Point(93, 390);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(80, 29);
+            this.btnActualizar.TabIndex = 10;
+            this.btnActualizar.Text = "Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripPBEstatus,
+            this.stripSLEstatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.statusStrip1.Size = new System.Drawing.Size(527, 22);
+            this.statusStrip1.TabIndex = 20;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // stripPBEstatus
+            // 
+            this.stripPBEstatus.Name = "stripPBEstatus";
+            this.stripPBEstatus.Size = new System.Drawing.Size(100, 16);
+            // 
+            // stripSLEstatus
+            // 
+            this.stripSLEstatus.Name = "stripSLEstatus";
+            this.stripSLEstatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.stripSLEstatus.Size = new System.Drawing.Size(16, 17);
+            this.stripSLEstatus.Text = "...";
+            // 
             // FrmImprimirInvita
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 431);
+            this.ClientSize = new System.Drawing.Size(527, 450);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnGenerarxls);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtCliRutBaja);
@@ -202,6 +244,8 @@
             this.Text = "Imprimir Invitaciones - FrmImprimirInvita";
             this.Load += new System.EventHandler(this.FrmImprimirInvita_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,5 +266,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtCliRutBaja;
         private System.Windows.Forms.Button btnGenerarxls;
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripProgressBar stripPBEstatus;
+        private System.Windows.Forms.ToolStripStatusLabel stripSLEstatus;
     }
 }
