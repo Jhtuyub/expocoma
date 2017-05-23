@@ -374,7 +374,7 @@ namespace EXPOCOMA.Stand
                 try
                 {
 
-                    String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo+"\\";
+                    String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo+ @"\" + _nomUsuario;
                     String Archivo = "TMPbajas_clientes_"+nomExpo+".xls";
                     String ArcExcel = carpetaLocal + Archivo;
                     if (!Directory.Exists(carpetaLocal))
@@ -550,7 +550,7 @@ namespace EXPOCOMA.Stand
                 {
 
                     if (Convert.ToBoolean(_esTablaBdf))//CUANDO EL TRASPASO ES EN BDF
-                {
+                    {
 
                     
                         int actualProcesoDBF = 1;
@@ -723,6 +723,18 @@ namespace EXPOCOMA.Stand
 
                         }
 
+
+                        String[] archivos = Directory.GetFiles(tmpCarpetaLocal, _tablasNombre + ".*");
+
+                        foreach (String file in archivos)
+                        {
+                            if (File.Exists(file))
+                            {
+                                //MessageBox.Show(file);
+                                File.Delete(file);
+                            }
+                        }
+
                         dtDBF.Columns.Add("id_sucursalalm", typeof(String));
 
                         for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
@@ -846,7 +858,7 @@ namespace EXPOCOMA.Stand
 
             _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Proceso terminado..." );
             _funcion.DesabilitarControles(this, true, btnActualizar);
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
             _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
             ThreadActualizar = null;
 
