@@ -71,6 +71,7 @@ namespace EXPOCOMA.Stand
             dgvSucursal.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvSucursal.Columns["organization_id"].HeaderText = "alm sql";
             dgvSucursal.Columns["sucursal"].ReadOnly = true;
+            dgvSucursal.Columns["servidorsucu"].Visible = true;
             dgvSucursal.Columns["servidor"].ReadOnly = true;
             dgvSucursal.Columns["dbf"].ReadOnly = true;
             dgvSucursal.Columns["dbf"].Visible = false;
@@ -95,6 +96,7 @@ namespace EXPOCOMA.Stand
                     "rutas",//rutas
                     "proveedo",
                     "articulo",
+                    // COLOCAR INV001 E INVENTA PARA LOS ARTICULOS
                     "fam_arti",
                     "porpieza",
                     
@@ -822,6 +824,7 @@ namespace EXPOCOMA.Stand
                                     }
 
                                     SqlCommand sqlComTablas = new SqlCommand(_dtTablas.Rows[j]["tablassql"].ToString(), _consqlOrigen);
+                                    sqlComTablas.CommandTimeout = 10000;
                                     if (!(_dtTablas.Rows[j]["tablas"].ToString() == "estatus"))
                                     {
 

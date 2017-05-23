@@ -61,6 +61,7 @@ namespace EXPOCOMA.Stand
             dgvCatEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvCatEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvCatEmpresa.Columns["organization_id"].HeaderText = "alm sql";
+            dgvCatEmpresa.Columns["servidorsucu"].Visible = false;
             dgvCatEmpresa.Columns["ruta_baja"].Visible = false;
             dgvCatEmpresa.Columns["agen_baja"].Visible = false;
 
@@ -86,6 +87,7 @@ namespace EXPOCOMA.Stand
             dgvTblEmpresa.Columns["organization_id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvTblEmpresa.Columns["organization_id"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgvTblEmpresa.Columns["organization_id"].HeaderText = "alm sql";
+            dgvTblEmpresa.Columns["servidorsucu"].Visible = false;
             dgvTblEmpresa.Columns["sucursal"].ReadOnly = true;
             dgvTblEmpresa.Columns["servidor"].ReadOnly = true;
             dgvTblEmpresa.Columns["dbf"].Visible = false;
@@ -198,6 +200,7 @@ namespace EXPOCOMA.Stand
                 String organizator = dgvCatEmpresa.CurrentRow.Cells["organization_id"].Value.ToString();
                 String sucursal = dgvCatEmpresa.CurrentRow.Cells["sucursal"].Value.ToString();
                 String servidor = dgvCatEmpresa.CurrentRow.Cells["servidor"].Value.ToString();
+                String servidorsucu = dgvCatEmpresa.CurrentRow.Cells["servidorsucu"].Value.ToString();
                 String dbf = dgvCatEmpresa.CurrentRow.Cells["dbf"].Value.ToString();
                 String usuario = dgvCatEmpresa.CurrentRow.Cells["usuario"].Value.ToString();
                 String contrasena = dgvCatEmpresa.CurrentRow.Cells["contrasena"].Value.ToString();
@@ -212,6 +215,7 @@ namespace EXPOCOMA.Stand
                 _drtbl["organization_id"] = organizator;
                 _drtbl["sucursal"] = sucursal;
                 _drtbl["servidor"] = servidor;
+                _drtbl["servidorsucu"] = servidorsucu;
                 _drtbl["dbf"] = dbf;
                 _drtbl["usuario"] = usuario;
                 _drtbl["contrasena"] = contrasena;
@@ -256,6 +260,7 @@ namespace EXPOCOMA.Stand
                 String organizator = dgvTblEmpresa.CurrentRow.Cells["organization_id"].Value.ToString();
                 String sucursal = dgvTblEmpresa.CurrentRow.Cells["sucursal"].Value.ToString();
                 String servidor = dgvTblEmpresa.CurrentRow.Cells["servidor"].Value.ToString();
+                String servidorsucu = dgvTblEmpresa.CurrentRow.Cells["servidorsucu"].Value.ToString();
                 String dbf = dgvTblEmpresa.CurrentRow.Cells["dbf"].Value.ToString();
                 String usuario = dgvTblEmpresa.CurrentRow.Cells["usuario"].Value.ToString();
                 String contrasena = dgvTblEmpresa.CurrentRow.Cells["contrasena"].Value.ToString();
@@ -270,6 +275,7 @@ namespace EXPOCOMA.Stand
                 _drcat["organization_id"] = organizator;
                 _drcat["sucursal"] = sucursal;
                 _drcat["servidor"] = servidor;
+                _drcat["servidorsucu"] = servidorsucu;
                 _drcat["dbf"] = dbf;
                 _drcat["usuario"] = usuario;
                 _drcat["contrasena"] = contrasena;
@@ -332,6 +338,7 @@ namespace EXPOCOMA.Stand
                     String organization = _dtbl.Rows[i]["organization_id"].ToString();
                     String sucursal = _dtbl.Rows[i]["sucursal"].ToString();
                     String servidor = _dtbl.Rows[i]["servidor"].ToString();
+                    String servidorsucu = _dtbl.Rows[i]["servidorsucu"].ToString();
                     String dbf = _dtbl.Rows[i]["dbf"].ToString();
                     String usuario = _dtbl.Rows[i]["usuario"].ToString();
                     String contrasena = _dtbl.Rows[i]["contrasena"].ToString();
@@ -342,14 +349,14 @@ namespace EXPOCOMA.Stand
                     String[,] _datosSQL =
                         {
                     {"id_catsucursal", "anfitrion","almacen", "organization_id","sucursal",
-                            "servidor","dbf","usuario","contrasena", "db",
+                            "servidor","servidorsucu","dbf","usuario","contrasena", "db",
                         "ruta_baja", "agen_baja"},
                     {_idDato,anfitrion,almacen, organization,sucursal,
-                            servidor,dbf,usuario,contrasena, db,
-                        rutaBaja, agenBaja},
+                            servidor,servidorsucu,dbf,usuario,contrasena,
+                            db, rutaBaja, agenBaja},
                     {"int","bit","varchar","varchar","varchar",
                             "varchar","varchar","varchar","varchar","varchar",
-                        "varchar","varchar"}
+                            "varchar","varchar","varchar"}
                     };
 
                     _funciones.guardar_datos(_datosSQL, "tbl_sucursal", "nuevo", 0, dgvTblEmpresa);

@@ -81,9 +81,9 @@ namespace EXPOCOMA.inicio
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string[,] _datos = {
-                {"almacen","organization_id", "sucursal","servidor","dbf","usuario","contrasena", "db", "ruta_baja","agen_baja"},
-                {txtAlmacen.Text, txtAlmacenSql.Text, txtSucursal.Text, txtServidor.Text,txtdbf.Text,txtUsudb.Text,txtPassdb.Text, txtDb.Text, txtRutaBaja.Text, txtAgenBaja.Text},
-                {"varchar", "varchar", "varchar", "varchar", "varchar", "varchar", "varchar","varchar", "varchar","varchar"}
+                {"almacen","organization_id", "sucursal", "servidorsucu","servidor","dbf","usuario","contrasena", "db", "ruta_baja","agen_baja"},
+                {txtAlmacen.Text, txtAlmacenSql.Text, txtSucursal.Text,txtServSucu.Text, txtServidor.Text,txtdbf.Text,txtUsudb.Text,txtPassdb.Text, txtDb.Text, txtRutaBaja.Text, txtAgenBaja.Text},
+                {"varchar", "varchar", "varchar", "varchar", "varchar", "varchar", "varchar", "varchar","varchar", "varchar","varchar"}
             };
 
             _funcion.validar_campo(this, _datos, "cat_sucursal", ___accion, ___idDato);
@@ -260,6 +260,11 @@ namespace EXPOCOMA.inicio
         private void txtAgenBaja_KeyUp(object sender, KeyEventArgs e)
         {
             _funcion.key_campo(txtAgenBaja);
+        }
+
+        private void txtServSucu_KeyUp(object sender, KeyEventArgs e)
+        {
+            _funcion.key_campo(txtServSucu);
         }
     }
 }

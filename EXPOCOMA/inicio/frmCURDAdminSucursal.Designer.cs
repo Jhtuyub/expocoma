@@ -53,6 +53,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtAgenBaja = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.txtServSucu = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -97,7 +99,7 @@
             this.label3.Location = new System.Drawing.Point(372, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 17);
-            this.label3.TabIndex = 13;
+            this.label3.TabIndex = 15;
             this.label3.Text = "Servidor sql:";
             // 
             // txtServidor
@@ -105,7 +107,7 @@
             this.txtServidor.Location = new System.Drawing.Point(375, 77);
             this.txtServidor.Name = "txtServidor";
             this.txtServidor.Size = new System.Drawing.Size(357, 25);
-            this.txtServidor.TabIndex = 14;
+            this.txtServidor.TabIndex = 16;
             this.txtServidor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtServidor_KeyUp);
             // 
             // label4
@@ -114,7 +116,7 @@
             this.label4.Location = new System.Drawing.Point(372, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 17);
-            this.label4.TabIndex = 11;
+            this.label4.TabIndex = 13;
             this.label4.Text = "Dirección dbf:";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
@@ -123,7 +125,7 @@
             this.txtdbf.Location = new System.Drawing.Point(375, 29);
             this.txtdbf.Name = "txtdbf";
             this.txtdbf.Size = new System.Drawing.Size(357, 25);
-            this.txtdbf.TabIndex = 12;
+            this.txtdbf.TabIndex = 14;
             this.txtdbf.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtfacturacion_KeyUp);
             // 
             // label5
@@ -132,7 +134,7 @@
             this.label5.Location = new System.Drawing.Point(372, 105);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 17);
-            this.label5.TabIndex = 15;
+            this.label5.TabIndex = 17;
             this.label5.Text = "Usuario sql:";
             // 
             // txtUsudb
@@ -140,7 +142,7 @@
             this.txtUsudb.Location = new System.Drawing.Point(375, 125);
             this.txtUsudb.Name = "txtUsudb";
             this.txtUsudb.Size = new System.Drawing.Size(357, 25);
-            this.txtUsudb.TabIndex = 16;
+            this.txtUsudb.TabIndex = 18;
             this.txtUsudb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCopyFiles_KeyUp);
             // 
             // label6
@@ -149,7 +151,7 @@
             this.label6.Location = new System.Drawing.Point(372, 153);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(111, 17);
-            this.label6.TabIndex = 17;
+            this.label6.TabIndex = 19;
             this.label6.Text = "Contraseña sql:";
             // 
             // txtPassdb
@@ -158,35 +160,35 @@
             this.txtPassdb.Name = "txtPassdb";
             this.txtPassdb.PasswordChar = '*';
             this.txtPassdb.Size = new System.Drawing.Size(358, 25);
-            this.txtPassdb.TabIndex = 18;
+            this.txtPassdb.TabIndex = 20;
             this.txtPassdb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPath_KeyUp);
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(652, 252);
+            this.btnSalir.Location = new System.Drawing.Point(652, 300);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 29);
-            this.btnSalir.TabIndex = 23;
+            this.btnSalir.TabIndex = 25;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(567, 252);
+            this.btnLimpiar.Location = new System.Drawing.Point(567, 300);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(80, 29);
-            this.btnLimpiar.TabIndex = 22;
+            this.btnLimpiar.TabIndex = 24;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(481, 252);
+            this.btnGuardar.Location = new System.Drawing.Point(481, 300);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(80, 29);
-            this.btnGuardar.TabIndex = 21;
+            this.btnGuardar.TabIndex = 23;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
@@ -207,7 +209,7 @@
             this.txtDb.Location = new System.Drawing.Point(375, 221);
             this.txtDb.Name = "txtDb";
             this.txtDb.Size = new System.Drawing.Size(358, 25);
-            this.txtDb.TabIndex = 20;
+            this.txtDb.TabIndex = 22;
             this.txtDb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtDb_KeyUp);
             // 
             // label7
@@ -216,7 +218,7 @@
             this.label7.Location = new System.Drawing.Point(372, 201);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 17);
-            this.label7.TabIndex = 19;
+            this.label7.TabIndex = 21;
             this.label7.Text = "Base de datos:";
             // 
             // txtAlmacenSql
@@ -283,11 +285,30 @@
             this.label10.TabIndex = 9;
             this.label10.Text = "Agente Baja:";
             // 
+            // txtServSucu
+            // 
+            this.txtServSucu.Location = new System.Drawing.Point(12, 269);
+            this.txtServSucu.Name = "txtServSucu";
+            this.txtServSucu.Size = new System.Drawing.Size(357, 25);
+            this.txtServSucu.TabIndex = 12;
+            this.txtServSucu.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtServSucu_KeyUp);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 249);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(128, 17);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Servidor Sucursal:";
+            // 
             // frmCURDAdminSucursal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 294);
+            this.ClientSize = new System.Drawing.Size(745, 344);
+            this.Controls.Add(this.txtServSucu);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.txtAgenBaja);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtRutaBaja);
@@ -358,5 +379,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtAgenBaja;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtServSucu;
+        private System.Windows.Forms.Label label11;
     }
 }
