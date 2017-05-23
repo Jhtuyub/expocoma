@@ -18,6 +18,7 @@ namespace EXPOCOMA.Stand
     {
         public String _CadenaConexion;
         public String nomExpo;
+        public String _nomUsuario;
 
         funciones _funcion = new funciones();
         private Thread copiarTablas;
@@ -96,17 +97,17 @@ namespace EXPOCOMA.Stand
                     "rutas",//rutas
                     "proveedo",
                     "articulo",
-                    // COLOCAR INV001 E INVENTA PARA LOS ARTICULOS
+                    "inventa,inv001",//SOLO SE PROGRAMO LA PARTE DE DBF, YA QUE EN SQL NO ESTA AL DIA SOBRE SU INFORMACION
                     "fam_arti",
                     "porpieza",
-                    
+
                     "prefijos",
-                    
+
                     "statarti",
                     "estatus",
-                    
+
                 },
-                { "false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
+                { "false","false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
                 {
                     "",//cliente
                     "", //agentes
@@ -114,6 +115,7 @@ namespace EXPOCOMA.Stand
                     "",//rutas
                     "SELECT * FROM VW_PO_VENDORS_INT WHERE organizacion = @ORGANIZATION_ID",//proveedo
                     "SELECT * FROM VW_MTL_SYSTEM_ITEMS_B_CMA_2 WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//articulo
+                    "",//INV001-INVENTA - SOLO SE PROGRAMO LA PARTE DE DBF, YA QUE EN SQL NO ESTA AL DIA SOBRE SU INFORMACION
                     "SELECT * FROM PO_FAMILIAS_COMA WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//fam_arti
                     "",//porpieza
                     
@@ -123,7 +125,7 @@ namespace EXPOCOMA.Stand
                     "SELECT * FROM po_catalog_status",//estatus
                     
                 },
-                { "false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
+                { "false","false","false","false","false", "false", "false","false", "false", "false", "false", "false"},
                 {
                     "",//Cliente
                     "", //agentes
@@ -131,6 +133,7 @@ namespace EXPOCOMA.Stand
                     "",//rutas
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA", //PROVEEDO
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR",
+                    "",
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
                     
@@ -267,6 +270,10 @@ namespace EXPOCOMA.Stand
                     {
                         DT.Rows[i]["dbf"] = CHECKED;
                     }
+                    else if (DT.Rows[i]["tablas"].ToString() == "inventa,inv001")
+                    {
+                        DT.Rows[i]["dbf"] = CHECKED;
+                    }
                     else
                     {
                         DT.Rows[i][COLUMNA] = CHECKED;
@@ -353,7 +360,8 @@ namespace EXPOCOMA.Stand
                         (_dtTablas.Rows[i]["tablas"].ToString() == "agentes" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "agentes") ||
                         (_dtTablas.Rows[i]["tablas"].ToString() == "rutagen" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "rutagen") ||
                         (_dtTablas.Rows[i]["tablas"].ToString() == "rutas" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "rutas") ||
-                        (_dtTablas.Rows[i]["tablas"].ToString() == "prefijos" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos"))
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "prefijos" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "prefijos") ||
+                        (_dtTablas.Rows[i]["tablas"].ToString() == "inventa,inv001" && dgvTablas.CurrentRow.Cells["tablas"].Value.ToString() == "inventa,inv001"))
                     {
                         MessageBox.Show(_dtTablas.Rows[i]["tablas"].ToString()+" no disponible en esta opción");
                         _dtTablas.Rows[i]["sql"] = false;
@@ -529,7 +537,7 @@ namespace EXPOCOMA.Stand
                         if (Convert.ToBoolean(dbfdtTablas) == true)
                         {
 
-                            String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + almdtSucu.ToString();
+                            String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString();
                             String carpetaTmpExpo = rutadtSucu.ToString() + @"\tmp_expo";
                             if (!Directory.Exists(carpetaLocal))
                             {
@@ -555,24 +563,62 @@ namespace EXPOCOMA.Stand
 
                             //}
 
-                            _funcion.Cargando(this, barraProgreso, 0, 1, 3, lblMensaje, "Preparando dbf " + tbldtTablas.ToString());
+                            String[] cutTablas = tbldtTablas.ToString().Split(',');
+                            String nomTblTablas = "";
+                            String nomDbfTablas = "";
+
+                            if (!(almdtSucu.ToString() == "001")) //ESTO SE HIZO POR EL DETALLE DE MERIDA QUE TIENE INV001 Y LAS OTRAS SUCURSALES TIENEN INVENTA
+                            {
+                                nomTblTablas = cutTablas[0].ToString();
+                                nomDbfTablas = cutTablas[0].ToString();
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    nomTblTablas = cutTablas[0].ToString();
+                                    nomDbfTablas = cutTablas[1].ToString();
+                                }
+                                catch (Exception)
+                                {
+
+                                    nomTblTablas = cutTablas[0].ToString();
+                                    nomDbfTablas = cutTablas[0].ToString();
+                                }
+
+                            }
+                            //for (int ii = 0; ii < cutTablas.Count(); ii++)
+                            //{
+                            //    nomTblTablas = cutTablas[0].ToString();
+                            //    if (File.Exists(rutadtSucu.ToString()+"\\"+ cutTablas[ii].ToString()+".dbf"))
+                            //    {
+                            //        nomDbfTablas = cutTablas[ii].ToString();
+                            //        break;
+                            //    }
+                            //}
+
+                            _funcion.Cargando(this, barraProgreso, 0, 1, 3, lblMensaje, "Preparando dbf " + nomDbfTablas);
 
                             //COPIAR LOS DBF EN EL MISMO SERVIDOR CON OTRO NOMBRE
-                            var servFptOrigen = Path.Combine(rutadtSucu.ToString(), tbldtTablas.ToString() + ".fpt");
-                            var servFptDestino = Path.Combine(carpetaTmpExpo, "expo_" + tbldtTablas.ToString() + ".fpt");
+                            var servFptOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".fpt");
+                            var servFptDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".fpt");
                             //COPIAR LOS ARCHIVOS A LAS CARPETAS QUE EL SISTEMA CREA
-                            var localFptDestino = Path.Combine(carpetaLocal, tbldtTablas.ToString() + ".fpt");
+                            var localFptDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".fpt");
 
-                            var servDbfOrigen = Path.Combine(rutadtSucu.ToString(), tbldtTablas.ToString() + ".dbf");
-                            var servDbfDestino = Path.Combine(carpetaTmpExpo, "expo_" + tbldtTablas.ToString() + ".dbf");
-                            var localDbfDestino = Path.Combine(carpetaLocal, tbldtTablas.ToString() + ".dbf");
+                            var servDbfOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".dbf");
+                            var servDbfDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".dbf");
+                            var localDbfDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".dbf");
+
+                            var servCdxOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".cdx");
+                            var servCdxDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".cdx");
+                            var localCdxDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".cdx");
 
                             if (File.Exists(servFptOrigen))
                             {
 
                                 File.Copy(servFptOrigen, servFptDestino, true);
 
-                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar fpt " + tbldtTablas.ToString());
+                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar fpt " + nomDbfTablas);
                                 //Thread.Sleep(1000);
 
                                 CopyFile(servFptDestino, localFptDestino);
@@ -583,25 +629,54 @@ namespace EXPOCOMA.Stand
                             {
                                 File.Copy(servDbfOrigen, servDbfDestino, true);
 
-                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar dbf " + tbldtTablas.ToString());
+                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar dbf " + nomDbfTablas);
                                 //Thread.Sleep(1000);
 
                                 CopyFile(servDbfDestino, localDbfDestino);
                             }
 
+                            if (File.Exists(servCdxOrigen))
+                            {
+                                File.Copy(servCdxOrigen, servCdxDestino, true);
+
+                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar cdx " + nomDbfTablas);
+                                //Thread.Sleep(1000);
+
+                                CopyFile(servCdxDestino, localCdxDestino);
+                            }
+
                             int totalProcesoDBF = 4;
                             int actualProcesoDBF = 1;
-                            _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Preparando para importación: " + tbldtTablas.ToString());
+                            _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Preparando para importación: " + nomTblTablas);
                             Thread.Sleep(5000);
+
+                            ProcessStartInfo info = null;
+                            String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString() + @"\" + nomDbfTablas;
+                            //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
+                            info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
+                            //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
+                            info.WindowStyle = ProcessWindowStyle.Hidden;
+                            programa = Process.Start(info);
+                            programa.WaitForExit(1000 * 60 * 900);
+                            programa.StartInfo.UseShellExecute = false;
+
+                            //programa.Close();
+
+                            if (!programa.HasExited)
+                            {
+                                programa.Kill();
+                            }
 
 
                             string cadena = @"Driver={Microsoft Visual Foxpro Driver};UID=;SourceType=DBF;SourceDB=" + carpetaLocal + " ;Exclusive=No;SHARED=YES;collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=YES;";
                             OdbcConnection con = new OdbcConnection();  //se crea la variable de conexion para el dbf
                             con.ConnectionString = cadena;              //se crea la conexion
                             con.Open();
-                            string consulta = "SELECT * FROM " + tbldtTablas.ToString();
+                            string consulta = "SELECT * FROM " + nomDbfTablas;
                             OdbcDataAdapter adapter = new OdbcDataAdapter(consulta, con);
                             DataTable dtDBF = new DataTable();
+
+
 
                             try
                             {
@@ -611,28 +686,14 @@ namespace EXPOCOMA.Stand
                             }
                             catch (Exception ex)
                             {
+                                //throw;
                                 //MessageBox.Show(ex.Message);
                                 con.Close();
 
                                 dtDBF.Clear();
 
 
-                                ProcessStartInfo info = null;
-                                String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + almdtSucu.ToString() + @"\" + tbldtTablas.ToString();
-                                //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
-                                info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
-                                //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
-                                info.WindowStyle = ProcessWindowStyle.Hidden;
-                                programa = Process.Start(info);
-                                programa.WaitForExit(1000 * 60 * 900);
-                                programa.StartInfo.UseShellExecute = false;
 
-                                //programa.Close();
-
-                                if (!programa.HasExited)
-                                {
-                                    programa.Kill();
-                                }
 
                                 /////////////////////////////////////////////////
                                 if (File.Exists(_RutaTabla + ".txt"))
@@ -722,11 +783,24 @@ namespace EXPOCOMA.Stand
                                 }
                             }
 
+                            String[] archivos = Directory.GetFiles(carpetaLocal, nomDbfTablas + ".*");
+
+                            foreach (String file in archivos)
+                            {
+                                if (File.Exists(file))
+                                {
+                                    //MessageBox.Show(file);
+                                    File.Delete(file);
+                                }
+                            }
+
+
+
                             dtDBF.Columns.Add("id_sucursalalm", typeof(String));
 
                             for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
                             {
-                                _funcion.Cargando(this, barraProgreso, 0, iAlm, dtDBF.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
+                                _funcion.Cargando(this, barraProgreso, 0, iAlm, dtDBF.Rows.Count, lblMensaje, "Asignando el almacen: " + nomDbfTablas);
                                 dtDBF.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
                             }
 
@@ -734,7 +808,7 @@ namespace EXPOCOMA.Stand
                             {
                                 //bool respuesta = false;
                                 SqlTransaction _tran;
-                                string _tabla = "dbf_" + tbldtTablas.ToString();
+                                string _tabla = "dbf_" + nomTblTablas;
                                 if (_consql.State == ConnectionState.Closed)
                                 {
                                     _consql.Open();
@@ -742,14 +816,14 @@ namespace EXPOCOMA.Stand
 
                                 //_con.Open();
                                 actualProcesoDBF++;
-                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + tbldtTablas.ToString());
-                                String sqlBorrar = "DELETE FROM dbf_" + tbldtTablas.ToString() + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
+                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + nomTblTablas);
+                                String sqlBorrar = "DELETE FROM dbf_" + nomTblTablas + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
                                 SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
                                 comando.CommandTimeout = 300;
                                 comando.ExecuteNonQuery();
 
                                 actualProcesoDBF++;
-                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Verificando campos: " + tbldtTablas.ToString());
+                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Verificando campos: " + nomTblTablas);
                                 _tran = _consql.BeginTransaction();
                                 using (SqlBulkCopy bulkCopy =
                                     new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
@@ -757,12 +831,14 @@ namespace EXPOCOMA.Stand
 
                                     bulkCopy.DestinationTableName = _tabla;
                                     bulkCopy.BulkCopyTimeout = 300;
+                                    
                                     try
                                     {
                                         //dtDBF.Columns.Count
                                         for (int jj = 0; jj < dtDBF.Columns.Count; jj++)
                                         {
-                                            _funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + tbldtTablas.ToString());
+                                            _funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + nomTblTablas);
+                                            
                                             bulkCopy.ColumnMappings.Add(dtDBF.Columns[jj].ColumnName.ToString(), dtDBF.Columns[jj].ColumnName.ToString().ToUpper());
 
                                         }
@@ -772,13 +848,17 @@ namespace EXPOCOMA.Stand
                                         _tran.Commit();
                                         //respuesta = true;
                                         actualProcesoDBF++;
-                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + tbldtTablas.ToString());
+                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + nomTblTablas);
                                         //_dtTablas.Rows[j]["dbf"] = false;
                                     }
                                     catch (Exception exx)
                                     {
                                         //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                        MessageBox.Show(exx.Message);
+                                        this.Invoke((MethodInvoker)delegate
+                                        {
+                                            MessageBox.Show(exx.Message);
+                                        });
+                                        
                                         //respuesta = false;
                                         try
                                         {
@@ -801,6 +881,11 @@ namespace EXPOCOMA.Stand
                                 }
 
                             }
+
+                            //if (Directory.Exists(carpetaLocal))
+                            //{
+                            //    Directory.Delete(carpetaLocal);
+                            //}
 
                         }
                         else if (Convert.ToBoolean(sqldtTablas) == true)
@@ -902,7 +987,11 @@ namespace EXPOCOMA.Stand
                                         catch (Exception exx)
                                         {
                                             //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                            MessageBox.Show(exx.Message);
+                                            this.Invoke((MethodInvoker)delegate
+                                            {
+                                                MessageBox.Show(exx.Message);
+                                            });
+                                            
                                             //respuesta = false;
                                             try
                                             {
@@ -928,7 +1017,11 @@ namespace EXPOCOMA.Stand
                             }
                             else
                             {
-                                MessageBox.Show(_dtTablas.Rows[j]["tablas"].ToString()+" no esta disponible en esta opción");
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    MessageBox.Show(_dtTablas.Rows[j]["tablas"].ToString() + " no esta disponible en esta opción");
+                                });
+                                
                             }
                         }
 
@@ -938,7 +1031,11 @@ namespace EXPOCOMA.Stand
                 }
             }
             _funcion.Cargando(this, barraProgreso, 0, 1, 1, lblMensaje, "Proceso terminado: ");
-            MessageBox.Show("Proceso terminado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Invoke((MethodInvoker)delegate
+            {
+                MessageBox.Show("Proceso terminado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
+            
             this.Invoke(new PosicionTablaDelegate(PosicionTabla), 0);
             copiarTablas = null;
             //btnImportar.Text = "Importar";
@@ -1001,7 +1098,11 @@ namespace EXPOCOMA.Stand
             catch (Exception ee)
             {
                 //copiarTablas = null;
-                MessageBox.Show(ee.Message);
+                this.Invoke((MethodInvoker)delegate
+                {
+                    MessageBox.Show(ee.Message);
+                });
+                
                 //return false;
             }
             finally
