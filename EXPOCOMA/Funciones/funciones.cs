@@ -7,6 +7,7 @@ using System.Data.SqlServerCe;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -1992,8 +1993,30 @@ namespace EXPOCOMA
            
         }
 
+        /// <summary>
+        /// DEVUELVE TRUE O FALSE AL HACER UN PING A LA IP O NOMBRE DE LA PC
+        /// </summary>
+        /// <param name="IP">IP O NOMBRE DE LA PC</param>
+        /// <returns></returns>
+        public bool PingServ(string IP)
+        {
+            bool result = false;
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingReply = ping.Send(IP, 12000);
 
-        
+                if (pingReply.Status == IPStatus.Success && (pingReply.Options.Ttl == 126 || pingReply.Options.Ttl == 128) /*&& pingReply.RoundtripTime == 0.0360*/)
+                    result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
 
     }
 }
