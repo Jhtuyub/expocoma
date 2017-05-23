@@ -28,7 +28,10 @@ namespace EXPOCOMA.Stand
         String carpetaServ;
         String tmpCarpetaServ;
         String idActSucu;
-        
+        String servidorSucu;
+        String actuRutaBaja;
+        String actuAgenBaja;
+
 
         funciones _funcion = new funciones();
         //internal static Form _frmParent;
@@ -71,7 +74,7 @@ namespace EXPOCOMA.Stand
                 {
 
                 //_tablasBDFCampos - CAMPOS DE LA TABLA DBF
-                "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE", //,C_RUTA,DIRECCI,RFC
+                "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC", //
                     "",
                     "",
                     "",
@@ -99,7 +102,7 @@ namespace EXPOCOMA.Stand
                 },
                 {
                 //_tablasNomDestinoCampos - CAMPOS DE TABLAS DESTINO
-                    "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE",//,C_RUTA,DIRECCI,RFC
+                    "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC",//
                     "",
                     "",
                     "",
@@ -136,7 +139,7 @@ namespace EXPOCOMA.Stand
             picbCargando.Visible = false;
             _funcion.PicCargando(picbCargando);
             _funcion._SQLCadenaConexion = _CadenaConexion;
-            _dtSucursales = _funcion.llenar_dt("tbl_sucursal", "ALMACEN, SUCURSAL, RUTA_BAJA, AGEN_BAJA, DBF" ,"", "ORDER BY anfitrion DESC");
+            _dtSucursales = _funcion.llenar_dt("tbl_sucursal", "ALMACEN, SUCURSAL,SERVIDORSUCU, RUTA_BAJA, AGEN_BAJA, DBF", "", "ORDER BY anfitrion DESC");
             
 
             cBoxSucursal.DataSource = _dtSucursales;
@@ -484,6 +487,7 @@ namespace EXPOCOMA.Stand
                     //barraProgreso.Value = 0;
                     //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar, "Importar");
                     _funcion.DesabilitarControles(this, true, btnActualizar);
+                    _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
                 }
                 else
                 {
@@ -512,12 +516,14 @@ namespace EXPOCOMA.Stand
                 tmpCarpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + idActSucu;
                 carpetaServ = filSucu["dbf"].ToString();
                 tmpCarpetaServ = filSucu["dbf"].ToString() + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + idActSucu;
-                //rutaBaja = filSucu["RUTA_BAJA"].ToString();
-                //agenBaja = filSucu["AGEN_BAJA"].ToString();
+                servidorSucu = filSucu["SERVIDORSUCU"].ToString();
+                actuRutaBaja = filSucu["RUTA_BAJA"].ToString();
+                actuAgenBaja = filSucu["AGEN_BAJA"].ToString();
 
                 break;
             }
 
+            
 
             if (!Directory.Exists(tmpCarpetaLocal))
             {
@@ -526,231 +532,256 @@ namespace EXPOCOMA.Stand
 
             if (!Directory.Exists(tmpCarpetaServ))
             {
-                Directory.CreateDirectory(tmpCarpetaServ);
+                Directory.CreateDirectory(tmpCarpetaServ); //COLOCAR UN TRY PARA CUANDO NO PUEDA ENTRAR AL SERVIDOR PARA CREAR LAS CARPETAS DE COPIADO
             }
-            
+
             for (int i = 0; i < _tablas.GetLength(1); i++)
             {
-                 _tablasNombre = _tablas[0, i];
-                 _esTablaBdf = _tablas[1, i]; 
-                 _tablasBDFCampos = _tablas[2, i]; 
-                 _esTablaSql = _tablas[3, i]; 
-                 _tablasSQLCampos = _tablas[4, i]; 
-                 _tablasNomDestino = _tablas[5, i]; 
-                 _tablasNomDestinoCampos = _tablas[6, i];
-                 _tablasNomDestiCamposComparar = _tablas[7, i];
-               
-                if (Convert.ToBoolean(_esTablaBdf))//CUANDO EL TRASPASO ES EN BDF
+                _tablasNombre = _tablas[0, i];
+                _esTablaBdf = _tablas[1, i];
+                _tablasBDFCampos = _tablas[2, i];
+                _esTablaSql = _tablas[3, i];
+                _tablasSQLCampos = _tablas[4, i];
+                _tablasNomDestino = _tablas[5, i];
+                _tablasNomDestinoCampos = _tablas[6, i];
+                _tablasNomDestiCamposComparar = _tablas[7, i];
+
+                if (_funcion.PingServ(servidorSucu))
                 {
+
+                    if (Convert.ToBoolean(_esTablaBdf))//CUANDO EL TRASPASO ES EN BDF
+                {
+
                     
-                    int actualProcesoDBF = 1;
-                    int totalProcesoDBF = 3;
-                    _funcion.Cargando(this, stripPBEstatus, 0, actualProcesoDBF, totalProcesoDBF, stripSLEstatus, "Preparando dbf " + _tablasNombre);
+                        int actualProcesoDBF = 1;
+                        int totalProcesoDBF = 3;
+                        _funcion.Cargando(this, stripPBEstatus, 0, actualProcesoDBF, totalProcesoDBF, stripSLEstatus, "Preparando dbf " + _tablasNombre);
 
-                    //COPIAR LOS DBF EN EL MISMO SERVIDOR CON OTRO NOMBRE
-                    var servFptOrigen = Path.Combine(carpetaServ, _tablasNombre + ".fpt");
-                    var servFptDestino = Path.Combine(tmpCarpetaServ, "expo_" + _tablasNombre + ".fpt");
-                    //COPIAR LOS ARCHIVOS A LAS CARPETAS QUE EL SISTEMA CREA
-                    var localFptDestino = Path.Combine(tmpCarpetaLocal, _tablasNombre + ".fpt");
+                        //COPIAR LOS DBF EN EL MISMO SERVIDOR CON OTRO NOMBRE
+                        var servFptOrigen = Path.Combine(carpetaServ, _tablasNombre + ".fpt");
+                        var servFptDestino = Path.Combine(tmpCarpetaServ, "expo_" + _tablasNombre + ".fpt");
+                        //COPIAR LOS ARCHIVOS A LAS CARPETAS QUE EL SISTEMA CREA
+                        var localFptDestino = Path.Combine(tmpCarpetaLocal, _tablasNombre + ".fpt");
 
-                    //AQUI TE QUEDASTE
-                    var servDbfOrigen = Path.Combine(carpetaServ.ToString(), _tablasNombre + ".dbf");
-                    var servDbfDestino = Path.Combine(tmpCarpetaServ, "expo_" + _tablasNombre + ".dbf");
-                    var localDbfDestino = Path.Combine(tmpCarpetaLocal, _tablasNombre + ".dbf");
+                        //AQUI TE QUEDASTE
+                        var servDbfOrigen = Path.Combine(carpetaServ.ToString(), _tablasNombre + ".dbf");
+                        var servDbfDestino = Path.Combine(tmpCarpetaServ, "expo_" + _tablasNombre + ".dbf");
+                        var localDbfDestino = Path.Combine(tmpCarpetaLocal, _tablasNombre + ".dbf");
 
-                    if (File.Exists(servFptOrigen))
-                    {
-
-                        File.Copy(servFptOrigen, servFptDestino, true);
-
-                        _funcion.Cargando(this, stripPBEstatus, 0, 2, 3, stripSLEstatus, "Preparando copiado fpt " + _tablasNombre);
-                        //Thread.Sleep(1000);
-
-                        CopyFile(servFptDestino, localFptDestino);
-                        File.Delete(servFptDestino);
-
-                    }
-
-                    if (File.Exists(servDbfOrigen))
-                    {
-                        File.Copy(servDbfOrigen, servDbfDestino, true);
-
-                        _funcion.Cargando(this, stripPBEstatus, 0, 2, 3, stripSLEstatus, "Preparando copiado dbf " + _tablasNombre);
-                        //Thread.Sleep(1000);
-
-                        CopyFile(servDbfDestino, localDbfDestino);
-                        File.Delete(servDbfDestino);
-                    }
-
-
-
-                    _funcion.Cargando(this, stripPBEstatus, 0, actualProcesoDBF, totalProcesoDBF, stripSLEstatus, "Preparando para importación: " + _tablasNombre);
-                    //Thread.Sleep(5000);
-
-
-                    string cadena = @"Driver={Microsoft Visual Foxpro Driver};UID=;SourceType=DBF;SourceDB=" + tmpCarpetaLocal + " ;Exclusive=No;SHARED=YES;collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=YES;";
-                    OdbcConnection con = new OdbcConnection();  //se crea la variable de conexion para el dbf
-                    con.ConnectionString = cadena;              //se crea la conexion
-                    con.Open();
-                    string consulta = "SELECT * FROM " + _tablasNombre;
-                    OdbcDataAdapter adapter = new OdbcDataAdapter(consulta, con);
-                    DataTable dtDBF = new DataTable();
-                    
-                    try
-                    {
-                        adapter.Fill(dtDBF);
-                        con.Close();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        con.Close();
-                        dtDBF.Clear();
-
-                        ProcessStartInfo info = null;
-                        //String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + almdtSucu.ToString() + @"\" + _tablasNombre;
-                        //String _RutaTabla = tmpCarpetaLocal + @"\" + _tablasNombre;
-                        String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + idActSucu + @"\" + _tablasNombre;
-                        //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
-                        info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
-                        //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        programa = Process.Start(info);
-                        programa.WaitForExit(1000 * 60 * 900);
-                        programa.StartInfo.UseShellExecute = false;
-                        if (!programa.HasExited)
+                        if (File.Exists(servFptOrigen))
                         {
-                            programa.Kill();
+
+                            File.Copy(servFptOrigen, servFptDestino, true);
+
+                            _funcion.Cargando(this, stripPBEstatus, 0, 2, 3, stripSLEstatus, "Preparando copiado fpt " + _tablasNombre);
+                            //Thread.Sleep(1000);
+
+                            CopyFile(servFptDestino, localFptDestino);
+                            File.Delete(servFptDestino);
+
+                        }
+
+                        if (File.Exists(servDbfOrigen))
+                        {
+                            File.Copy(servDbfOrigen, servDbfDestino, true);
+
+                            _funcion.Cargando(this, stripPBEstatus, 0, 2, 3, stripSLEstatus, "Preparando copiado dbf " + _tablasNombre);
+                            //Thread.Sleep(1000);
+
+                            CopyFile(servDbfDestino, localDbfDestino);
+                            File.Delete(servDbfDestino);
                         }
 
 
-                        /////////////////////////////////////////////////
-                        if (File.Exists(_RutaTabla + ".txt"))
+
+                        _funcion.Cargando(this, stripPBEstatus, 0, actualProcesoDBF, totalProcesoDBF, stripSLEstatus, "Preparando para importación: " + _tablasNombre);
+                        //Thread.Sleep(5000);
+
+
+                        string cadena = @"Driver={Microsoft Visual Foxpro Driver};UID=;SourceType=DBF;SourceDB=" + tmpCarpetaLocal + " ;Exclusive=No;SHARED=YES;collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=YES;";
+                        OdbcConnection con = new OdbcConnection();  //se crea la variable de conexion para el dbf
+                        con.ConnectionString = cadena;              //se crea la conexion
+                        con.Open();
+                        string consulta = "SELECT * FROM " + _tablasNombre;
+                        OdbcDataAdapter adapter = new OdbcDataAdapter(consulta, con);
+                        DataTable dtDBF = new DataTable();
+
+                        try
                         {
+                            adapter.Fill(dtDBF);
+                            con.Close();
 
-                            String line;
-                            Char delimiter = '\t';
+                        }
+                        catch (Exception ex)
+                        {
+                            con.Close();
+                            dtDBF.Clear();
 
-                            DataRow rowdbf;
-
-                            // Read the file and display it line by line.
-                            System.IO.StreamReader file =
-                                new System.IO.StreamReader(_RutaTabla + ".txt");
-                            while ((line = file.ReadLine()) != null)
+                            ProcessStartInfo info = null;
+                            //String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + almdtSucu.ToString() + @"\" + _tablasNombre;
+                            //String _RutaTabla = tmpCarpetaLocal + @"\" + _tablasNombre;
+                            String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + idActSucu + @"\" + _tablasNombre;
+                            //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
+                            info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
+                            //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
+                            info.WindowStyle = ProcessWindowStyle.Hidden;
+                            programa = Process.Start(info);
+                            programa.WaitForExit(1000 * 60 * 900);
+                            programa.StartInfo.UseShellExecute = false;
+                            if (!programa.HasExited)
                             {
-                                //try
-                                //{
-                                line = line.Replace("\"", "");
-                                string[] x = line.Split(delimiter);
+                                programa.Kill();
+                            }
+                            
+                            /////////////////////////////////////////////////
+                            if (File.Exists(_RutaTabla + ".txt"))
+                            {
 
-                                DataColumn col;
-                                rowdbf = dtDBF.NewRow();
-                                //int iColtxt = 0;
-                                for (int iColDbf = 0; iColDbf < dtDBF.Columns.Count; iColDbf++)
+                                String line;
+                                Char delimiter = '\t';
+
+                                DataRow rowdbf;
+
+                                // Read the file and display it line by line.
+                                System.IO.StreamReader file =
+                                    new System.IO.StreamReader(_RutaTabla + ".txt");
+                                while ((line = file.ReadLine()) != null)
                                 {
-                                    col = dtDBF.Columns[iColDbf];
+                                    //try
+                                    //{
+                                    line = line.Replace("\"", "");
+                                    string[] x = line.Split(delimiter);
 
-                                    if (col.DataType.ToString() == "System.DateTime")
+                                    DataColumn col;
+                                    rowdbf = dtDBF.NewRow();
+                                    //int iColtxt = 0;
+                                    for (int iColDbf = 0; iColDbf < dtDBF.Columns.Count; iColDbf++)
                                     {
-                                        //try
-                                        //{
+                                        col = dtDBF.Columns[iColDbf];
 
-                                        if (!(x[iColDbf] == " "))
+                                        if (col.DataType.ToString() == "System.DateTime")
                                         {
-                                            String[] fechPedacitos = x[iColDbf].Split('/');
-                                            String fecha = fechPedacitos[2] + "-" + fechPedacitos[0] + "-" + fechPedacitos[1];
-                                            if (!(fechPedacitos[2] == "") && !(fechPedacitos[0] == "") && !(fechPedacitos[1] == ""))
+                                            //try
+                                            //{
+
+                                            if (!(x[iColDbf] == " "))
                                             {
-                                                DateTime fechaco = Convert.ToDateTime(fecha);
-                                                rowdbf[iColDbf] = fechaco;
+                                                String[] fechPedacitos = x[iColDbf].Split('/');
+                                                String fecha = fechPedacitos[2] + "-" + fechPedacitos[0] + "-" + fechPedacitos[1];
+                                                if (!(fechPedacitos[2] == "") && !(fechPedacitos[0] == "") && !(fechPedacitos[1] == ""))
+                                                {
+                                                    DateTime fechaco = Convert.ToDateTime(fecha);
+                                                    rowdbf[iColDbf] = fechaco;
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                DateTime? fechaco = null;
+                                                rowdbf[iColDbf] = fechaco.GetValueOrDefault();
+                                            }
+
+                                        }
+                                        else if (col.DataType.ToString() == "System.Decimal")
+                                        {
+                                            if (x[iColDbf].ToString() == "" || x[iColDbf].ToString() == "*****")
+                                            {
+                                                Decimal Valordeci = 0;
+                                                rowdbf[iColDbf] = Valordeci;
+                                            }
+
+                                        }
+                                        else if (col.DataType.ToString() == "System.Boolean")
+                                        {
+                                            if (x[iColDbf].ToString() == "T")
+                                            {
+                                                rowdbf[iColDbf] = true;
+                                            }
+                                            else if (x[iColDbf].ToString() == "F")
+                                            {
+                                                rowdbf[iColDbf] = false;
                                             }
 
                                         }
                                         else
                                         {
-                                            DateTime? fechaco = null;
-                                            rowdbf[iColDbf] = fechaco.GetValueOrDefault();
+                                            var columnatipo = col.DataType.ToString();
+                                            var valorCelda = x[iColDbf].ToString();
+                                            var nombreColumna = col.ColumnName;
+                                            rowdbf[iColDbf] = x[iColDbf].ToString();
                                         }
 
-                                    }
-                                    else if (col.DataType.ToString() == "System.Decimal")
-                                    {
-                                        if (x[iColDbf].ToString() == "" || x[iColDbf].ToString() == "*****")
-                                        {
-                                            Decimal Valordeci = 0;
-                                            rowdbf[iColDbf] = Valordeci;
-                                        }
 
                                     }
-                                    else if (col.DataType.ToString() == "System.Boolean")
-                                    {
-                                        if (x[iColDbf].ToString() == "T")
-                                        {
-                                            rowdbf[iColDbf] = true;
-                                        }
-                                        else if (x[iColDbf].ToString() == "F")
-                                        {
-                                            rowdbf[iColDbf] = false;
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        var columnatipo = col.DataType.ToString();
-                                        var valorCelda = x[iColDbf].ToString();
-                                        var nombreColumna = col.ColumnName;
-                                        rowdbf[iColDbf] = x[iColDbf].ToString();
-                                    }
-
-
+                                    dtDBF.Rows.Add(rowdbf);
                                 }
-                                dtDBF.Rows.Add(rowdbf);
+
+                                file.Close();
+                                //throw;
                             }
 
-                            file.Close();
-                            //throw;
+
+                        }
+
+                        dtDBF.Columns.Add("id_sucursalalm", typeof(String));
+
+                        for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
+                        {
+                            _funcion.Cargando(this, stripPBEstatus, 0, iAlm, dtDBF.Rows.Count, stripSLEstatus, "Asignando el almacen: " + _tablasNombre);
+                            dtDBF.Rows[iAlm]["ID_SUCURSALALM"] = idActSucu;
                         }
 
 
-                    }
 
-                    dtDBF.Columns.Add("id_sucursalalm", typeof(String));
-
-                    for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
-                    {
-                        _funcion.Cargando(this, stripPBEstatus, 0, iAlm, dtDBF.Rows.Count, stripSLEstatus, "Asignando el almacen: " + _tablasNombre);
-                        dtDBF.Rows[iAlm]["ID_SUCURSALALM"] = idActSucu;
-                    }
-
-                    using (SqlConnection _con = new SqlConnection(_CadenaConexion))
-                    {
-
-                        if (_con.State == ConnectionState.Closed)
+                        if (chRutabaja.Checked)
                         {
-                            _con.Open();
+                            DataRow[] _dataRow;
+                            DataTable _tmpDtDBF;
+                            int posicion = 0;
+                            _dataRow = dtDBF.Select("C_RUTA <> " + actuRutaBaja);
+
+                            _tmpDtDBF = dtDBF.Clone();
+                            foreach (DataRow fila in _dataRow)
+                            {
+                                _tmpDtDBF.ImportRow(fila);
+                            }
+                            dtDBF.Clear();
+                            _dataRow = null;
+                            _dataRow = _tmpDtDBF.Select();
+                            foreach (DataRow fila in _dataRow)
+                            {
+                                _funcion.Cargando(this, stripPBEstatus, 0, posicion++, _dataRow.Count(), stripSLEstatus, "Filtrando clientes: " + _tablasNombre);
+                                dtDBF.ImportRow(fila);
+                            }
                         }
 
-                        int totaldtDBF = dtDBF.Rows.Count;
-                        for (int ii = 0; ii < totaldtDBF; ii++)
+                        //MessageBox.Show(""+ dtDBF.Rows.Count);
+                        using (SqlConnection _con = new SqlConnection(_CadenaConexion))
                         {
-                        
+
+                            if (_con.State == ConnectionState.Closed)
+                            {
+                                _con.Open();
+                            }
+
+                            int totaldtDBF = dtDBF.Rows.Count;
+                            int totalCiente;
                             String[] campo = _tablasNomDestiCamposComparar.ToString().Split('-');
                             String[] camposguardar = _tablasNomDestinoCampos.ToString().Split(',');
-                            String _sql ="";
+                            String _sql = "";
                             DataTable _datos = new DataTable();
                             DataRow dr;
                             _datos.Columns.Add("campo", typeof(String));
-                            _datos.Columns.Add("valor",typeof(String));
+                            _datos.Columns.Add("valor", typeof(String));
                             _datos.Columns.Add("tipo", typeof(String));
+                            for (int ii = 0; ii < totaldtDBF; ii++)
+                            {
+                                _datos.Clear();
+                                //_funcion.Cargando(this, stripPBEstatus, 0, ii, dtDBF.Rows.Count, stripSLEstatus, "Checando existencia");
+                                //_dtTmpCliente.Clear();
+                                _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
 
-
-                            //_funcion.Cargando(this, stripPBEstatus, 0, ii, dtDBF.Rows.Count, stripSLEstatus, "Checando existencia");
-                            //_dtTmpCliente.Clear();
-                            _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString()+" = "+ dtDBF.Rows[ii][campo[0].ToString()] + " AND "+ campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
-
-
-                        
-                            
+                                totalCiente = _dtTmpCliente.Rows.Count;
 
                                 for (int iii = 0; iii < camposguardar.Count(); iii++)
                                 {
@@ -761,41 +792,41 @@ namespace EXPOCOMA.Stand
                                     _datos.Rows.Add(dr);
                                 }
 
-                                if (!(_dtTmpCliente.Rows.Count > 0))
+                                if (!(totalCiente > 0))
                                 {
-                                    _funcion.Cargando(this, stripPBEstatus, 0, ii, totaldtDBF, stripSLEstatus, "Nuevo registro: "+ii+"/"+ totaldtDBF);
-                                    _sql=_funcion._sql(_datos, _tablasNomDestino, "nuevo", "");
+                                    _funcion.Cargando(this, stripPBEstatus, 0, ii, totaldtDBF, stripSLEstatus, "Nuevo registro: " + ii + "/" + totaldtDBF);
+                                    _sql = _funcion._sql(_datos, _tablasNomDestino, "nuevo", "");
                                 }
                                 else
                                 {
-                            
-                                    _funcion.Cargando(this, stripPBEstatus, 0, ii, totaldtDBF, stripSLEstatus, "Modificando registro: "+ii+" / "+ totaldtDBF);
-                                    _sql=_funcion._sql(_datos, _tablasNomDestino, "modificar", "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
+
+                                    _funcion.Cargando(this, stripPBEstatus, 0, ii, totaldtDBF, stripSLEstatus, "Modificando registro: " + ii + " / " + totaldtDBF);
+                                    _sql = _funcion._sql(_datos, _tablasNomDestino, "modificar", "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
+                                }
+                                try
+                                {
+                                    //_con.Open();
+                                    SqlCommand comando = new SqlCommand(_sql, _con);
+                                    //resultado = comando.ExecuteNonQuery();
+                                    comando.CommandTimeout = 10000;
+                                    comando.ExecuteNonQuery();
+                                    //            __dblocal.Close();
+                                }
+                                catch (Exception e)
+                                {
+
+                                    MessageBox.Show(e.Message, "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
-                                //_con.Open();
-                                SqlCommand comando = new SqlCommand(_sql, _con);
-                                //resultado = comando.ExecuteNonQuery();
-                                comando.ExecuteNonQuery();
-                                //            __dblocal.Close();
                             }
 
-                        //MessageBox.Show(totalClien+"");
-                        //"WHERE ID_SUCURSALALM = " + dtDBF.Rows[ii]["ID_SUCURSALALM"] + " " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()]
-                        // sql_dtTmpClien =
-                        //from dtClien in _dtClientes.AsEnumerable()
-                        //where dtClien.Field<String>("C_CLIENTE") == clvCliente[i].ToString()
-                        //select dtClien;
+                        }
                     }
-
-
-
-
-                }
                 else if (Convert.ToBoolean(_esTablaSql))//CUANDO EL TRASPASO ES EN SQL
                 {
 
-                }else
+                }
+                else
                 {
                     //this.Invoke((MethodInvoker)delegate
                     //{
@@ -803,22 +834,21 @@ namespace EXPOCOMA.Stand
                     //});
                 }
 
-
-
+            } else
+                    {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    MessageBox.Show("No se pudo conectar al servidor", "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
             }
+        }
+            
 
-
-
-
-
-
-
-            _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Proceso terminado" );
+            _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Proceso terminado..." );
             _funcion.DesabilitarControles(this, true, btnActualizar);
             Thread.Sleep(3000);
             _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
             ThreadActualizar = null;
-
 
         }
 
