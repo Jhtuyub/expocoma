@@ -710,25 +710,25 @@ namespace EXPOCOMA.Stand
                 + "[ENTRADA_1] [NUMERIC](9),"
                 + "[SALIDA_1]  [NUMERIC](9),"
                 + "[INVINI_1][NUMERIC](9) NULL,"
-	            +"[INVFIN_1][NUMERIC](9) NULL,"
-	            +"[COSTOPI_1][NUMERIC](9,4) NULL,"
-	            +"[COSTOFI_1][NUMERIC](9,4) NULL,"
+	            + "[INVFIN_1][NUMERIC](9) NULL,"
+	            + "[COSTOPI_1][NUMERIC](9,4) NULL,"
+	            + "[COSTOFI_1][NUMERIC](9,4) NULL,"
 	            + "[INVFIS_1][NUMERIC](9) NULL,"
                 + "[FINFIS_1][varchar](1) NULL,"
                 + "[ENTRADA_2][NUMERIC](9) NULL,"
-	            +"[SALIDA_2][NUMERIC](9) NULL,"
-	            +"[INVINI_2][NUMERIC](9) NULL,"
-	            +"[INVFIN_2][NUMERIC](9) NULL,"
-	            +"[COSTOPI_2][NUMERIC](9,4) NULL,"
-	            +"[COSTOFI_2][NUMERIC](9,4) NULL,"
+	            + "[SALIDA_2][NUMERIC](9) NULL,"
+	            + "[INVINI_2][NUMERIC](9) NULL,"
+	            + "[INVFIN_2][NUMERIC](9) NULL,"
+	            + "[COSTOPI_2][NUMERIC](9,4) NULL,"
+	            + "[COSTOFI_2][NUMERIC](9,4) NULL,"
 	            + "[INVFIS_2][NUMERIC](9) NULL,"
                 + "[FINFIS_2][varchar](1) NULL,"
                 + "[ENTRADA_3][NUMERIC](9) NULL,"
-	            +"[SALIDA_3][NUMERIC](9) NULL,"
-	            +"[INVINI_3][NUMERIC](9) NULL,"
-	            +"[INVFIN_3][NUMERIC](9) NULL,"
-	            +"[COSTOPI_3][NUMERIC](9,4) NULL,"
-	            +"[COSTOFI_3][NUMERIC](9,4) NULL,"
+	            + "[SALIDA_3][NUMERIC](9) NULL,"
+	            + "[INVINI_3][NUMERIC](9) NULL,"
+	            + "[INVFIN_3][NUMERIC](9) NULL,"
+	            + "[COSTOPI_3][NUMERIC](9,4) NULL,"
+	            + "[COSTOFI_3][NUMERIC](9,4) NULL,"
 	            + "[INVFIS_3][NUMERIC](9) NULL,"
                 + "[FINFIS_3][varchar](1) NULL,"
                 + "[ENTRADA_4][NUMERIC](9) NULL,"
@@ -746,7 +746,8 @@ namespace EXPOCOMA.Stand
                 + "[DIS_PEDIDO][NUMERIC](9) NULL,"
                 + "[DIS_MS][NUMERIC](9) NULL,"
                 + "[DIS_TR][NUMERIC](9) NULL,"
-                + "[DIS_DISPO][NUMERIC](9) NULL"
+                + "[DIS_DISPO][NUMERIC](9) NULL,"
+                + "[F]	[varchar](1),"
                 + ");";
 
 
@@ -827,6 +828,7 @@ namespace EXPOCOMA.Stand
             _frmImporTablas.MdiParent = this;
             _frmImporTablas._CadenaConexion = _CadenaConexion;
             _frmImporTablas.nomExpo = nomExpo;
+            _frmImporTablas._nomUsuario = _nomUsuario;
             //_frmSucusal.Owner = this;
             _frmImporTablas.Show();
             
