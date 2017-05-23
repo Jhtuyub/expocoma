@@ -8,6 +8,15 @@ Application.Visible = .F.
 ALINES(arreglo, _rutaTabla, 0, '\')
 *!*	MESSAGEBOX(ALEN(arreglo))
 *!*	MESSAGEBOX(arreglo[ALEN(arreglo)])
+TRY
+  FREE TABLE &_rutaTabla.
+CATCH
+*!*	  =MessageBox("No se puede ejecutar la aplicación ahora, inténtalo más tarde")
+*!*	  QUIT
+ENDTRY
+*!*	IF arreglo[ALEN(arreglo)] =="inventa" OR arreglo[ALEN(arreglo)] == "inv001"
+*!*		FREE TABLE &_rutaTabla.
+*!*	ENDIF
 
 USE &_rutaTabla. EXCLUSIVE
 IF arreglo[ALEN(arreglo)] =="cliente"
