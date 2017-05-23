@@ -45,6 +45,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.stripPBEstatus = new System.Windows.Forms.ToolStripProgressBar();
             this.stripSLEstatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chRutabaja = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -75,7 +76,7 @@
             this.btnImprimir.Location = new System.Drawing.Point(359, 390);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(75, 29);
-            this.btnImprimir.TabIndex = 11;
+            this.btnImprimir.TabIndex = 12;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
             this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
@@ -124,7 +125,7 @@
             this.btnSalir.Location = new System.Drawing.Point(440, 390);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 29);
-            this.btnSalir.TabIndex = 12;
+            this.btnSalir.TabIndex = 13;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
@@ -214,18 +215,29 @@
             this.stripSLEstatus.Size = new System.Drawing.Size(16, 17);
             this.stripSLEstatus.Text = "...";
             // 
+            // chRutabaja
+            // 
+            this.chRutabaja.AutoSize = true;
+            this.chRutabaja.Location = new System.Drawing.Point(179, 395);
+            this.chRutabaja.Name = "chRutabaja";
+            this.chRutabaja.Size = new System.Drawing.Size(151, 21);
+            this.chRutabaja.TabIndex = 11;
+            this.chRutabaja.Text = "Excluir ruta de baja";
+            this.chRutabaja.UseVisualStyleBackColor = true;
+            // 
             // FrmImprimirInvita
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 450);
+            this.Controls.Add(this.picbCargando);
+            this.Controls.Add(this.chRutabaja);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnGenerarxls);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtCliRutBaja);
             this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.picbCargando);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtNoImpre);
@@ -270,5 +282,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripProgressBar stripPBEstatus;
         private System.Windows.Forms.ToolStripStatusLabel stripSLEstatus;
+        private System.Windows.Forms.CheckBox chRutabaja;
     }
 }
