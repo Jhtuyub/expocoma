@@ -212,7 +212,7 @@ namespace EXPOCOMA.login
         public void IniciarSesion()
         {
             _funciones.DesabilitarControles(this, false);
-            _funciones.Cargando(this, stripPBEstatus, 5, 1, 2, stripSLEstatus, "Validando...");
+            _funciones.Cargando(this, stripPBEstatus, 0, 1, 2, stripSLEstatus, "Validando...");
             DirectoryEntry directoryEntry = new DirectoryEntry("LDAP://servdc2", txtUsuario.Text, txtPass.Text);
             DirectorySearcher searcher = new DirectorySearcher(directoryEntry)
             {
