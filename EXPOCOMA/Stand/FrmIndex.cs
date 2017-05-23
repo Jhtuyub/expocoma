@@ -162,6 +162,7 @@ namespace EXPOCOMA.Stand
                   + "[almacen] [varchar](5) NOT NULL,"
                   + "[organization_id] [varchar](5) NOT NULL,"
                   + "[sucursal] [varchar](100) NOT NULL,"
+                  + "[servidorsucu] [varchar](100) NOT NULL,"
                   + "[dbf] [varchar](100) NOT NULL,"
                   + "[servidor] [varchar](100) NOT NULL,"
                   + "[usuario] [varchar](100) NOT NULL,"
@@ -700,11 +701,60 @@ namespace EXPOCOMA.Stand
                 + "[C_CLIEXPO] [varchar](6) NULL,"
                 + ");";
 
+
+            String _dbfInventa = "IF OBJECT_ID('dbf_inventa') IS NULL "
+                + "CREATE TABLE[dbf_inventa] ("
+                + "[id][int] IDENTITY(1, 1) NOT NULL,"
+                + "[ID_SUCURSALALM][varchar](5) NOT NULL,"
+                + "[C_ARTI][varchar](4) NULL,"
+                + "[ENTRADA_1] [NUMERIC](9),"
+                + "[SALIDA_1]  [NUMERIC](9),"
+                + "[INVINI_1][NUMERIC](9) NULL,"
+	            +"[INVFIN_1][NUMERIC](9) NULL,"
+	            +"[COSTOPI_1][NUMERIC](9,4) NULL,"
+	            +"[COSTOFI_1][NUMERIC](9,4) NULL,"
+	            + "[INVFIS_1][NUMERIC](9) NULL,"
+                + "[FINFIS_1][varchar](1) NULL,"
+                + "[ENTRADA_2][NUMERIC](9) NULL,"
+	            +"[SALIDA_2][NUMERIC](9) NULL,"
+	            +"[INVINI_2][NUMERIC](9) NULL,"
+	            +"[INVFIN_2][NUMERIC](9) NULL,"
+	            +"[COSTOPI_2][NUMERIC](9,4) NULL,"
+	            +"[COSTOFI_2][NUMERIC](9,4) NULL,"
+	            + "[INVFIS_2][NUMERIC](9) NULL,"
+                + "[FINFIS_2][varchar](1) NULL,"
+                + "[ENTRADA_3][NUMERIC](9) NULL,"
+	            +"[SALIDA_3][NUMERIC](9) NULL,"
+	            +"[INVINI_3][NUMERIC](9) NULL,"
+	            +"[INVFIN_3][NUMERIC](9) NULL,"
+	            +"[COSTOPI_3][NUMERIC](9,4) NULL,"
+	            +"[COSTOFI_3][NUMERIC](9,4) NULL,"
+	            + "[INVFIS_3][NUMERIC](9) NULL,"
+                + "[FINFIS_3][varchar](1) NULL,"
+                + "[ENTRADA_4][NUMERIC](9) NULL,"
+                + "[SALIDA_4][NUMERIC](9) NULL,"
+                + "[INVINI_4][NUMERIC](9) NULL,"
+                + "[INVFIN_4][NUMERIC](9) NULL,"
+                + "[COSTOPI_4][NUMERIC](9,4) NULL,"
+                + "[COSTOFI_4][NUMERIC](9,4) NULL,"
+                + "[INVFIS_4][NUMERIC](9) NULL,"
+                + "[FINFIS_4][varchar](1) NULL,"
+                + "[EXIS_ACTU][NUMERIC](9) NULL,"
+                + "[MARCA][varchar](1) NULL,"
+                + "[PEDIDOS][NUMERIC](9) NULL,"
+                + "[PROD_MALO][NUMERIC](9) NULL,"
+                + "[DIS_PEDIDO][NUMERIC](9) NULL,"
+                + "[DIS_MS][NUMERIC](9) NULL,"
+                + "[DIS_TR][NUMERIC](9) NULL,"
+                + "[DIS_DISPO][NUMERIC](9) NULL"
+                + ");";
+
+
             String[,] tablas = {
-                { "tbl_sucursal", "dbf_articulo", "dbf_fam_arti", "dbf_porpieza", "dbf_cliente",
+                { "tbl_sucursal", "dbf_articulo", "dbf_inventa", "dbf_fam_arti", "dbf_porpieza", "dbf_cliente",
                     "dbf_prefijos", "dbf_proveedo", "dbf_statarti", "dbf_estatus", "tbl_provexpo",
                     "tbl_artiexpo", "dbf_agentes", "dbf_rutagen","dbf_rutas","tbl_ctesinvitados" },
-                {_tblSucursal, _dbfArticulo, _dbfFamArti, _dbfPorpieza, _dbfCliente,
+                {_tblSucursal, _dbfArticulo, _dbfInventa, _dbfFamArti, _dbfPorpieza, _dbfCliente,
                     _dbfPrefijos, _dbfProveedo, _dbfStatarti, _dbfEstatus,_tblprovexpo,
                     _tblartiexpo, _dbfAgentes, _dbfRutagen,_dbfRutas, _tblCtesInvitados }
             };
