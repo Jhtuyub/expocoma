@@ -37,8 +37,8 @@ namespace EXPOCOMA.inicio
             txtContrasena.Text = Properties.Settings.Default.sqlserPass;
 
             String[,] _cbdatos = {
-                { "sqlserver","oracle"},
-                { "SQL SERVER","ORACLE"}
+                { "sqlserver",},//"oracle"
+                { "SQL SERVER",}//"ORACLE"
             };
             //MessageBox.Show(Properties.Settings.Default.sqlorigen);
             _funciones.llenarCombobox(cbxOrigenDatos, _cbdatos);
