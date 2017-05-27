@@ -30,6 +30,49 @@ namespace EXPOCOMA.Stand
         DataTable _dtDbfTabla;
         DataTable _dtTblTablaSql;
 
+        //String[,] _tablas =
+        //    {
+        //    {
+        //        //SI ES SBF
+        //        "false",
+        //    },
+        //    {
+        //        //TABLA DBF
+        //        "cliente",
+        //    },
+        //    {
+        //        //CAMPOS DBF
+        //        "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC",
+        //    },
+            
+        //    {
+        //        //SI ES SQL
+        //        "false"
+        //    },
+        //    {
+        //        //TABLA ORIGEN
+        //        ""
+        //    },
+        //    {
+        //        //CAMPOS TABLA ORIGEN
+        //        ""
+        //    },
+        //    {
+        //        //TABLA DESTINO
+        //        "dbf_cliente"
+        //    },
+        //    {
+        //        //CAMPOS TABLA DESTINO
+        //        "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC",
+        //    },
+        //    {
+        //        //CAMPOS DE TABLAS DESTINO PARA COMPARA SI EXISTEN O NO
+        //        "ID_SUCURSALALM-C_CLIENTE",
+                   
+        //        },
+
+        //};
+
         public FrmImporTablas()
         {
             InitializeComponent();
@@ -131,17 +174,17 @@ namespace EXPOCOMA.Stand
                     "", //agentes
                     "",//rutagen
                     "",//rutas
-                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA", //PROVEEDO
+                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA,inactive_date-inactive_date,BAJA_GRAL-BAJA_GRAL", //PROVEEDO
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR",
                     "",
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
-                    
+
                     "",
-                    
+
                     "ID_SUCURSALALM-ID_SUCURSALALM,ITEM_NUMBER-C_ARTI,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,DESCRIPTION-DES_ARTI,ATTRIBUTE3-EMPAQUE,ATTRIBUTE2-CAP_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE", //,status_number-STATUS
                     "ID_SUCURSALALM-ID_SUCURSALALM,STATUS_NUMBER-STATUS,CONCEPTO-CONCEPTO,FECHA_ALTA-FECHA_ALT",
-                    
+
                 },
                
                 //"ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI",
@@ -149,18 +192,39 @@ namespace EXPOCOMA.Stand
             };
 
             _dtTablas = new DataTable("tablas");
+            //_dtTablas.Columns.Add("isdbf", typeof(Boolean));
+            //_dtTablas.Columns.Add("tablasdbf");
+            //_dtTablas.Columns.Add("campodbf");
+            //_dtTablas.Columns.Add("issql", typeof(Boolean));
+            //_dtTablas.Columns.Add("tablassqlorigen");
+            //_dtTablas.Columns.Add("camposqlorigen");
+            //_dtTablas.Columns.Add("tablassqldestino");
+            //_dtTablas.Columns.Add("camposqldestino");
+            //_dtTablas.Columns.Add("camposqlcomparar");
             _dtTablas.Columns.Add("tablas");
             _dtTablas.Columns.Add("dbf", typeof(Boolean));
             _dtTablas.Columns.Add("tablassql");
             _dtTablas.Columns.Add("sql", typeof(Boolean));
             _dtTablas.Columns.Add("campos");
 
+
+
             DataRow dr;
             //
             var totalArray = _cbdatos.GetLength(1);
+            //var totalArray = _tablas.GetLength(1);
             for (int i = 0; i < totalArray; i++)
             {
                 dr = _dtTablas.NewRow();
+                //dr["isdbf"] = _tablas[0, i];
+                //dr["tablasdbf"] = _tablas[1, i];
+                //dr["campodbf"] = _tablas[2, i];
+                //dr["issql"] = _tablas[3, i];
+                //dr["tablassqlorigen"] = _tablas[4, i];
+                //dr["camposqlorigen"] = _tablas[5, i];
+                //dr["tablassqldestino"] = _tablas[6, i];
+                //dr["camposqldestino"] = _tablas[7, i];
+                //dr["camposqlcomparar"] = _tablas[8, i];
                 dr["tablas"] = _cbdatos[0, i];
                 dr["dbf"] = _cbdatos[1, i];
                 dr["tablassql"] = _cbdatos[2, i];
@@ -171,9 +235,19 @@ namespace EXPOCOMA.Stand
             }
             
             dgvTablas.DataSource = _dtTablas;
+            //dgvTablas.Columns["isdbf"].DisplayIndex = 1;
+            //dgvTablas.Columns["tablasdbf"].HeaderText = "Tablas";
+            //dgvTablas.Columns["isdbf"].HeaderText = "dbf";
+            //dgvTablas.Columns["campodbf"].Visible = false;
+            //dgvTablas.Columns["issql"].HeaderText = "sql";
+            //dgvTablas.Columns["tablassqlorigen"].Visible = false;
+            //dgvTablas.Columns["camposqlorigen"].Visible = false;
+            //dgvTablas.Columns["tablassqldestino"].Visible = false;
+            //dgvTablas.Columns["camposqldestino"].Visible = false;
+            //dgvTablas.Columns["camposqlcomparar"].Visible = false;
             dgvTablas.Columns["tablassql"].Visible = false;
             dgvTablas.Columns["campos"].Visible = false;
-            
+
             dgvTablas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             dgvTablas.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
@@ -490,6 +564,7 @@ namespace EXPOCOMA.Stand
                 var impdtSucu = _dtSucursal.Rows[i]["importar"];
                 var almdtSucu = _dtSucursal.Rows[i]["almacen"];
                 var rutadtSucu = _dtSucursal.Rows[i]["dbf"];
+                var servSucu = _dtSucursal.Rows[i]["SERVIDORSUCU"];
 
                 if (Convert.ToBoolean(impdtSucu) == true)
                 {
@@ -536,356 +611,365 @@ namespace EXPOCOMA.Stand
 
                         if (Convert.ToBoolean(dbfdtTablas) == true)
                         {
-
-                            String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString();
-                            String carpetaTmpExpo = rutadtSucu.ToString() + @"\tmp_expo";
-                            if (!Directory.Exists(carpetaLocal))
+                            if (_funcion.PingServ(servSucu.ToString()))
                             {
-                                Directory.CreateDirectory(carpetaLocal);
-                            }
-
-                            if (!Directory.Exists(carpetaTmpExpo))
-                            {
-                                Directory.CreateDirectory(carpetaTmpExpo);
-                            }
-
-                            //for (int iPosi = 0; iPosi < _dtTablas.Rows.Count; iPosi++)
-                            //{
-                            //foreach (DataGridViewRow row in dgvTablas.Rows)
-                            //{
-                            //    if (row.Cells[0].Value == tbldtTablas)
-                            //    {
-
-                            //        this.Invoke(new PosicionTablaDelegate(PosicionTabla), j);
-                            //        //break;
-
-                            //    }
-
-                            //}
-
-                            String[] cutTablas = tbldtTablas.ToString().Split(',');
-                            String nomTblTablas = "";
-                            String nomDbfTablas = "";
-
-                            if (!(almdtSucu.ToString() == "001")) //ESTO SE HIZO POR EL DETALLE DE MERIDA QUE TIENE INV001 Y LAS OTRAS SUCURSALES TIENEN INVENTA
-                            {
-                                nomTblTablas = cutTablas[0].ToString();
-                                nomDbfTablas = cutTablas[0].ToString();
-                            }
-                            else
-                            {
-                                try
+                                String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString();
+                                String carpetaTmpExpo = rutadtSucu.ToString() + @"\tmp_expo";
+                                if (!Directory.Exists(carpetaLocal))
                                 {
-                                    nomTblTablas = cutTablas[0].ToString();
-                                    nomDbfTablas = cutTablas[1].ToString();
+                                    Directory.CreateDirectory(carpetaLocal);
                                 }
-                                catch (Exception)
-                                {
 
+                                if (!Directory.Exists(carpetaTmpExpo))
+                                {
+                                    Directory.CreateDirectory(carpetaTmpExpo);
+                                }
+
+                                //for (int iPosi = 0; iPosi < _dtTablas.Rows.Count; iPosi++)
+                                //{
+                                //foreach (DataGridViewRow row in dgvTablas.Rows)
+                                //{
+                                //    if (row.Cells[0].Value == tbldtTablas)
+                                //    {
+
+                                //        this.Invoke(new PosicionTablaDelegate(PosicionTabla), j);
+                                //        //break;
+
+                                //    }
+
+                                //}
+
+                                String[] cutTablas = tbldtTablas.ToString().Split(',');
+                                String nomTblTablas = "";
+                                String nomDbfTablas = "";
+
+                                if (!(almdtSucu.ToString() == "001")) //ESTO SE HIZO POR EL DETALLE DE MERIDA QUE TIENE INV001 Y LAS OTRAS SUCURSALES TIENEN INVENTA
+                                {
                                     nomTblTablas = cutTablas[0].ToString();
                                     nomDbfTablas = cutTablas[0].ToString();
                                 }
+                                else
+                                {
+                                    try
+                                    {
+                                        nomTblTablas = cutTablas[0].ToString();
+                                        nomDbfTablas = cutTablas[1].ToString();
+                                    }
+                                    catch (Exception)
+                                    {
 
-                            }
-                            //for (int ii = 0; ii < cutTablas.Count(); ii++)
-                            //{
-                            //    nomTblTablas = cutTablas[0].ToString();
-                            //    if (File.Exists(rutadtSucu.ToString()+"\\"+ cutTablas[ii].ToString()+".dbf"))
-                            //    {
-                            //        nomDbfTablas = cutTablas[ii].ToString();
-                            //        break;
-                            //    }
-                            //}
+                                        nomTblTablas = cutTablas[0].ToString();
+                                        nomDbfTablas = cutTablas[0].ToString();
+                                    }
 
-                            _funcion.Cargando(this, barraProgreso, 0, 1, 3, lblMensaje, "Preparando dbf " + nomDbfTablas);
+                                }
+                                //for (int ii = 0; ii < cutTablas.Count(); ii++)
+                                //{
+                                //    nomTblTablas = cutTablas[0].ToString();
+                                //    if (File.Exists(rutadtSucu.ToString()+"\\"+ cutTablas[ii].ToString()+".dbf"))
+                                //    {
+                                //        nomDbfTablas = cutTablas[ii].ToString();
+                                //        break;
+                                //    }
+                                //}
 
-                            //COPIAR LOS DBF EN EL MISMO SERVIDOR CON OTRO NOMBRE
-                            var servFptOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".fpt");
-                            var servFptDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".fpt");
-                            //COPIAR LOS ARCHIVOS A LAS CARPETAS QUE EL SISTEMA CREA
-                            var localFptDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".fpt");
+                                _funcion.Cargando(this, barraProgreso, 0, 1, 3, lblMensaje, "Preparando dbf " + nomDbfTablas);
 
-                            var servDbfOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".dbf");
-                            var servDbfDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".dbf");
-                            var localDbfDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".dbf");
+                                //COPIAR LOS DBF EN EL MISMO SERVIDOR CON OTRO NOMBRE
+                                var servFptOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".fpt");
+                                var servFptDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".fpt");
+                                //COPIAR LOS ARCHIVOS A LAS CARPETAS QUE EL SISTEMA CREA
+                                var localFptDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".fpt");
 
-                            var servCdxOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".cdx");
-                            var servCdxDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".cdx");
-                            var localCdxDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".cdx");
+                                var servDbfOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".dbf");
+                                var servDbfDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".dbf");
+                                var localDbfDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".dbf");
 
-                            if (File.Exists(servFptOrigen))
-                            {
+                                var servCdxOrigen = Path.Combine(rutadtSucu.ToString(), nomDbfTablas + ".cdx");
+                                var servCdxDestino = Path.Combine(carpetaTmpExpo, "expo_" + nomDbfTablas + ".cdx");
+                                var localCdxDestino = Path.Combine(carpetaLocal, nomDbfTablas + ".cdx");
 
-                                File.Copy(servFptOrigen, servFptDestino, true);
-
-                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar fpt " + nomDbfTablas);
-                                //Thread.Sleep(1000);
-
-                                CopyFile(servFptDestino, localFptDestino);
-
-                            }
-
-                            if (File.Exists(servDbfOrigen))
-                            {
-                                File.Copy(servDbfOrigen, servDbfDestino, true);
-
-                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar dbf " + nomDbfTablas);
-                                //Thread.Sleep(1000);
-
-                                CopyFile(servDbfDestino, localDbfDestino);
-                            }
-
-                            if (File.Exists(servCdxOrigen))
-                            {
-                                File.Copy(servCdxOrigen, servCdxDestino, true);
-
-                                _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar cdx " + nomDbfTablas);
-                                //Thread.Sleep(1000);
-
-                                CopyFile(servCdxDestino, localCdxDestino);
-                            }
-
-                            int totalProcesoDBF = 4;
-                            int actualProcesoDBF = 1;
-                            _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Preparando para importación: " + nomTblTablas);
-                            Thread.Sleep(5000);
-
-                            ProcessStartInfo info = null;
-                            String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString() + @"\" + nomDbfTablas;
-                            //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
-                            info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
-                            //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
-                            info.WindowStyle = ProcessWindowStyle.Hidden;
-                            programa = Process.Start(info);
-                            programa.WaitForExit(1000 * 60 * 900);
-                            programa.StartInfo.UseShellExecute = false;
-
-                            //programa.Close();
-
-                            if (!programa.HasExited)
-                            {
-                                programa.Kill();
-                            }
-
-
-                            string cadena = @"Driver={Microsoft Visual Foxpro Driver};UID=;SourceType=DBF;SourceDB=" + carpetaLocal + " ;Exclusive=No;SHARED=YES;collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=YES;";
-                            OdbcConnection con = new OdbcConnection();  //se crea la variable de conexion para el dbf
-                            con.ConnectionString = cadena;              //se crea la conexion
-                            con.Open();
-                            string consulta = "SELECT * FROM " + nomDbfTablas;
-                            OdbcDataAdapter adapter = new OdbcDataAdapter(consulta, con);
-                            DataTable dtDBF = new DataTable();
-
-
-
-                            try
-                            {
-                                adapter.Fill(dtDBF);
-                                con.Close();
-
-                            }
-                            catch (Exception ex)
-                            {
-                                //throw;
-                                //MessageBox.Show(ex.Message);
-                                con.Close();
-
-                                dtDBF.Clear();
-
-
-
-
-                                /////////////////////////////////////////////////
-                                if (File.Exists(_RutaTabla + ".txt"))
+                                if (File.Exists(servFptOrigen))
                                 {
 
-                                    String line;
-                                    Char delimiter = '\t';
+                                    File.Copy(servFptOrigen, servFptDestino, true);
 
-                                    DataRow rowdbf;
+                                    _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar fpt " + nomDbfTablas);
+                                    //Thread.Sleep(1000);
 
-                                    // Read the file and display it line by line.
-                                    System.IO.StreamReader file =
-                                        new System.IO.StreamReader(_RutaTabla + ".txt");
-                                    while ((line = file.ReadLine()) != null)
+                                    CopyFile(servFptDestino, localFptDestino);
+
+                                }
+
+                                if (File.Exists(servDbfOrigen))
+                                {
+                                    File.Copy(servDbfOrigen, servDbfDestino, true);
+
+                                    _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar dbf " + nomDbfTablas);
+                                    //Thread.Sleep(1000);
+
+                                    CopyFile(servDbfDestino, localDbfDestino);
+                                }
+
+                                if (File.Exists(servCdxOrigen))
+                                {
+                                    File.Copy(servCdxOrigen, servCdxDestino, true);
+
+                                    _funcion.Cargando(this, barraProgreso, 0, 2, 3, lblMensaje, "Preparando para copiar cdx " + nomDbfTablas);
+                                    //Thread.Sleep(1000);
+
+                                    CopyFile(servCdxDestino, localCdxDestino);
+                                }
+
+                                int totalProcesoDBF = 4;
+                                int actualProcesoDBF = 1;
+                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Preparando para importación: " + nomTblTablas);
+                                Thread.Sleep(5000);
+
+                                ProcessStartInfo info = null;
+                                String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString() + @"\" + nomDbfTablas;
+                                //String _Alm = _dtTablas.Rows[j]["almacen"].ToString();
+                                info = new ProcessStartInfo(@"copiartabla.exe", '"' + _RutaTabla + '"');
+                                //info = new ProcessStartInfo(@"C:\CRM\CRM_VentasDos.exe", "" + cvsuc + " " + Fecha + "");
+                                info.WindowStyle = ProcessWindowStyle.Hidden;
+                                programa = Process.Start(info);
+                                programa.WaitForExit(1000 * 60 * 900);
+                                programa.StartInfo.UseShellExecute = false;
+
+                                //programa.Close();
+
+                                if (!programa.HasExited)
+                                {
+                                    programa.Kill();
+                                }
+
+
+                                string cadena = @"Driver={Microsoft Visual Foxpro Driver};UID=;SourceType=DBF;SourceDB=" + carpetaLocal + " ;Exclusive=No;SHARED=YES;collate=Machine;NULL=NO;DELETED=NO;BACKGROUNDFETCH=YES;";
+                                OdbcConnection con = new OdbcConnection();  //se crea la variable de conexion para el dbf
+                                con.ConnectionString = cadena;              //se crea la conexion
+                                con.Open();
+                                string consulta = "SELECT * FROM " + nomDbfTablas;
+                                OdbcDataAdapter adapter = new OdbcDataAdapter(consulta, con);
+                                DataTable dtDBF = new DataTable();
+
+
+
+                                try
+                                {
+                                    adapter.Fill(dtDBF);
+                                    con.Close();
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    //throw;
+                                    //MessageBox.Show(ex.Message);
+                                    con.Close();
+
+                                    dtDBF.Clear();
+
+
+
+
+                                    /////////////////////////////////////////////////
+                                    if (File.Exists(_RutaTabla + ".txt"))
                                     {
-                                        //try
-                                        //{
-                                        line = line.Replace("\"", "");
-                                        string[] x = line.Split(delimiter);
 
-                                        DataColumn col;
-                                        rowdbf = dtDBF.NewRow();
-                                        //int iColtxt = 0;
-                                        for (int iColDbf = 0; iColDbf < dtDBF.Columns.Count; iColDbf++)
+                                        String line;
+                                        Char delimiter = '\t';
+
+                                        DataRow rowdbf;
+
+                                        // Read the file and display it line by line.
+                                        System.IO.StreamReader file =
+                                            new System.IO.StreamReader(_RutaTabla + ".txt");
+                                        while ((line = file.ReadLine()) != null)
                                         {
-                                            col = dtDBF.Columns[iColDbf];
+                                            //try
+                                            //{
+                                            line = line.Replace("\"", "");
+                                            string[] x = line.Split(delimiter);
 
-                                            if (col.DataType.ToString() == "System.DateTime")
+                                            DataColumn col;
+                                            rowdbf = dtDBF.NewRow();
+                                            //int iColtxt = 0;
+                                            for (int iColDbf = 0; iColDbf < dtDBF.Columns.Count; iColDbf++)
                                             {
-                                                //try
-                                                //{
+                                                col = dtDBF.Columns[iColDbf];
 
-                                                if (!(x[iColDbf] == " "))
+                                                if (col.DataType.ToString() == "System.DateTime")
                                                 {
-                                                    String[] fechPedacitos = x[iColDbf].Split('/');
-                                                    String fecha = fechPedacitos[2] + "-" + fechPedacitos[0] + "-" + fechPedacitos[1];
-                                                    if (!(fechPedacitos[2] == "") && !(fechPedacitos[0] == "") && !(fechPedacitos[1] == ""))
+                                                    //try
+                                                    //{
+
+                                                    if (!(x[iColDbf] == " "))
                                                     {
-                                                        DateTime fechaco = Convert.ToDateTime(fecha);
-                                                        rowdbf[iColDbf] = fechaco;
+                                                        String[] fechPedacitos = x[iColDbf].Split('/');
+                                                        String fecha = fechPedacitos[2] + "-" + fechPedacitos[0] + "-" + fechPedacitos[1];
+                                                        if (!(fechPedacitos[2] == "") && !(fechPedacitos[0] == "") && !(fechPedacitos[1] == ""))
+                                                        {
+                                                            DateTime fechaco = Convert.ToDateTime(fecha);
+                                                            rowdbf[iColDbf] = fechaco;
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        DateTime? fechaco = null;
+                                                        rowdbf[iColDbf] = fechaco.GetValueOrDefault();
+                                                    }
+
+                                                }
+                                                else if (col.DataType.ToString() == "System.Decimal")
+                                                {
+                                                    if (x[iColDbf].ToString() == "" || x[iColDbf].ToString() == "*****")
+                                                    {
+                                                        Decimal Valordeci = 0;
+                                                        rowdbf[iColDbf] = Valordeci;
+                                                    }
+
+                                                }
+                                                else if (col.DataType.ToString() == "System.Boolean")
+                                                {
+                                                    if (x[iColDbf].ToString() == "T")
+                                                    {
+                                                        rowdbf[iColDbf] = true;
+                                                    }
+                                                    else if (x[iColDbf].ToString() == "F")
+                                                    {
+                                                        rowdbf[iColDbf] = false;
                                                     }
 
                                                 }
                                                 else
                                                 {
-                                                    DateTime? fechaco = null;
-                                                    rowdbf[iColDbf] = fechaco.GetValueOrDefault();
+                                                    var columnatipo = col.DataType.ToString();
+                                                    var valorCelda = x[iColDbf].ToString();
+                                                    var nombreColumna = col.ColumnName;
+                                                    rowdbf[iColDbf] = x[iColDbf].ToString();
                                                 }
 
-                                            }
-                                            else if (col.DataType.ToString() == "System.Decimal")
-                                            {
-                                                if (x[iColDbf].ToString() == "" || x[iColDbf].ToString() == "*****")
-                                                {
-                                                    Decimal Valordeci = 0;
-                                                    rowdbf[iColDbf] = Valordeci;
-                                                }
 
                                             }
-                                            else if (col.DataType.ToString() == "System.Boolean")
-                                            {
-                                                if (x[iColDbf].ToString() == "T")
-                                                {
-                                                    rowdbf[iColDbf] = true;
-                                                }
-                                                else if (x[iColDbf].ToString() == "F")
-                                                {
-                                                    rowdbf[iColDbf] = false;
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                var columnatipo = col.DataType.ToString();
-                                                var valorCelda = x[iColDbf].ToString();
-                                                var nombreColumna = col.ColumnName;
-                                                rowdbf[iColDbf] = x[iColDbf].ToString();
-                                            }
-
-
-                                        }
-                                        dtDBF.Rows.Add(rowdbf);
-                                    }
-
-                                    file.Close();
-                                    //throw;
-                                }
-                            }
-
-                            String[] archivos = Directory.GetFiles(carpetaLocal, nomDbfTablas + ".*");
-
-                            foreach (String file in archivos)
-                            {
-                                if (File.Exists(file))
-                                {
-                                    //MessageBox.Show(file);
-                                    File.Delete(file);
-                                }
-                            }
-
-
-
-                            dtDBF.Columns.Add("id_sucursalalm", typeof(String));
-
-                            for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
-                            {
-                                _funcion.Cargando(this, barraProgreso, 0, iAlm, dtDBF.Rows.Count, lblMensaje, "Asignando el almacen: " + nomDbfTablas);
-                                dtDBF.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
-                            }
-
-                            using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
-                            {
-                                //bool respuesta = false;
-                                SqlTransaction _tran;
-                                string _tabla = "dbf_" + nomTblTablas;
-                                if (_consql.State == ConnectionState.Closed)
-                                {
-                                    _consql.Open();
-                                }
-
-                                //_con.Open();
-                                actualProcesoDBF++;
-                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + nomTblTablas);
-                                String sqlBorrar = "DELETE FROM dbf_" + nomTblTablas + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
-                                SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
-                                comando.CommandTimeout = 300;
-                                comando.ExecuteNonQuery();
-
-                                actualProcesoDBF++;
-                                _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Verificando campos: " + nomTblTablas);
-                                _tran = _consql.BeginTransaction();
-                                using (SqlBulkCopy bulkCopy =
-                                    new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
-                                {
-
-                                    bulkCopy.DestinationTableName = _tabla;
-                                    bulkCopy.BulkCopyTimeout = 300;
-                                    
-                                    try
-                                    {
-                                        //dtDBF.Columns.Count
-                                        for (int jj = 0; jj < dtDBF.Columns.Count; jj++)
-                                        {
-                                            _funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + nomTblTablas);
-                                            
-                                            bulkCopy.ColumnMappings.Add(dtDBF.Columns[jj].ColumnName.ToString(), dtDBF.Columns[jj].ColumnName.ToString().ToUpper());
-
+                                            dtDBF.Rows.Add(rowdbf);
                                         }
 
-                                        //bulkCopy.BatchSize = 5000;
-                                        bulkCopy.WriteToServer(dtDBF);
-                                        _tran.Commit();
-                                        //respuesta = true;
-                                        actualProcesoDBF++;
-                                        _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + nomTblTablas);
-                                        //_dtTablas.Rows[j]["dbf"] = false;
+                                        file.Close();
+                                        //throw;
                                     }
-                                    catch (Exception exx)
+                                }
+
+                                String[] archivos = Directory.GetFiles(carpetaLocal, nomDbfTablas + ".*");
+
+                                foreach (String file in archivos)
+                                {
+                                    if (File.Exists(file))
                                     {
-                                        //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                                        this.Invoke((MethodInvoker)delegate
-                                        {
-                                            MessageBox.Show(exx.Message);
-                                        });
-                                        
-                                        //respuesta = false;
+                                        //MessageBox.Show(file);
+                                        File.Delete(file);
+                                    }
+                                }
+
+
+
+                                dtDBF.Columns.Add("id_sucursalalm", typeof(String));
+
+                                for (int iAlm = 0; iAlm < dtDBF.Rows.Count; iAlm++)
+                                {
+                                    _funcion.Cargando(this, barraProgreso, 0, iAlm, dtDBF.Rows.Count, lblMensaje, "Asignando el almacen: " + nomDbfTablas);
+                                    dtDBF.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
+                                }
+
+                                using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
+                                {
+                                    //bool respuesta = false;
+                                    SqlTransaction _tran;
+                                    string _tabla = "dbf_" + nomTblTablas;
+                                    if (_consql.State == ConnectionState.Closed)
+                                    {
+                                        _consql.Open();
+                                    }
+
+                                    //_con.Open();
+                                    actualProcesoDBF++;
+                                    _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Limpiando: " + nomTblTablas);
+                                    String sqlBorrar = "DELETE FROM dbf_" + nomTblTablas + " WHERE ID_SUCURSALALM = '" + almdtSucu.ToString() + "'";
+                                    SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
+                                    comando.CommandTimeout = 300;
+                                    comando.ExecuteNonQuery();
+
+                                    actualProcesoDBF++;
+                                    _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Verificando campos: " + nomTblTablas);
+                                    _tran = _consql.BeginTransaction();
+                                    using (SqlBulkCopy bulkCopy =
+                                        new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
+                                    {
+
+                                        bulkCopy.DestinationTableName = _tabla;
+                                        bulkCopy.BulkCopyTimeout = 300;
+
                                         try
                                         {
-                                            _tran.Rollback();
+                                            //dtDBF.Columns.Count
+                                            for (int jj = 0; jj < dtDBF.Columns.Count; jj++)
+                                            {
+                                                _funcion.Cargando(this, barraProgreso, 0, jj, dtDBF.Columns.Count, lblMensaje, "Preparando campos: " + nomTblTablas);
+
+                                                bulkCopy.ColumnMappings.Add(dtDBF.Columns[jj].ColumnName.ToString(), dtDBF.Columns[jj].ColumnName.ToString().ToUpper());
+
+                                            }
+
+                                            //bulkCopy.BatchSize = 5000;
+                                            bulkCopy.WriteToServer(dtDBF);
+                                            _tran.Commit();
+                                            //respuesta = true;
+                                            actualProcesoDBF++;
+                                            _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Información importada: " + nomTblTablas);
+                                            //_dtTablas.Rows[j]["dbf"] = false;
                                         }
-                                        catch (Exception)
+                                        catch (Exception exx)
+                                        {
+                                            //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
+                                            this.Invoke((MethodInvoker)delegate
+                                            {
+                                                MessageBox.Show(exx.Message);
+                                            });
+
+                                            //respuesta = false;
+                                            try
+                                            {
+                                                _tran.Rollback();
+                                            }
+                                            catch (Exception)
+                                            {
+
+                                                //throw;
+                                            }
+
+                                        }
+                                        finally
                                         {
 
-                                            //throw;
+                                            _consql.Close();
+                                            //copiarTablas = null;
+                                            //respuesta = true;
                                         }
-
                                     }
-                                    finally
-                                    {
 
-                                        _consql.Close();
-                                        //copiarTablas = null;
-                                        //respuesta = true;
-                                    }
                                 }
 
+                                //if (Directory.Exists(carpetaLocal))
+                                //{
+                                //    Directory.Delete(carpetaLocal);
+                                //}
                             }
-
-                            //if (Directory.Exists(carpetaLocal))
-                            //{
-                            //    Directory.Delete(carpetaLocal);
-                            //}
+                            else
+                            {
+                                this.Invoke((MethodInvoker)delegate (){
+                                    MessageBox.Show("No logro conectarme al servidor","¡Upsss!");
+                                });
+                            }
+                            
 
                         }
                         else if (Convert.ToBoolean(sqldtTablas) == true)
@@ -929,7 +1013,18 @@ namespace EXPOCOMA.Stand
                                 {
                                     _funcion.Cargando(this, barraProgreso, 0, iAlm, _dtTblTablaSql.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
                                     _dtTblTablaSql.Rows[iAlm]["ID_SUCURSALALM"] = almdtSucu.ToString();
+
+
+                                    if (_dtTablas.Rows[j]["tablas"].ToString() == "articulo")
+                                    {
+                                        _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] = _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] +" "+ _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE4"];
+                                        //sqlComTablas.Parameters.AddWithValue("@ORGANIZATION_ID", _dtSucursal.Rows[i]["ORGANIZATION_ID"]);
+                                    }
+
+
                                 }
+
+                                //int existeClien = _funcion.llenar_dt(_dtTablas.Rows[j]["tablas"].ToString()).Rows.Count;
 
                                 using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
                                 {
@@ -941,8 +1036,10 @@ namespace EXPOCOMA.Stand
                                         _consql.Open();
                                     }
 
+
+
                                     //_dtTblArticuloSql = _funcion.EstructuraTabla("dbf_articulo");
-                                    _dtDbfTabla = _funcion.EstructuraTabla("dbf_" + tbldtTablas.ToString());
+                                    //_dtDbfTabla = _funcion.EstructuraTabla("dbf_" + tbldtTablas.ToString());
 
                                     //_dtTblArticuloSql = _funcion.llenar_dt("");
                                     actualProcesoDBF++;
@@ -951,6 +1048,8 @@ namespace EXPOCOMA.Stand
                                     SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
                                     comando.CommandTimeout = 300;
                                     comando.ExecuteNonQuery();
+
+
 
                                     _tranSql = _consql.BeginTransaction();
                                     using (SqlBulkCopy bulkCopy =
@@ -991,7 +1090,7 @@ namespace EXPOCOMA.Stand
                                             {
                                                 MessageBox.Show(exx.Message);
                                             });
-                                            
+
                                             //respuesta = false;
                                             try
                                             {
