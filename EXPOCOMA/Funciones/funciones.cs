@@ -128,13 +128,22 @@ namespace EXPOCOMA
             {
                 using (SqlConnection _con = new SqlConnection(_SQLCadenaConexion))
                 {
-
+                    if (_con.State == ConnectionState.Closed)
+                    {
+                        _con.Open();
+                    }
                     SqlDataAdapter myAdaptador = new SqlDataAdapter(_sql, _con);
                     DataTable dt = new DataTable();
                     myAdaptador.Fill(dt);
                     //txtNombre.Text = dt.Rows[0]["nombre"].ToString();
                     //txtDB.Text = dt.Rows[0]["db"].ToString();
                     //_validarDB = dt.Rows[0]["db"].ToString();
+
+                    if (_con.State == ConnectionState.Open)
+                    {
+                        _con.Close();
+                    }
+
                     return dt;
                 }
             }
