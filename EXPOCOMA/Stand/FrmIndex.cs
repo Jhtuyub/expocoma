@@ -180,7 +180,7 @@ namespace EXPOCOMA.Stand
                 + "[FAMI_ARTI] [varchar](10) NULL,"
                 + "[DES_ARTI] [varchar](250) NULL,"
                 + "[DES_ART2] [varchar](250) NULL,"
-                + "[CAP_ARTI] [varchar](7) NULL,"
+                + "[CAP_ARTI] [varchar](15) NULL,"
                 + "[EMPAQUE1] [numeric](4,0) NULL,"
                 + "[EMPAQUE2] [numeric](4,0) NULL,"
                 + "[UBICA_CAJA] [varchar](9) NULL,"
@@ -466,6 +466,8 @@ namespace EXPOCOMA.Stand
                 + "[DES_PCRECI][numeric](5,2) NULL,"
                 + "[DES_COMER][numeric](9,5) NULL,"
                 + "[STATUS][varchar](1) NULL,"
+                + "[inactive_date][varchar](20) NULL," //ESTATUS
+                + "[BAJA_GRAL][varchar](20) NULL,"//ESTATUS
                 + "[CAMBIO][datetime] NULL,"
                 + "[OBSERV1][varchar](60) NULL,"
                 + "[OBSERV2][varchar](60) NULL,"
