@@ -68,8 +68,13 @@ namespace EXPOCOMA.Stand
             //SUCURSAL
             _funcion._SQLCadenaConexion = _CadenaConexion;
             _dtSucursales = _funcion.llenar_form("tbl_sucursal", "anfitrion DESC", "almacen, sucursal");
-            _dtProveedor = _funcion.llenar_form("dbf_proveedo", "c_prove ASC", "id, ID_SUCURSALALM, C_PROVE, DESCRI, RESP_COMA,  C_PROVE2");
-            _dtArticulo = _funcion.llenar_form("dbf_articulo", "c_prove ASC", "id, ID_SUCURSALALM, C_ARTI, FAMI_ARTI, DES_ARTI, CAP_ARTI, EMPAQUE2, STATUS, C_PROVE, C_PROVE2, CANTIDAD, CANCELA, FALTANTE, COSTO, UNIDAD, CAJA, EXHIBIDOR, MARG_PRE4");
+//            SELECT id, ID_SUCURSALALM, C_PROVE, DESCRI, RESP_COMA, C_PROVE2
+//FROM dbf_proveedo
+//where(STATUS = '*' or BAJA_GRAL <> '' or inactive_date <> '')
+            _dtProveedor = _funcion.llenar_dt("dbf_proveedo", "id, ID_SUCURSALALM, C_PROVE, DESCRI, RESP_COMA,  C_PROVE2", "WHERE (STATUS <> '*') or ((inactive_date is null or BAJA_GRAL ='') AND (inactive_date is null and BAJA_GRAL =''))");
+            //_dtClientes = _funcion.llenar_dt("dbf_cliente clie, dbf_agentes agen", "clie.ID_SUCURSALALM, clie.C_CLIENTE, clie.NOM_CLIEN, clie.C_AGENTE AS CLIAGEN, agen.C_AGENTE AS AGENAGEN, agen.NOM_AGENTE, clie.C_RUTA, clie.NOM_TIENDA, clie.POBLACION, clie.TELEFONO", "WHERE (clie.C_AGENTE = agen.C_AGENTE)AND(clie.ID_SUCURSALALM = '" + idSucur + "' AND agen.ID_SUCURSALALM = '" + idSucur + "')");// "WHERE ID_SUCURSALALM = "+cBoxSucursal.SelectedValue.ToString());
+            //_dtArticulo = _funcion.llenar_form("dbf_articulo", "c_prove ASC", "id, ID_SUCURSALALM, C_ARTI, FAMI_ARTI, DES_ARTI, CAP_ARTI, EMPAQUE2, STATUS, C_PROVE, C_PROVE2, CANTIDAD, CANCELA, FALTANTE, COSTO, UNIDAD, CAJA, EXHIBIDOR, MARG_PRE4");
+            _dtArticulo = _funcion.llenar_dt("dbf_articulo arti,dbf_inventa inve", "arti.id, arti.ID_SUCURSALALM, arti.C_ARTI, arti.FAMI_ARTI, arti.DES_ARTI, arti.CAP_ARTI, arti.EMPAQUE2, arti.STATUS, arti.C_PROVE, arti.C_PROVE2, arti.CANTIDAD, arti.CANCELA, arti.FALTANTE, arti.COSTO, arti.UNIDAD, arti.CAJA, arti.EXHIBIDOR, arti.MARG_PRE4, inve.DIS_DISPO", "WHERE arti.C_ARTI = inve.C_ARTI AND arti.ID_SUCURSALALM = inve.ID_SUCURSALALM AND arti.STATUS <> '*' AND arti.STATUS <> 'INACTIVO'");
             _dtProveGuardados = _funcion.llenar_dt("tbl_provexpo", "*", "WHERE COMPRADOR = '" + SesionLetra + "'");
             _dtArtiGuardados = _funcion.llenar_dt("tbl_artiexpo", "*");
             //id, ID_SUCURSALALM, C_PROVE, C_ARTI, DES_ARTI, EMPAQUE2, CAP_ARTI, STATUS
@@ -300,6 +305,9 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["EXHIBIDOR"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["EXHIBIDOR"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                 dgvArticulo.Columns["MARG_PRE4"].Visible = false;
+                dgvArticulo.Columns["DIS_DISPO"].HeaderText = "EXIS";
+                dgvArticulo.Columns["DIS_DISPO"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                dgvArticulo.Columns["DIS_DISPO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                 dgvArticulo.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
                 dgvArticulo.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -1277,22 +1285,7 @@ namespace EXPOCOMA.Stand
             if (!(GuardarProveedor == null))
             {
                 MessageBox.Show("No puede cerrar esta ventana","Guardando Información", MessageBoxButtons.OK,MessageBoxIcon.Information);
-                //copiarTablas.Suspend();
-                //var detener = MessageBox.Show("¿Desea detener la importación?", "¡Aviso!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                //if (detener == DialogResult.Yes)
-                //{
-                //    copiarTablas.Resume();
-                //    btnImportar.Text = "Importar";
-                //    copiarTablas.Abort();
-                //    copiarTablas = null;
-                //    lblMensaje.Text = "...";
-                //    barraProgreso.Value = 0;
-                //    this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar, "Importar");
-                //    //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar);
-
-                //    FrmIndex.opcPartSuc.Enabled = true;
-                //    FrmIndex.opcImporTabla.Enabled = true;
-
+        
                 e.Cancel = true;
                 //    GC.Collect();
             }
@@ -1326,6 +1319,11 @@ namespace EXPOCOMA.Stand
         private void dgvArticulo_MouseMove(object sender, MouseEventArgs e)
         {
             dgvArticulo.Focus();
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+
         }
         //else
         //{
