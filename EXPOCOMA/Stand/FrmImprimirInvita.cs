@@ -54,6 +54,7 @@ namespace EXPOCOMA.Stand
         private Process programa;
         private Thread ThreadImprimir;
         private Thread ThreadActualizar;
+        Thread ThreadGuardarClie;
 
         String[,] _tablas =
             {
@@ -768,13 +769,13 @@ namespace EXPOCOMA.Stand
                         }
 
                         //MessageBox.Show(""+ dtDBF.Rows.Count);
-                        using (SqlConnection _con = new SqlConnection(_CadenaConexion))
-                        {
+                        //using (SqlConnection _con = new SqlConnection(_CadenaConexion))
+                        //{
 
-                            if (_con.State == ConnectionState.Closed)
-                            {
-                                _con.Open();
-                            }
+                            //if (_con.State == ConnectionState.Closed)
+                            //{
+                            //    _con.Open();
+                            //}
 
                             int totaldtDBF = dtDBF.Rows.Count;
                             int totalCiente;
@@ -786,12 +787,26 @@ namespace EXPOCOMA.Stand
                             _datos.Columns.Add("campo", typeof(String));
                             _datos.Columns.Add("valor", typeof(String));
                             _datos.Columns.Add("tipo", typeof(String));
+
+
+
+                            
+
                             for (int ii = 0; ii < totaldtDBF; ii++)
                             {
                                 _datos.Clear();
-                                //_funcion.Cargando(this, stripPBEstatus, 0, ii, dtDBF.Rows.Count, stripSLEstatus, "Checando existencia");
-                                //_dtTmpCliente.Clear();
+                            //_funcion.Cargando(this, stripPBEstatus, 0, ii, dtDBF.Rows.Count, stripSLEstatus, "Checando existencia");
+                            //_dtTmpCliente.Clear();
+                            //try
+                            //{
                                 _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
+                            //}
+                            //catch (Exception)
+                            //{
+
+                            //    _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
+                            //}
+                                
 
                                 totalCiente = _dtTmpCliente.Rows.Count;
 
@@ -806,6 +821,7 @@ namespace EXPOCOMA.Stand
 
                                 if (!(totalCiente > 0))
                                 {
+                                    
                                     _funcion.Cargando(this, stripPBEstatus, 0, ii, totaldtDBF, stripSLEstatus, "Nuevo registro: " + ii + "/" + totaldtDBF);
                                     _sql = _funcion._sql(_datos, _tablasNomDestino, "nuevo", "");
                                 }
@@ -817,22 +833,31 @@ namespace EXPOCOMA.Stand
                                 }
                                 try
                                 {
-                                    //_con.Open();
-                                    SqlCommand comando = new SqlCommand(_sql, _con);
-                                    //resultado = comando.ExecuteNonQuery();
-                                    comando.CommandTimeout = 10000;
-                                    comando.ExecuteNonQuery();
-                                    //            __dblocal.Close();
-                                }
-                                catch (Exception e)
+
+                                //ThreadGuardarClie = new Thread(delegate ()
+                                //{
+                                    guardarClientes(_sql, _CadenaConexion);
+                                //});
+                                //ThreadGuardarClie.Start();
+                                
+                                ////_con.Open();
+                                //SqlCommand comando = new SqlCommand(_sql, _con);
+                                ////resultado = comando.ExecuteNonQuery();
+                                //comando.CommandTimeout = 10000;
+                                //comando.ExecuteNonQuery();
+                                ////            __dblocal.Close();
+                            }
+                            catch (Exception e)
                                 {
 
                                     MessageBox.Show(e.Message, "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
 
                             }
-
-                        }
+                        //ThreadGuardarClie.Join();
+                        //ThreadGuardarClie.Abort();
+                        //ThreadGuardarClie = null;
+                        //}
                     }
                 else if (Convert.ToBoolean(_esTablaSql))//CUANDO EL TRASPASO ES EN SQL
                 {
@@ -856,15 +881,37 @@ namespace EXPOCOMA.Stand
         }
             
 
-            _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Proceso terminado..." );
-            _funcion.DesabilitarControles(this, true, btnActualizar);
+            _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Terminando proceso...");
+            
             Thread.Sleep(5000);
             _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
+            _funcion.DesabilitarControles(this, true, btnActualizar);
             ThreadActualizar = null;
 
         }
 
        
+        public void guardarClientes(String sql, String conexion)
+        {
+            using (SqlConnection _con = new SqlConnection(conexion))
+            {
+                if (_con.State == ConnectionState.Closed)
+                {
+                    _con.Open();
+                }
+                //_con.Open();
+                SqlCommand comando = new SqlCommand(sql, _con);
+                //resultado = comando.ExecuteNonQuery();
+                comando.CommandTimeout = 10000;
+                comando.ExecuteNonQuery();
+                //            __dblocal.Close();
+                if (_con.State == ConnectionState.Open)
+                {
+                    _con.Close();
+                }
+            }
+        }
+
 
         public void CopyFile(string Filein, string fileOut)
         {
@@ -929,5 +976,32 @@ namespace EXPOCOMA.Stand
             fs.Close();
         }
 
+        private void FrmImprimirInvita_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!(ThreadActualizar == null))
+            {
+                ThreadActualizar.Suspend();
+                var detener = MessageBox.Show("¿Desea detener la actualización?", "¡Aviso!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (detener == DialogResult.Yes)
+                {
+                    //btnImportar.Text = "Importar";
+                    ThreadActualizar.Resume();
+                    ThreadActualizar.Abort();
+                    ThreadActualizar = null;
+                    //lblMensaje.Text = "...";
+                    //barraProgreso.Value = 0;
+                    //this.Invoke(new CamposEnableDelegate(_funcion.CamposEnabled), this, true, btnImportar, "Importar");
+                    _funcion.DesabilitarControles(this, true, btnActualizar);
+                    _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
+                    e.Cancel = false;
+                    GC.Collect();
+                }
+                else
+                {
+                    ThreadActualizar.Resume();
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }

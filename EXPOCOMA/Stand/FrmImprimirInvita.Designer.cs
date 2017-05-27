@@ -254,6 +254,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Imprimir Invitaciones - FrmImprimirInvita";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmImprimirInvita_FormClosing);
             this.Load += new System.EventHandler(this.FrmImprimirInvita_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).EndInit();
             this.statusStrip1.ResumeLayout(false);
