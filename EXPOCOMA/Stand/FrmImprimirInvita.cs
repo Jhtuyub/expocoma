@@ -68,7 +68,7 @@ namespace EXPOCOMA.Stand
                 {
                     //_esTablaBdf - SI ES BDF
                     "true",
-                    "false",
+                    "true",
                     "false",
                     "false",
                 },
@@ -76,7 +76,7 @@ namespace EXPOCOMA.Stand
 
                 //_tablasBDFCampos - CAMPOS DE LA TABLA DBF
                 "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC", //
-                    "",
+                    "ID_SUCURSALALM,C_AGENTE,NOM_AGENTE",
                     "",
                     "",
                 },
@@ -97,21 +97,21 @@ namespace EXPOCOMA.Stand
                 {
                 //_tablasNomDestino - TABLAS DESTINO
                     "dbf_cliente",
-                    "",
+                    "dbf_agentes",
                     "",
                     "",
                 },
                 {
                 //_tablasNomDestinoCampos - CAMPOS DE TABLAS DESTINO
                     "ID_SUCURSALALM,C_CLIENTE,NOM_CLIEN,NOM_TIENDA,POBLACION,TELEFONO,C_AGENTE,C_RUTA,DIRECCI,RFC",//
-                    "",
+                    "ID_SUCURSALALM,C_AGENTE,NOM_AGENTE",
                     "",
                     "",
                 },
                 {
                 //_tablasNomDestiCamposComparar - CAMPOS DE TABLAS DESTINO PARA COMPARA SI EXISTEN O NO
                     "ID_SUCURSALALM-C_CLIENTE",
-                    "",
+                    "ID_SUCURSALALM-C_AGENTE",
                     "",
                     "",
                 },
@@ -547,13 +547,13 @@ namespace EXPOCOMA.Stand
                 _tablasNomDestinoCampos = _tablas[6, i];
                 _tablasNomDestiCamposComparar = _tablas[7, i];
 
-                if (_funcion.PingServ(servidorSucu))
-                {
-
+                
                     if (Convert.ToBoolean(_esTablaBdf))//CUANDO EL TRASPASO ES EN BDF
                     {
 
-                    
+                    if (_funcion.PingServ(servidorSucu))
+                    {
+
                         int actualProcesoDBF = 1;
                         int totalProcesoDBF = 3;
                         _funcion.Cargando(this, stripPBEstatus, 0, actualProcesoDBF, totalProcesoDBF, stripSLEstatus, "Preparando dbf " + _tablasNombre);
@@ -745,28 +745,31 @@ namespace EXPOCOMA.Stand
                         }
 
 
-
-                        if (chRutabaja.Checked)
+                        if (_tablasNombre == "cliente")
                         {
-                            DataRow[] _dataRow;
-                            DataTable _tmpDtDBF;
-                            int posicion = 0;
-                            _dataRow = dtDBF.Select("C_RUTA <> " + actuRutaBaja);
+                            if (chRutabaja.Checked)
+                            {
+                                DataRow[] _dataRow;
+                                DataTable _tmpDtDBF;
+                                int posicion = 0;
+                                _dataRow = dtDBF.Select("C_RUTA <> " + actuRutaBaja);
 
-                            _tmpDtDBF = dtDBF.Clone();
-                            foreach (DataRow fila in _dataRow)
-                            {
-                                _tmpDtDBF.ImportRow(fila);
-                            }
-                            dtDBF.Clear();
-                            _dataRow = null;
-                            _dataRow = _tmpDtDBF.Select();
-                            foreach (DataRow fila in _dataRow)
-                            {
-                                _funcion.Cargando(this, stripPBEstatus, 0, posicion++, _dataRow.Count(), stripSLEstatus, "Filtrando clientes: " + _tablasNombre);
-                                dtDBF.ImportRow(fila);
+                                _tmpDtDBF = dtDBF.Clone();
+                                foreach (DataRow fila in _dataRow)
+                                {
+                                    _tmpDtDBF.ImportRow(fila);
+                                }
+                                dtDBF.Clear();
+                                _dataRow = null;
+                                _dataRow = _tmpDtDBF.Select();
+                                foreach (DataRow fila in _dataRow)
+                                {
+                                    _funcion.Cargando(this, stripPBEstatus, 0, posicion++, _dataRow.Count(), stripSLEstatus, "Filtrando clientes: " + _tablasNombre);
+                                    dtDBF.ImportRow(fila);
+                                }
                             }
                         }
+                        
 
                         //MessageBox.Show(""+ dtDBF.Rows.Count);
                         //using (SqlConnection _con = new SqlConnection(_CadenaConexion))
@@ -799,7 +802,7 @@ namespace EXPOCOMA.Stand
                             //_dtTmpCliente.Clear();
                             //try
                             //{
-                                _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = " + dtDBF.Rows[ii][campo[1].ToString()]);
+                                _dtTmpCliente = _funcion.llenar_dt(_tablasNomDestino, _tablasNomDestinoCampos, "WHERE " + campo[0].ToString() + " = " + dtDBF.Rows[ii][campo[0].ToString()] + " AND " + campo[1].ToString() + " = '" + dtDBF.Rows[ii][campo[1].ToString()]+"'");
                             //}
                             //catch (Exception)
                             //{
@@ -858,7 +861,21 @@ namespace EXPOCOMA.Stand
                         //ThreadGuardarClie.Abort();
                         //ThreadGuardarClie = null;
                         //}
+
+
                     }
+                    else
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            MessageBox.Show("No se pudo conectar al servidor", "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        });
+                    }
+
+                    //////////////////////////////////////////
+
+
+                }
                 else if (Convert.ToBoolean(_esTablaSql))//CUANDO EL TRASPASO ES EN SQL
                 {
 
@@ -871,19 +888,13 @@ namespace EXPOCOMA.Stand
                     //});
                 }
 
-            } else
-                    {
-                this.Invoke((MethodInvoker)delegate
-                {
-                    MessageBox.Show("No se pudo conectar al servidor", "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                });
-            }
+            
         }
             
 
             _funcion.Cargando(this, stripPBEstatus, 0, 1, 1, stripSLEstatus, "Terminando proceso...");
             
-            Thread.Sleep(5000);
+            Thread.Sleep(500);
             _funcion.Cargando(this, stripPBEstatus, 0, 0, 1, stripSLEstatus, "...");
             _funcion.DesabilitarControles(this, true, btnActualizar);
             ThreadActualizar = null;

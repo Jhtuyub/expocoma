@@ -51,7 +51,9 @@
             this.picbCargando = new System.Windows.Forms.PictureBox();
             this.cBoxMostarProv = new System.Windows.Forms.CheckBox();
             this.btnActualizar = new System.Windows.Forms.Button();
-            this.chStatus = new System.Windows.Forms.CheckBox();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.stripPBEstatus = new System.Windows.Forms.ToolStripProgressBar();
+            this.stripSLEstatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabProveedor.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProveedor)).BeginInit();
@@ -59,12 +61,13 @@
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSalir
             // 
             this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalir.Location = new System.Drawing.Point(817, 462);
+            this.btnSalir.Location = new System.Drawing.Point(817, 468);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(80, 29);
             this.btnSalir.TabIndex = 15;
@@ -75,7 +78,7 @@
             // btnGuardar
             // 
             this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGuardar.Location = new System.Drawing.Point(731, 462);
+            this.btnGuardar.Location = new System.Drawing.Point(731, 468);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(80, 29);
             this.btnGuardar.TabIndex = 14;
@@ -209,7 +212,7 @@
             this.tabArticulo.Location = new System.Drawing.Point(12, 248);
             this.tabArticulo.Name = "tabArticulo";
             this.tabArticulo.SelectedIndex = 0;
-            this.tabArticulo.Size = new System.Drawing.Size(885, 205);
+            this.tabArticulo.Size = new System.Drawing.Size(885, 214);
             this.tabArticulo.TabIndex = 6;
             // 
             // tabPage2
@@ -223,7 +226,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(877, 175);
+            this.tabPage2.Size = new System.Drawing.Size(877, 184);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Articulo";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -291,7 +294,7 @@
             this.dgvArticulo.Name = "dgvArticulo";
             this.dgvArticulo.RowHeadersWidth = 4;
             this.dgvArticulo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvArticulo.Size = new System.Drawing.Size(861, 132);
+            this.dgvArticulo.Size = new System.Drawing.Size(861, 141);
             this.dgvArticulo.TabIndex = 22;
             this.dgvArticulo.TabStop = false;
             this.dgvArticulo.Tag = "";
@@ -312,17 +315,18 @@
             // 
             this.cBoxMostarProv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cBoxMostarProv.AutoSize = true;
-            this.cBoxMostarProv.Location = new System.Drawing.Point(530, 467);
+            this.cBoxMostarProv.Location = new System.Drawing.Point(530, 473);
             this.cBoxMostarProv.Name = "cBoxMostarProv";
             this.cBoxMostarProv.Size = new System.Drawing.Size(197, 21);
             this.cBoxMostarProv.TabIndex = 13;
             this.cBoxMostarProv.Text = "Mostrar Prov. Sin Articulos";
             this.cBoxMostarProv.UseVisualStyleBackColor = true;
+            this.cBoxMostarProv.Visible = false;
             // 
             // btnActualizar
             // 
             this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnActualizar.Location = new System.Drawing.Point(12, 462);
+            this.btnActualizar.Location = new System.Drawing.Point(12, 468);
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(80, 29);
             this.btnActualizar.TabIndex = 11;
@@ -330,23 +334,36 @@
             this.btnActualizar.UseVisualStyleBackColor = true;
             this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
-            // chStatus
+            // statusStrip
             // 
-            this.chStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chStatus.AutoSize = true;
-            this.chStatus.Location = new System.Drawing.Point(98, 467);
-            this.chStatus.Name = "chStatus";
-            this.chStatus.Size = new System.Drawing.Size(159, 21);
-            this.chStatus.TabIndex = 12;
-            this.chStatus.Text = "Solo registro activos";
-            this.chStatus.UseVisualStyleBackColor = true;
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stripPBEstatus,
+            this.stripSLEstatus});
+            this.statusStrip.Location = new System.Drawing.Point(0, 500);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.statusStrip.Size = new System.Drawing.Size(909, 22);
+            this.statusStrip.TabIndex = 32;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // stripPBEstatus
+            // 
+            this.stripPBEstatus.Name = "stripPBEstatus";
+            this.stripPBEstatus.Size = new System.Drawing.Size(100, 16);
+            // 
+            // stripSLEstatus
+            // 
+            this.stripSLEstatus.Name = "stripSLEstatus";
+            this.stripSLEstatus.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.stripSLEstatus.Size = new System.Drawing.Size(16, 17);
+            this.stripSLEstatus.Text = "...";
             // 
             // FrmProveArti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 503);
-            this.Controls.Add(this.chStatus);
+            this.ClientSize = new System.Drawing.Size(909, 522);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.cBoxMostarProv);
             this.Controls.Add(this.picbCargando);
@@ -375,6 +392,8 @@
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picbCargando)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,6 +423,8 @@
         private System.Windows.Forms.Button btnAgregarArti;
         private System.Windows.Forms.CheckBox cBoxMostarProv;
         private System.Windows.Forms.Button btnActualizar;
-        private System.Windows.Forms.CheckBox chStatus;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripProgressBar stripPBEstatus;
+        private System.Windows.Forms.ToolStripStatusLabel stripSLEstatus;
     }
 }

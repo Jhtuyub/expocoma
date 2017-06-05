@@ -174,9 +174,9 @@ namespace EXPOCOMA.Stand
                     "", //agentes
                     "",//rutagen
                     "",//rutas
-                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA,inactive_date-inactive_date,BAJA_GRAL-BAJA_GRAL", //PROVEEDO
-                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR",
-                    "",
+                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA,ESTATUS-STATUS,inactive_date-inactive_date,BAJA_GRAL-BAJA_GRAL", //PROVEEDO
+                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR", //ARTICULO
+                    "",//INV001-INVENTA - SOLO SE PROGRAMO LA PARTE DE DBF, YA QUE EN SQL NO ESTA AL DIA SOBRE SU INFORMACION
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
 
@@ -724,7 +724,7 @@ namespace EXPOCOMA.Stand
                                 int totalProcesoDBF = 4;
                                 int actualProcesoDBF = 1;
                                 _funcion.Cargando(this, barraProgreso, 0, actualProcesoDBF, totalProcesoDBF, lblMensaje, "Preparando para importación: " + nomTblTablas);
-                                Thread.Sleep(5000);
+                                //Thread.Sleep(5000);
 
                                 ProcessStartInfo info = null;
                                 String _RutaTabla = @"tmp_expo\" + nomExpo + @"\" + _nomUsuario + @"\" + almdtSucu.ToString() + @"\" + nomDbfTablas;
@@ -1008,7 +1008,10 @@ namespace EXPOCOMA.Stand
 
 
                                 _dtTblTablaSql.Columns.Add("ID_SUCURSALALM", typeof(String));
-
+                                if (_dtTablas.Rows[j]["tablas"].ToString() == "proveedo")
+                                {
+                                    _dtTblTablaSql.Columns.Add("ESTATUS", typeof(String));
+                                }
                                 for (int iAlm = 0; iAlm < _dtTblTablaSql.Rows.Count; iAlm++)
                                 {
                                     _funcion.Cargando(this, barraProgreso, 0, iAlm, _dtTblTablaSql.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
@@ -1019,6 +1022,23 @@ namespace EXPOCOMA.Stand
                                     {
                                         _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] = _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] +" "+ _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE4"];
                                         //sqlComTablas.Parameters.AddWithValue("@ORGANIZATION_ID", _dtSucursal.Rows[i]["ORGANIZATION_ID"]);
+                                    }
+
+                                    if (_dtTablas.Rows[j]["tablas"].ToString() == "proveedo")
+                                    {
+                                        //IIF(!ISNULL(inactive_date) OR !EMPTY(BAJA_GRAL), '*', '')
+                                        if (_dtTblTablaSql.Rows[iAlm]["inactive_date"].ToString().Length >0)
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ESTATUS"] = "*";
+                                        }
+                                        else if (_dtTblTablaSql.Rows[iAlm]["BAJA_GRAL"].ToString().Length > 0)
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ESTATUS"] = "*";
+                                        }
+                                        else
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ESTATUS"] = " ";
+                                        }
                                     }
 
 

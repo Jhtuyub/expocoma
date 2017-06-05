@@ -1315,11 +1315,11 @@ namespace EXPOCOMA
                             {
                                 if (___DATOS.Rows[j][2].ToString() == "varchar")
                                 {
-                                    _sql = _sql + "'" + ___DATOS.Rows[j][i] + "')";
+                                    _sql = _sql + "'" + ___DATOS.Rows[j][i].ToString().Replace("'", "/") + "')";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "int")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + ")";
+                                    _sql = _sql + ___DATOS.Rows[j][i].ToString().Replace("'", "/") + ")";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "bit")
                                 {
@@ -1342,11 +1342,11 @@ namespace EXPOCOMA
                             {
                                 if (___DATOS.Rows[j][2].ToString() == "varchar")
                                 {
-                                    _sql = _sql + "'" + ___DATOS.Rows[j][i] + "', ";
+                                    _sql = _sql + "'" + ___DATOS.Rows[j][i].ToString().Replace("'", "''") + "', ";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "int")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + ", ";
+                                    _sql = _sql + ___DATOS.Rows[j][i].ToString().Replace("'", "''") + ", ";
 
                                 }
                                 else if (___DATOS.Rows[i][2].ToString() == "bit")
@@ -1384,11 +1384,11 @@ namespace EXPOCOMA
                             {
                                 if (___DATOS.Rows[j][2].ToString() == "varchar")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + "='" + ___DATOS.Rows[j][1].ToString() + "'";
+                                    _sql = _sql + ___DATOS.Rows[j][i] + "='" + ___DATOS.Rows[j][1].ToString().ToString().Replace("'", "''") + "'";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "int")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + "=" + ___DATOS.Rows[j][1].ToString()  + "";
+                                    _sql = _sql + ___DATOS.Rows[j][i] + "=" + ___DATOS.Rows[j][1].ToString().ToString().Replace("'", "''") + "";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "bit")
                                 {
@@ -1409,11 +1409,11 @@ namespace EXPOCOMA
                             {
                                 if (___DATOS.Rows[j][2].ToString() == "varchar")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + "='" + ___DATOS.Rows[j][1].ToString() + "', ";
+                                    _sql = _sql + ___DATOS.Rows[j][i] + "='" + ___DATOS.Rows[j][1].ToString().ToString().Replace("'", "''") + "', ";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "int")
                                 {
-                                    _sql = _sql + ___DATOS.Rows[j][i] + "=" + ___DATOS.Rows[j][1].ToString() + ", ";
+                                    _sql = _sql + ___DATOS.Rows[j][i] + "=" + ___DATOS.Rows[j][1].ToString().ToString().Replace("'", "''") + ", ";
                                 }
                                 else if (___DATOS.Rows[j][2].ToString() == "bit")
                                 {

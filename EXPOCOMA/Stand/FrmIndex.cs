@@ -130,17 +130,17 @@ namespace EXPOCOMA.Stand
                 DataTable dttblSucursal = _funcion.llenar_form(tabla);
                 if (dttblSucursal.Rows.Count > 0)
                 {
-                    submenu.Enabled = true;
+                    //submenu.Enabled = true;
                 }
                 else
                 {
-                    submenu.Enabled = false;
+                    //submenu.Enabled = false;
                 }
             }
             catch (Exception)
             {
 
-                submenu.Enabled = false;
+                //submenu.Enabled = false;
             }
 
 
@@ -201,7 +201,7 @@ namespace EXPOCOMA.Stand
                 + "[PRECIO_VEF] [numeric](12,2) NULL,"
                 + "[COMPRAS] [numeric](14,2) NULL,"
                 + "[VENTAS] [numeric](14,2) NULL,"
-                + "[STATUS] [varchar](20) NULL,"
+                + "[STATUS] [varchar](50) NULL,"
                 + "[OF_PIEZAS] [numeric](4) NULL,"
                 + "[OF_DESCTO] [numeric](6,2) NULL,"
                 + "[C_PROVE] [varchar](5) NULL,"
@@ -792,22 +792,22 @@ namespace EXPOCOMA.Stand
 
 
 
-            //this.Invoke((MethodInvoker)delegate
+            ////this.Invoke((MethodInvoker)delegate
+            ////{
+            ////habiImportTablas("tbl_sucursal", importacionDeTablasToolStripMenuItem);
+            ////_funcion.Cargando(this, toolStripPBar, 10, 1, 1, toolStripSLMensaje, "Listo");
+            //importacionDeTablasToolStripMenuItem.Enabled = habilitarSubMenu("tbl_sucursal");
+            ////proveedoresYArticulosToolStripMenuItem.Enabled = habilitarSubMenu("dbf_articulo");
+            //if (habilitarSubMenu("dbf_proveedo") && habilitarSubMenu("dbf_articulo"))
             //{
-            //habiImportTablas("tbl_sucursal", importacionDeTablasToolStripMenuItem);
-            //_funcion.Cargando(this, toolStripPBar, 10, 1, 1, toolStripSLMensaje, "Listo");
-            importacionDeTablasToolStripMenuItem.Enabled = habilitarSubMenu("tbl_sucursal");
-            //proveedoresYArticulosToolStripMenuItem.Enabled = habilitarSubMenu("dbf_articulo");
-            if (habilitarSubMenu("dbf_proveedo") && habilitarSubMenu("dbf_articulo"))
-            {
-                proveedoresYArticulosToolStripMenuItem.Enabled = true;
+            //    proveedoresYArticulosToolStripMenuItem.Enabled = true;
 
-            }
-            else
-            {
-                proveedoresYArticulosToolStripMenuItem.Enabled = false;
-            }
-            //});
+            //}
+            //else
+            //{
+            //    proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            //}
+            ////});
 
             _funcion.Cargando(this, toolStripPBar, 10, 0, 1, toolStripSLMensaje, "...");
 
@@ -820,8 +820,8 @@ namespace EXPOCOMA.Stand
             _frmSucusal._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmSucusal.Show();
-            empresasParticipantesToolStripMenuItem.Enabled = false;
-            importacionDeTablasToolStripMenuItem.Enabled = false;
+            //empresasParticipantesToolStripMenuItem.Enabled = false;
+            //importacionDeTablasToolStripMenuItem.Enabled = false;
         }
 
         private void importacionDeTablasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -834,21 +834,23 @@ namespace EXPOCOMA.Stand
             //_frmSucusal.Owner = this;
             _frmImporTablas.Show();
             
-            empresasParticipantesToolStripMenuItem.Enabled = false;
-            importacionDeTablasToolStripMenuItem.Enabled = false;
-            opcProveArti.Enabled = false;
+            //empresasParticipantesToolStripMenuItem.Enabled = false;
+            //importacionDeTablasToolStripMenuItem.Enabled = false;
+            //opcProveArti.Enabled = false;
         }
 
         private void proveedoresYArticulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmProveArti _frmProveArti = new FrmProveArti();
             _frmProveArti.MdiParent = this;
+            _frmProveArti.nomExpo = nomExpo;
+            _frmProveArti._nomUsuario = _nomUsuario;
             _frmProveArti._CadenaConexion = _CadenaConexion;
             //_frmSucusal.Owner = this;
             _frmProveArti.Show();
-            empresasParticipantesToolStripMenuItem.Enabled = false;
-            importacionDeTablasToolStripMenuItem.Enabled = false;
-            proveedoresYArticulosToolStripMenuItem.Enabled = false;
+            //empresasParticipantesToolStripMenuItem.Enabled = false;
+            //importacionDeTablasToolStripMenuItem.Enabled = false;
+            //proveedoresYArticulosToolStripMenuItem.Enabled = false;
         }
 
         private void FrmIndex_SizeChanged(object sender, EventArgs e)
