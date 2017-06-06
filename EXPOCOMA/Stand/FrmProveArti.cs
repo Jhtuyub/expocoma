@@ -395,10 +395,10 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["CAP_ARTI"].HeaderText = "CAP";
                 dgvArticulo.Columns["CAP_ARTI"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["CAP_ARTI"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                //dgvArticulo.Columns["STATUS"].Visible = true;
+                dgvArticulo.Columns["STATUS"].Visible = true;
                 dgvArticulo.Columns["STATUS"].HeaderText = "ST";
                 dgvArticulo.Columns["STATUS"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dgvArticulo.Columns["STATUS"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                dgvArticulo.Columns["STATUS"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 dgvArticulo.Columns["UNIDAD"].HeaderText = "U";
                 dgvArticulo.Columns["UNIDAD"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["UNIDAD"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
@@ -1883,10 +1883,10 @@ namespace EXPOCOMA.Stand
                                 _datos.Rows.Add(dr);
                             }
 
-                            if (dtDBF.Rows[ii][campo[1].ToString()].ToString() == "GE40")
-                            {
-                                MessageBox.Show("totalCiente");
-                            }
+                            //if (dtDBF.Rows[ii][campo[1].ToString()].ToString() == "GE40")
+                            //{
+                            //    MessageBox.Show("totalCiente");
+                            //}
                             if (!(totalCiente > 0))
                             {
 
@@ -1924,7 +1924,7 @@ namespace EXPOCOMA.Stand
 
 
                 }
-                if (Convert.ToBoolean(_esTablaSql))
+                if (Convert.ToBoolean(_esTablaSql)) //TRASPASO DE INFORMACIÓN SQL
                 {
 
                     int totalProcesoDBF = 4;
@@ -1967,83 +1967,147 @@ namespace EXPOCOMA.Stand
 
                         if (_tablasNombre == "articulo")
                         {
+
+
                             var estatus = "";
                             string[] valores = CproveFiltrar.Split(',');
                             //var status = new List<string> { "2", "4", "7", "8", "12", "19", "20", "22", "33", "35" };
+                            DataTable _dtTmpArti = new DataTable();
                             DataTable _dtArti = new DataTable();
+                            DataRow _drArti;
+
+                            _dtArti.Columns.Add("c_arti");
+                            _dtArti.Columns.Add("estatus");
+
                             _dtArti.Clear();
-                               _dtArti = _dtTblTablaSql.Copy();
+                            _dtTmpArti = _dtTblTablaSql.Copy();
 
                             sql_dtTblTablaSql =
-                                from tblCProve in _dtArti.AsEnumerable()
-                                where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"]) 
+                                from tblCProve in _dtTmpArti.AsEnumerable()
+                                where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
+                                orderby tblCProve["SEGMENT1"], tblCProve["FECHA_CREACION"]
                                 select tblCProve;
 
-                            
-                            var sql_CArti =
-                                from tblCProve in sql_dtTblTablaSql
-                                where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
-                                group tblCProve by tblCProve["SEGMENT1"] into grupo
-                                select grupo;
 
-                            foreach (var fila in sql_CArti)
+                            //var sql_CArti =
+                            //    from tblCProve in sql_dtTblTablaSql
+                            //    where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
+                            //    group tblCProve by tblCProve["SEGMENT1"] into grupo
+                            //    select grupo;
+
+                            //foreach (var fila in sql_CArti)
+                            //{
+
+                            //    foreach (DataRow row in fila)
+                            //    {
+                            //        //estatus += name["SEGMENT1"];
+
+                            //        estatus = "";
+                            //        //estatus += row["SEGMENT1"] + ":";
+                            var arti = "";
+                            foreach (var filadtArti in sql_dtTblTablaSql)
                             {
 
-                                estatus = "";
-                                foreach (DataRow row in fila)
+
+                                if (arti == filadtArti["SEGMENT1"].ToString())
                                 {
-                                    //estatus += name["SEGMENT1"];
+                                    estatus += filadtArti.Field<String>("status_number") + ",";
 
-
-                                    //estatus += row["SEGMENT1"] + ":";
-                                    foreach (var filadtArti in sql_dtTblTablaSql)
-                                    {
-
-                                        //if (row["SEGMENT1"] == filadtArti["SEGMENT1"])
-                                        //{
-                                        //    MessageBox.Show(row["SEGMENT1"] + "--" + filadtArti["SEGMENT1"]);
-                                        //}
-
-                                        if (filadtArti["SEGMENT1"].ToString() == "GE40")
-                                        {
-                                            MessageBox.Show(filadtArti["SEGMENT1"].ToString());
-                                        }
-                                    }
-                                   
-
-                                    break;
                                 }
+                                else
+                                {
+                                    if (!(String.IsNullOrWhiteSpace(arti)))
+                                    {
+                                        _drArti = _dtArti.NewRow();
+                                        _drArti["c_arti"] = arti;
+                                        _drArti["estatus"] = estatus.TrimEnd(',');
+                                        _dtArti.Rows.Add(_drArti);
+                                    }
+                                    estatus = filadtArti["status_number"].ToString() + ",";
+                                    arti = filadtArti["SEGMENT1"].ToString();
 
-                                MessageBox.Show(estatus);
+                                }
+                                //MessageBox.Show(filadtArti["SEGMENT1"].ToString() + " = " + estatus);
+                                //}
+                                //MessageBox.Show(filadtArti["SEGMENT1"].ToString() + " = " + estatus);
+                            }
+                            foreach (var filaEsta in _dtArti.AsEnumerable())
+                            {
+                                foreach (var filadtArti in sql_dtTblTablaSql)
+                                {
+                                
+                                    if (filaEsta["c_arti"].ToString() == filadtArti["SEGMENT1"].ToString())
+                                    {
+                                        filadtArti.SetField("status_number", filaEsta["estatus"]);
+                                        filadtArti.AcceptChanges();
+                                    }
+                                }
                             }
 
-                            
+                            //var sql_CArti =
+                            //    from tblCProve in sql_dtTblTablaSql
+                            //    where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
+                            //    group tblCProve by tblCProve["SEGMENT1"] into grupo
+                            //    select grupo;
+
+                            //foreach (var fila in sql_CArti)
+                            //{
+
+                            //    estatus = "";
+                            //    foreach (DataRow row in fila)
+                            //    {
+                            //        //estatus += name["SEGMENT1"];
+
+
+                            //        //estatus += row["SEGMENT1"] + ":";
+                            //        foreach (var filadtArti in sql_dtTblTablaSql)
+                            //        {
+
+                            //            //if (row["SEGMENT1"] == filadtArti["SEGMENT1"])
+                            //            //{
+                            //            //    MessageBox.Show(row["SEGMENT1"] + "--" + filadtArti["SEGMENT1"]);
+                            //            //}
+
+                            //            if (filadtArti["SEGMENT1"].ToString() == "GE40")
+                            //            {
+                            //                MessageBox.Show(filadtArti["SEGMENT1"].ToString());
+                            //            }
+                            //        }
+
+
+                            //        break;
+                            //    }
+
+                            //    MessageBox.Show(estatus);
+                            //}
+
+
 
                             _dtTblTablaSql.Clear();
 
-                            _dtTblTablaSql = sql_dtTblTablaSql.CopyToDataTable();
+                            _dtTblTablaSql = _dtTmpArti.Copy();
 
-                            foreach (DataRow filaArti in sql_dtTblTablaSql)
-                            {
+                            //foreach (DataRow filaArti in sql_dtTblTablaSql)
+                            //{
 
-                                foreach (DataRow filaBuscar in sql_dtTblTablaSql)
-                                {
-                                    if (filaArti.Field<String>("SEGMENT1") == filaBuscar.Field<String>("SEGMENT1"))
-                                    {
-                                        estatus += "("+ filaBuscar.Field<String>("SEGMENT1") +")"+ filaBuscar.Field<String>("status_number") + ",";
-                                    }
-                                }
-                                //estatus += filaArti.Field<String>("status_number") + ",";
-                                //_dtTblTablaSql.ImportRow(filaArti);
-                                //if (filaArti.Field<String>("NO_PROV_AFECTA_PRECIO") == "02474")
-                                //{
-                                //    MessageBox.Show(filaArti.Field<String>("NO_PROV_AFECTA_PRECIO"));
-                                //}
-                            }
-                            MessageBox.Show(estatus);
-                            //this.Invoke((MethodInvoker)delegate {
-                            //    dgvArticulo.DataSource = _dtTblTablaSql;
-                            //});
+                            //    foreach (DataRow filaBuscar in sql_dtTblTablaSql)
+                            //    {
+                            //        if (filaArti.Field<String>("SEGMENT1") == filaBuscar.Field<String>("SEGMENT1"))
+                            //        {
+                            //            estatus += "("+ filaBuscar.Field<String>("SEGMENT1") +")"+ filaBuscar.Field<String>("status_number") + ",";
+                            //        }
+                            //    }
+                            //    //estatus += filaArti.Field<String>("status_number") + ",";
+                            //    //_dtTblTablaSql.ImportRow(filaArti);
+                            //    //if (filaArti.Field<String>("NO_PROV_AFECTA_PRECIO") == "02474")
+                            //    //{
+                            //    //    MessageBox.Show(filaArti.Field<String>("NO_PROV_AFECTA_PRECIO"));
+                            //    //}
+                            //}
+                            //MessageBox.Show(estatus);
+                            ////this.Invoke((MethodInvoker)delegate {
+                            ////    dgvArticulo.DataSource = _dtTblTablaSql;
+                            ////});
 
 
                         }
