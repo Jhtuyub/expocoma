@@ -157,7 +157,7 @@ namespace EXPOCOMA.Stand
                     "",//rutagen
                     "",//rutas
                     "SELECT * FROM VW_PO_VENDORS_INT WHERE organizacion = @ORGANIZATION_ID",//proveedo
-                    "SELECT * FROM VW_MTL_SYSTEM_ITEMS_B_CMA_2 WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//articulo
+                    "select arti.*, starti.status_number, st.concepto as stconcepto from VW_PO_SUPPLIERS_ITEMS_CMA_2 arti, po_supp_item_status_int starti, PO_CATALOG_STATUS st where (arti.segment1 = starti.item_number and arti.organization_id = starti.organization_id) AND (starti.status_number = st.status_number) AND ( arti.organization_id = @ORGANIZATION_ID) AND starti.status_number in (2,4,7,8,12,19,20,22,33,35)",//"SELECT * FROM VW_MTL_SYSTEM_ITEMS_B_CMA_2 WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//articulo
                     "",//INV001-INVENTA - SOLO SE PROGRAMO LA PARTE DE DBF, YA QUE EN SQL NO ESTA AL DIA SOBRE SU INFORMACION
                     "SELECT * FROM PO_FAMILIAS_COMA WHERE ORGANIZATION_ID = @ORGANIZATION_ID",//fam_arti
                     "",//porpieza
@@ -175,7 +175,9 @@ namespace EXPOCOMA.Stand
                     "",//rutagen
                     "",//rutas
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_PROVE,SEGMENT1-C_PROVE2,VENDOR_NAME-DESCRI,ATTRIBUTE9-RESP_COMA,ESTATUS-STATUS,inactive_date-inactive_date,BAJA_GRAL-BAJA_GRAL", //PROVEEDO
-                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR", //ARTICULO
+                    "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,STATUS_NUMBER-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR", //INVENTORY_ITEM_STATUS_CODE = STATUS
+                    //"ID_SUCURSALALM,C_ARTI,C_PROVE,C_PROVE2,FAMI_ARTI,DES_ARTI,DES_ART2,CAP_ARTI,EMPAQUE2,STATUS,CAJA,UNIDAD,EXHIBIDOR",
+                    //"ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT1-C_ARTI,NO_PROV_AFECTA_PRECIO-C_PROVE,NO_PROV_AFECTA_PRECIO-C_PROVE2,SEGMENT2-FAMI_ARTI,DESCRIPTION-DES_ARTI,DESCRIPTION-DES_ART2,ATTRIBUTE2-CAP_ARTI,ATTRIBUTE3-EMPAQUE2,INVENTORY_ITEM_STATUS_CODE-STATUS,ATTRIBUTE13-CAJA,ATTRIBUTE14-UNIDAD,ATTRIBUTE15-EXHIBIDOR", //ARTICULO
                     "",//INV001-INVENTA - SOLO SE PROGRAMO LA PARTE DE DBF, YA QUE EN SQL NO ESTA AL DIA SOBRE SU INFORMACION
                     "ID_SUCURSALALM-ID_SUCURSALALM,SEGMENT2-FAMI_ARTI,DESCRIPCION_SEG2-NOMBRE,IVA-IVA,IVA-IVA2", //
                     "",
@@ -1012,6 +1014,95 @@ namespace EXPOCOMA.Stand
                                 {
                                     _dtTblTablaSql.Columns.Add("ESTATUS", typeof(String));
                                 }
+
+                                ///////////////////////////////////////////////////////////
+                                if (_dtTablas.Rows[j]["tablas"].ToString() == "articulo")
+                                {
+
+
+                                    var estatus = "";
+                                    //string[] valores = CproveFiltrar.Split(',');
+                                    //var status = new List<string> { "2", "4", "7", "8", "12", "19", "20", "22", "33", "35" };
+                                    DataTable _dtTmpArti = new DataTable();
+                                    DataTable _dtArti = new DataTable();
+                                    DataRow _drArti;
+
+                                    _dtArti.Columns.Add("c_arti");
+                                    _dtArti.Columns.Add("estatus");
+
+                                    _dtArti.Clear();
+                                    _dtTmpArti = _dtTblTablaSql.Copy();
+
+                                    var sql_dtTblTablaSql =
+                                        from tblCProve in _dtTmpArti.AsEnumerable()
+                                        //where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
+                                        orderby tblCProve["SEGMENT1"], tblCProve["FECHA_CREACION"]
+                                        select tblCProve;
+
+                                    var arti = "";
+                                    foreach (var filadtArti in sql_dtTblTablaSql)
+                                    {
+
+
+                                        if (arti == filadtArti["SEGMENT1"].ToString())
+                                        {
+                                            estatus += filadtArti.Field<String>("status_number") + ",";
+
+                                        }
+                                        else
+                                        {
+                                            if (!(String.IsNullOrWhiteSpace(arti)))
+                                            {
+                                                _drArti = _dtArti.NewRow();
+                                                _drArti["c_arti"] = arti;
+                                                _drArti["estatus"] = estatus.TrimEnd(',');
+                                                _dtArti.Rows.Add(_drArti);
+                                            }
+                                            estatus = filadtArti["status_number"].ToString() + ",";
+                                            arti = filadtArti["SEGMENT1"].ToString();
+
+                                        }
+                                        //MessageBox.Show(filadtArti["SEGMENT1"].ToString() + " = " + estatus);
+                                        //}
+                                        //MessageBox.Show(filadtArti["SEGMENT1"].ToString() + " = " + estatus);
+                                    }
+                                    foreach (var filaEsta in _dtArti.AsEnumerable())
+                                    {
+                                        foreach (var filadtArti in sql_dtTblTablaSql)
+                                        {
+
+                                            if (filaEsta["c_arti"].ToString() == filadtArti["SEGMENT1"].ToString())
+                                            {
+                                                filadtArti.SetField("status_number", filaEsta["estatus"]);
+                                                filadtArti.AcceptChanges();
+                                            }
+                                        }
+                                    }
+
+
+                                    //var sql_dtArtiGroup =
+                                    //    from tblCProve in _dtTmpArti.AsEnumerable()
+                                    //    group tblCProve by tblCProve["SEGMENT1"] into grupo
+                                    //    select grupo;
+                                    var campos = "";
+                                    for (int ii = 0; ii < _dtTmpArti.Columns.Count; ii++)
+                                    {
+                                        campos += _dtTmpArti.Columns[ii].ColumnName.ToString() + ",";
+                                    }
+
+                                    string[] valores = campos.TrimEnd(',').Split(',');
+
+                                    DataView vista = new DataView(_dtTmpArti);
+                                    DataTable dtsindupl = _dtTmpArti.Clone();
+                                    dtsindupl= vista.ToTable(true, valores);
+                                    _dtTblTablaSql.Clear();
+                                    _dtTblTablaSql = dtsindupl.Copy();
+                                    //_dtTblTablaSql = sql_dtArtiGroup.AsEnumerable();
+
+
+
+                                }
+                                ///////////////////////////////////////////////////////////
                                 for (int iAlm = 0; iAlm < _dtTblTablaSql.Rows.Count; iAlm++)
                                 {
                                     _funcion.Cargando(this, barraProgreso, 0, iAlm, _dtTblTablaSql.Rows.Count, lblMensaje, "Asignando el almacen: " + tbldtTablas.ToString());
