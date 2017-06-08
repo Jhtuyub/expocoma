@@ -1035,7 +1035,7 @@ namespace EXPOCOMA.Stand
 
                                     var sql_dtTblTablaSql =
                                         from tblCProve in _dtTmpArti.AsEnumerable()
-                                        //where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
+                                            //where valores.Contains(tblCProve["NO_PROV_AFECTA_PRECIO"])
                                         orderby tblCProve["SEGMENT1"], tblCProve["FECHA_CREACION"]
                                         select tblCProve;
 
@@ -1080,23 +1080,59 @@ namespace EXPOCOMA.Stand
                                     }
 
 
+                                    _dtTblTablaSql.Clear();
+
+                                    Int32 existe;
+                                    foreach (var filaArti in _dtTmpArti.AsEnumerable())
+                                    {
+                                        existe = 0;
+                                        foreach (var filaTmpArti in _dtTblTablaSql.AsEnumerable())
+                                        {
+                                            if (filaArti["SEGMENT1"].ToString() == filaTmpArti["SEGMENT1"].ToString())
+                                            {
+                                                existe++;
+                                            }
+                                        }
+                                        if (!(existe>0))
+                                        {
+                                            _dtTblTablaSql.ImportRow(filaArti);
+                                        }
+                                    }
+
+
                                     //var sql_dtArtiGroup =
                                     //    from tblCProve in _dtTmpArti.AsEnumerable()
                                     //    group tblCProve by tblCProve["SEGMENT1"] into grupo
                                     //    select grupo;
-                                    var campos = "";
-                                    for (int ii = 0; ii < _dtTmpArti.Columns.Count; ii++)
-                                    {
-                                        campos += _dtTmpArti.Columns[ii].ColumnName.ToString() + ",";
-                                    }
 
-                                    string[] valores = campos.TrimEnd(',').Split(',');
+                                    //foreach (var studentGroup in sql_dtArtiGroup)
+                                    //{
+                                    //    //Console.WriteLine(studentGroup.Key == true ? "High averages" : "Low averages");
+                                    //    foreach (var student in studentGroup)
+                                    //    {
+                                    //        MessageBox.Show(student["SEGMENT1"].ToString());
+                                    //    }
+                                    //}
 
-                                    DataView vista = new DataView(_dtTmpArti);
-                                    DataTable dtsindupl = _dtTmpArti.Clone();
-                                    dtsindupl= vista.ToTable(true, valores);
-                                    _dtTblTablaSql.Clear();
-                                    _dtTblTablaSql = dtsindupl.Copy();
+                                    //_dtTblTablaSql = _dtTmpArti.LoadDataRow(new object[] {
+                                    //    someVariable,
+                                    //});
+
+                                    //var campos = "";
+                                    //for (int ii = 0; ii < _dtTmpArti.Columns.Count; ii++)
+                                    //{
+                                    //    campos += _dtTmpArti.Columns[ii].ColumnName.ToString() + ",";
+                                    //}
+
+                                    //string[] valores = campos.TrimEnd(',').Split(',');
+
+                                    //DataView vista = new DataView(_dtTmpArti);
+                                    //DataTable dtsindupl = _dtTmpArti.Clone();
+                                    //dtsindupl= vista.ToTable(true, valores);
+                                    //_dtTblTablaSql.Clear();
+                                    //_dtTblTablaSql = dtsindupl.Copy();
+
+
                                     //_dtTblTablaSql = sql_dtArtiGroup.AsEnumerable();
 
 
@@ -1113,6 +1149,35 @@ namespace EXPOCOMA.Stand
                                     {
                                         _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] = _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE2"] +" "+ _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE4"];
                                         //sqlComTablas.Parameters.AddWithValue("@ORGANIZATION_ID", _dtSucursal.Rows[i]["ORGANIZATION_ID"]);
+
+                                        if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"].ToString().Trim() == "SI")
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"] = "X";
+                                        }
+                                        else
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"] = "";
+                                        }
+
+                                        if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"].ToString().Trim() == "SI")
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"] = "X";
+                                        }
+                                        else
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"] = "";
+                                        }
+
+                                        if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"].ToString().Trim() == "SI")
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"] = "X";
+                                        }
+                                        else
+                                        {
+                                            _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"] = "";
+                                        }
+
+
                                     }
 
                                     if (_dtTablas.Rows[j]["tablas"].ToString() == "proveedo")
