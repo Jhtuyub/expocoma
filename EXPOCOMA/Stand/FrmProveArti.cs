@@ -354,6 +354,7 @@ namespace EXPOCOMA.Stand
                 dgvProveedor.Columns["C_PROVE"].HeaderText = "Clv. Proveedor";
                 dgvProveedor.Columns["DESCRI"].HeaderText = "Nombre";
                 dgvProveedor.Columns["RESP_COMA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                dgvProveedor.Columns["STATUS"].Visible =false;
                 
 
                 dgvProveedor.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
@@ -422,7 +423,7 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["CAP_ARTI"].HeaderText = "CAP";
                 dgvArticulo.Columns["CAP_ARTI"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["CAP_ARTI"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                dgvArticulo.Columns["STATUS"].Visible = true;
+                //dgvArticulo.Columns["STATUS"].Visible = true;
                 dgvArticulo.Columns["STATUS"].HeaderText = "ST";
                 dgvArticulo.Columns["STATUS"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["STATUS"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -879,7 +880,7 @@ namespace EXPOCOMA.Stand
             {
                 //dtPartiProve.ImportRow(fila);
                 //[0=id][1=idalmacen][2=c_clave]
-                _drproveArti = _dtArticulo.Select("(PARTICIPA = true AND ID_SUCURSALALM = " + fila[1].ToString() + " AND C_PROVE = '" + fila[2].ToString() + "') AND (STATUS <> '*' OR STATUS <> 'INACTIVO')");
+                _drproveArti = _dtArticulo.Select("(PARTICIPA = true AND ID_SUCURSALALM = " + fila[1].ToString() + " AND C_PROVE = '" + fila[2].ToString() + "')");//AND (STATUS <> '*' OR STATUS <> 'INACTIVO')
                 if (_drproveArti.Count() > 0)
                 {
                     dtPartiProve.ImportRow(fila);
@@ -888,7 +889,10 @@ namespace EXPOCOMA.Stand
                 {
                     if (cBoxMostarProv.Checked)
                     {
-                        MessageBox.Show("El proveedor " + fila[2].ToString() + " (" + fila[1].ToString() + ") no tienen articulos disponibles");
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            MessageBox.Show("El proveedor " + fila[2].ToString() + " (" + fila[1].ToString() + ") no tienen articulos disponibles");
+                        });
                     }
 
                 }
@@ -896,87 +900,175 @@ namespace EXPOCOMA.Stand
 
             if (!(drPartiProve.Count() > 0))
             {
-                MessageBox.Show("¡No tienes seleccionado ningún proveedor!", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Invoke((MethodInvoker)delegate
+                {
+                    MessageBox.Show("¡No tienes seleccionado ningún proveedor!", "Espera", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
             }
             else
             {
 
                 Int32 staGuardado = 0;
-                using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
+            //    Int32 totalFilas;
+            //    Int32 posiPartiProve=1;
+            //    String orgaId;
+            //    String cProve;
+            //    String colProve = "";
+            //    String _sql = "";
+            //    String[] campProve;
+            //    DataTable _datosSave = new DataTable();
+            //    DataRow dr;
+            //    _datosSave.Columns.Add("campo", typeof(String));
+            //    _datosSave.Columns.Add("valor", typeof(String));
+            //    _datosSave.Columns.Add("tipo", typeof(String));
+
+            //    foreach (var filaprove in dtPartiProve.AsEnumerable())
+            //    {
+            //        totalFilas = dtPartiProve.Rows.Count;
+            //        orgaId = filaprove["ID_SUCURSALALM"].ToString();
+            //        cProve = filaprove["C_PROVE"].ToString();
+            //        DataTable _dtExisProv = _funcion.llenar_dt("tbl_provexpo",
+            //            "ID_SUCURSALALM,C_PROVE,C_PROVE2,DESCRI,COMPRADOR",
+            //            "WHERE (ID_SUCURSALALM = " + orgaId + " AND C_PROVE = '" + cProve + "' AND COMPRADOR = '" + SesionLetra + "')"
+            //            );
+            //        var exisProv = _dtExisProv.Rows.Count;
+
+
+            //        for (int i = 0; i < _dtExisProv.Columns.Count; i++)
+            //        {
+            //            colProve += _dtExisProv.Columns[i].ColumnName + ",";
+            //        }
+            //        colProve = colProve.TrimEnd(',');
+            //        campProve = colProve.ToString().Split(',');
+
+
+            //        for (int i = 0; i < campProve.Count(); i++)
+            //        {
+            //            dr = _datosSave.NewRow();
+
+            //            dr["campo"] = campProve[i];
+            //            if (campProve[i].ToString() == "COMPRADOR")
+            //            {
+            //                dr["valor"] = filaprove["RESP_COMA"];
+            //            }
+            //            else
+            //            {
+            //                dr["valor"] = filaprove[campProve[i]];
+            //            }
+            //            dr["tipo"] = "varchar";
+            //            _datosSave.Rows.Add(dr);
+
+
+            //        }
+
+
+
+            //        if (!(exisProv > 0))
+            //        {
+            //            //MessageBox.Show("Nuevo ? : " + exisProv);
+            //            _funcion.Cargando(this, stripPBEstatus, 0, posiPartiProve, totalFilas, stripSLEstatus, "tbl_provexpo" + " Insertando registro: " + posiPartiProve + "/" + totalFilas);
+            //            _sql = _funcion._sql(_datosSave, "tbl_provexpo", "nuevo", "");
+            //        }
+            //        else
+            //        {
+            //            //MessageBox.Show("Modificar ? : " + exisProv);
+            //            _funcion.Cargando(this, stripPBEstatus, 0, posiPartiProve, totalFilas, stripSLEstatus, "tbl_provexpo" + " Actualizando registro: " + posiPartiProve + "/" + totalFilas);
+            //            _sql = _funcion._sql(_datosSave, "tbl_provexpo", "modificar", "WHERE (ID_SUCURSALALM = " + orgaId + " AND C_PROVE = '" + cProve + "' AND COMPRADOR = '" + SesionLetra + "')");
+            //        }
+
+            //        try
+            //        {
+            //            guardarClientes(_sql, _CadenaConexion);
+            //        }
+            //        catch (Exception e)
+            //        {
+
+            //            this.Invoke((MethodInvoker)delegate {
+            //                MessageBox.Show(e.Message, "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //            });
+
+            //        }
+
+            //        posiPartiProve++;
+            //    }
+
+
+
+            using (SqlConnection _consql = new SqlConnection(_CadenaConexion))
+            {
+                SqlTransaction _tran;
+                string _tabla = "tbl_provexpo";
+
+                if (_consql.State == ConnectionState.Closed)
                 {
-                    SqlTransaction _tran;
-                    string _tabla = "tbl_provexpo";
+                    _consql.Open();
+                }
 
-                    if (_consql.State == ConnectionState.Closed)
+                _dtTblProveedor = _funcion.EstructuraTabla("tbl_provexpo");
+
+                String sqlBorrar = "DELETE FROM tbl_provexpo WHERE COMPRADOR = '" + SesionLetra + "'";
+                SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
+                comando.CommandTimeout = 300;
+                comando.ExecuteNonQuery();
+
+                _tran = _consql.BeginTransaction();
+
+
+                using (SqlBulkCopy bulkCopy =
+                    new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
+                {
+                    bulkCopy.DestinationTableName = _tabla;
+                    bulkCopy.BulkCopyTimeout = 300;
+
+
+                    try
                     {
-                        _consql.Open();
+
+
+                        bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
+                        bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
+                        bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
+                        bulkCopy.ColumnMappings.Add("DESCRI", "DESCRI");
+                        bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
+
+                        //bulkCopy.BatchSize = 5000;
+                        bulkCopy.WriteToServer(dtPartiProve);
+                        _tran.Commit();
+
+
+                        staGuardado++;
                     }
-
-                    _dtTblProveedor = _funcion.EstructuraTabla("tbl_provexpo");
-
-                    String sqlBorrar = "DELETE FROM tbl_provexpo WHERE COMPRADOR = '" + SesionLetra + "'";
-                    SqlCommand comando = new SqlCommand(sqlBorrar, _consql);
-                    comando.CommandTimeout = 300;
-                    comando.ExecuteNonQuery();
-
-                    _tran = _consql.BeginTransaction();
-
-
-                    using (SqlBulkCopy bulkCopy =
-                        new SqlBulkCopy(_consql, SqlBulkCopyOptions.KeepNulls & SqlBulkCopyOptions.KeepIdentity, _tran))
+                    catch (Exception ex)
                     {
-                        bulkCopy.DestinationTableName = _tabla;
-                        bulkCopy.BulkCopyTimeout = 300;
-
-
+                        //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
+                        MessageBox.Show(ex.Message);
+                        //respuesta = false;
                         try
                         {
-                            
-                        
-                            bulkCopy.ColumnMappings.Add("ID_SUCURSALALM", "ID_SUCURSALALM");
-                            bulkCopy.ColumnMappings.Add("C_PROVE", "C_PROVE");
-                            bulkCopy.ColumnMappings.Add("C_PROVE2", "C_PROVE2");
-                            bulkCopy.ColumnMappings.Add("DESCRI", "DESCRI");
-                            bulkCopy.ColumnMappings.Add("RESP_COMA", "COMPRADOR");
-
-                            //bulkCopy.BatchSize = 5000;
-                            bulkCopy.WriteToServer(dtPartiProve);
-                            _tran.Commit();
-                         
-
-                            staGuardado++;
+                            _tran.Rollback();
                         }
-                        catch (Exception ex)
-                        {
-                            //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                            MessageBox.Show(ex.Message);
-                            //respuesta = false;
-                            try
-                            {
-                                _tran.Rollback();
-                            }
-                            catch (Exception)
-                            {
-
-                                //throw;
-                            }
-
-                        }
-                        finally
+                        catch (Exception)
                         {
 
-                            _consql.Close();
-                            //copiarTablas = null;
-                            //respuesta = true;
-                            //MessageBox.Show("Guardado");
+                            //throw;
                         }
-
 
                     }
+                    finally
+                    {
+
+                        _consql.Close();
+                        //copiarTablas = null;
+                        //respuesta = true;
+                        //MessageBox.Show("Guardado");
+                    }
+
 
                 }
 
-                using (SqlConnection _consqlArti = new SqlConnection(_CadenaConexion))
+            }
+
+            using (SqlConnection _consqlArti = new SqlConnection(_CadenaConexion))
                 {
 
                     if (_consqlArti.State == ConnectionState.Closed)
@@ -991,7 +1083,27 @@ namespace EXPOCOMA.Stand
                     _dtGuardarArticulo = _dtArticulo.Clone();
                     foreach (DataRow fila in _drArticulo)
                     {
+                        //if (Convert.ToInt32(fila["UNIDAD"].ToString().Trim()) > 0)
+                        //{
+                        //    fila.SetField("UNIDAD", "X");
+                        //}
+
+
                         _dtGuardarArticulo.ImportRow(fila);
+                    }
+                    String unidadArti;
+                    for (int i = 0; i < _dtGuardarArticulo.Rows.Count; i++)
+                    {
+                        unidadArti = _dtGuardarArticulo.Rows[i]["UNIDAD"].ToString().Trim();
+                        if (!(String.IsNullOrEmpty(unidadArti)))
+                        {
+                            if (Convert.ToInt32(unidadArti) > 0)
+                            {
+                                _dtGuardarArticulo.Rows[i]["UNIDAD"] = "X";
+                            }
+                        }
+                        
+                        
                     }
 
                     _dtTblArticulo = _funcion.EstructuraTabla("tbl_artiexpo");
@@ -1073,7 +1185,10 @@ namespace EXPOCOMA.Stand
                         catch (Exception ex)
                         {
                             //correo.SendError(ex, System.Net.Mail.MailPriority.High, "Las ventas del día " + _fecha + " de la Sucursal " + _suc + "" + ex.StackTrace);
-                            MessageBox.Show(ex.Message);
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                MessageBox.Show(ex.Message);
+                            });
                             //respuesta = false;
                             try
                             {
@@ -1103,13 +1218,19 @@ namespace EXPOCOMA.Stand
 
                 if (staGuardado == 2)
                 {
-                    MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show("Se ha guardado", "¡Listo!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    });
                     //FrmIndex.opcProveArti.Enabled = true;
                     
                 }
                 else
                 {
-                    MessageBox.Show("Los proveedores o los articulos no se guardaron",":S Algo ocurrio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show("Los proveedores o los articulos no se guardaron", ":S Algo ocurrio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    });
                 }
 
             }
@@ -1350,17 +1471,40 @@ namespace EXPOCOMA.Stand
             int marcados = 0;
             for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
             {
-                if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) && (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()) && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
+                if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) && 
+                    (_dtArticulo.Rows[ii]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()) && 
+                    (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
                 {
                     _dtArticulo.Rows[ii]["PARTICIPA"] = Convert.ToBoolean(chBoxArtiTodos.Checked);
                     marcados++;
+
+                    //for (int i = 0; i < _dtArticulo.Rows.Count; i++)
+                    //{
+                    //    if (true)
+                    //    {
+
+                    //    }
+                    //}
+
                     //chBoxProvTodos.Checked = false;
                     //chBoxArtiTodos.Checked = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
                 }
             }
             if (marcados>0)
             {
-                dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = Convert.ToBoolean(chBoxArtiTodos.Checked);
+                
+                for (int i = 0; i < _dtProveedor.Rows.Count; i++)
+                {
+                    if ((_dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString() == dgvProveedor.CurrentRow.Cells["ID_SUCURSALALM"].Value.ToString()) &&
+                        (_dtProveedor.Rows[i]["C_PROVE"].ToString() == dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString()))
+                    {
+                        //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = Convert.ToBoolean(chBoxArtiTodos.Checked);
+                        _dtProveedor.Rows[i]["PARTICIPA"] = Convert.ToBoolean(chBoxArtiTodos.Checked);
+                        btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+                        //MessageBox.Show(_dtProveedor.Rows[i]["PARTICIPA"].ToString());
+                        break;
+                    }
+                }
             }
         }
 
@@ -1368,50 +1512,90 @@ namespace EXPOCOMA.Stand
         {
             if (dgvArticulo.Columns[e.ColumnIndex].Name == "PARTICIPA")
             {
-                chBoxArtiTodos.Checked = false;
-                //dgvProveedor.Rows[e.ColumnIndex].Cells["PARTICIPA"].Value = true;
 
-                dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
-
-                var sql_dtArti =
-                    from dtArti in _dtArticulo.AsEnumerable()
-                    where dtArti.Field<String>("C_ARTI") == dgvArticulo.CurrentRow.Cells["C_PROVE"].Value.ToString() && dtArti.Field<String>("ID_SUCURSALALM") == cBoxSucursal.SelectedValue.ToString() && dtArti.Field<String>("RESP_COMA") == SesionLetra
-                    select dtArti;
-
-                foreach (DataRow fila in sql_dtArti)
+                try
                 {
-                    fila.SetField("PARTICIPA",!Convert.ToBoolean(dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value));
-                    fila.AcceptChanges();
+                    chBoxArtiTodos.Checked = false;
+                    //dgvProveedor.Rows[e.ColumnIndex].Cells["PARTICIPA"].Value = true;
 
-                    var sql_dtProve =
-                        from dtProve in _dtProveedor.AsEnumerable()
-                        where dtProve.Field<String>("C_PROVE") == fila.Field<String>("C_PROVE")
-                        select dtProve;
+                    //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
 
-                    foreach (DataRow row in sql_dtProve)
+
+                    for (int ii = 0; ii < _dtArticulo.Rows.Count; ii++)
                     {
-                        row.SetField("PARTICIPA",true);
-                        row.AcceptChanges();
+                        if ((_dtArticulo.Rows[ii]["ID_SUCURSALALM"].ToString() == cBoxSucursal.SelectedValue.ToString()) &&
+                            (_dtArticulo.Rows[ii]["C_ARTI"].ToString() == dgvArticulo.CurrentRow.Cells["C_ARTI"].Value.ToString()) &&
+                            (_dtArticulo.Rows[ii]["STATUS"].ToString() != "*") && (_dtArticulo.Rows[ii]["STATUS"].ToString() != "INACTIVO"))
+                        {
+                            //_dtArticulo.Rows[ii]["PARTICIPA"] = false;
+                            _dtArticulo.Rows[ii]["PARTICIPA"] = !Convert.ToBoolean(_dtArticulo.Rows[ii]["PARTICIPA"]);
+                            break;
+                        }
                     }
 
+                    for (int i = 0; i < _dtProveedor.Rows.Count; i++)
+                    {
+                        if ((_dtProveedor.Rows[i]["ID_SUCURSALALM"].ToString() == dgvArticulo.CurrentRow.Cells["ID_SUCURSALALM"].Value.ToString()) &&
+                            (_dtProveedor.Rows[i]["C_PROVE"].ToString() == dgvArticulo.CurrentRow.Cells["C_PROVE"].Value.ToString()))
+                        {
+                            //dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = Convert.ToBoolean(chBoxArtiTodos.Checked);
+                            _dtProveedor.Rows[i]["PARTICIPA"] = true;
+
+                            //btnAgregarArti.Enabled = Convert.ToBoolean(dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value);
+
+                            //MessageBox.Show(_dtProveedor.Rows[i]["PARTICIPA"].ToString());
+                            break;
+                        }
+                    }
+
+                    //var sql_dtArti =
+                    //    from dtArti in _dtArticulo.AsEnumerable()
+                    //    where dtArti.Field<String>("C_ARTI") == dgvArticulo.CurrentRow.Cells["C_ARTI"].Value.ToString() && dtArti.Field<String>("ID_SUCURSALALM") == cBoxSucursal.SelectedValue.ToString() && dtArti.Field<String>("RESP_COMA") == SesionLetra
+                    //    select dtArti;
+
+                    //foreach (DataRow fila in sql_dtArti)
+                    //{
+                    //    fila.SetField("PARTICIPA", !Convert.ToBoolean(dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value));
+                    //    fila.AcceptChanges();
+
+                    //    var sql_dtProve =
+                    //        from dtProve in _dtProveedor.AsEnumerable()
+                    //        where dtProve.Field<String>("C_PROVE") == fila.Field<String>("C_PROVE")
+                    //        select dtProve;
+
+                    //    foreach (DataRow row in sql_dtProve)
+                    //    {
+                    //        row.SetField("PARTICIPA", true);
+                    //        row.AcceptChanges();
+                    //    }
+
+                    //}
+                    //-------------------------------------------------------------------------------------------------------
+                    //if (Convert.ToBoolean(dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value) == false)
+                    //{
+                    //    //MessageBox.Show("hola");
+                    //    String consMarcados = "(PARTICIPA = TRUE) AND (ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() + ")";
+                    //    foundRows = _dtArticulo.Select(consMarcados);
+                    //    if (foundRows.LongCount() > 0)
+                    //    {
+                    //        //MessageBox.Show("marcados: "+ foundRows.LongCount());
+                    //        //dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value;
+                    //        dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
+                    //    }
+                    //    else
+                    //    {
+                    //        dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = false;
+                    //    }
+                    //}
+                }
+                catch (Exception)
+                {
+
+                    //throw;
                 }
 
-                //if (Convert.ToBoolean(dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value) == false)
-                //{
-                //    //MessageBox.Show("hola");
-                //    String consMarcados = "(PARTICIPA = TRUE) AND (ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() + ") AND (c_prove = " + dgvProveedor.CurrentRow.Cells["C_PROVE"].Value.ToString() + ")";
-                //    foundRows = _dtArticulo.Select(consMarcados);
-                //    if (foundRows.LongCount() > 0)
-                //    {
-                //        //MessageBox.Show("marcados: "+ foundRows.LongCount());
-                //        //dgvArticulo.CurrentRow.Cells["PARTICIPA"].Value;
-                //        dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = true;
-                //    }
-                //    else
-                //    {
-                //        dgvProveedor.CurrentRow.Cells["PARTICIPA"].Value = false;
-                //    }
-                //}
+
+                
 
 
             }
@@ -1480,15 +1664,7 @@ namespace EXPOCOMA.Stand
 
         }
 
-        private void dgvProveedor_MouseMove(object sender, MouseEventArgs e)
-        {
-            dgvProveedor.Focus();
-        }
-
-        private void dgvArticulo_MouseMove(object sender, MouseEventArgs e)
-        {
-            dgvArticulo.Focus();
-        }
+    
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -1934,8 +2110,10 @@ namespace EXPOCOMA.Stand
                             }
                             catch (Exception e)
                             {
-
-                                MessageBox.Show(e.Message, "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Invoke((MethodInvoker)delegate {
+                                    MessageBox.Show(e.Message, "¡Espera!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                });
+                                
                             }
 
                         }
@@ -2109,10 +2287,27 @@ namespace EXPOCOMA.Stand
                             //}
 
 
-
+                            
                             _dtTblTablaSql.Clear();
 
-                            _dtTblTablaSql = _dtTmpArti.Copy();
+                            Int32 existe;
+                            foreach (var filaArti in _dtTmpArti.AsEnumerable())
+                            {
+                                existe = 0;
+                                foreach (var filaTmpArti in _dtTblTablaSql.AsEnumerable())
+                                {
+                                    if (filaArti["SEGMENT1"].ToString() == filaTmpArti["SEGMENT1"].ToString())
+                                    {
+                                        existe++;
+                                    }
+                                }
+                                if (!(existe > 0))
+                                {
+                                    _dtTblTablaSql.ImportRow(filaArti);
+                                }
+                            }
+
+                            //_dtTblTablaSql = _dtTmpArti.Copy();
 
                             //foreach (DataRow filaArti in sql_dtTblTablaSql)
                             //{
@@ -2199,6 +2394,35 @@ namespace EXPOCOMA.Stand
                                 {
                                     CartiFiltar += _dtTblTablaSql.Rows[iAlm]["SEGMENT1"].ToString();
                                 }
+
+
+                                if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"].ToString().Trim() == "SI")
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"] = "X";
+                                }
+                                else
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE14"] = "";
+                                }
+
+                                if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"].ToString().Trim() == "SI")
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"] = "X";
+                                }
+                                else
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE13"] = "";
+                                }
+
+                                if (_dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"].ToString().Trim() == "SI")
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"] = "X";
+                                }
+                                else
+                                {
+                                    _dtTblTablaSql.Rows[iAlm]["ATTRIBUTE15"] = "";
+                                }
+
                             }
 
                         }
@@ -2413,5 +2637,6 @@ namespace EXPOCOMA.Stand
             }
         }
 
+       
     }
 }

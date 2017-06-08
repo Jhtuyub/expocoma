@@ -182,7 +182,7 @@
             this.dgvProveedor.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProveedor_CellClick);
             this.dgvProveedor.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProveedor_CellContentClick);
             this.dgvProveedor.SelectionChanged += new System.EventHandler(this.dgvProveedor_SelectionChanged);
-            this.dgvProveedor.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvProveedor_MouseMove);
+            
             // 
             // label1
             // 
@@ -299,7 +299,7 @@
             this.dgvArticulo.TabStop = false;
             this.dgvArticulo.Tag = "";
             this.dgvArticulo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvArticulo_CellContentClick);
-            this.dgvArticulo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgvArticulo_MouseMove);
+            
             // 
             // picbCargando
             // 
