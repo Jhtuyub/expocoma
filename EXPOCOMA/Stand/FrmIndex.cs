@@ -550,7 +550,7 @@ namespace EXPOCOMA.Stand
                 + "[C_ARTI][varchar](4) NULL,"
                 + "[FAMI_ARTI][varchar](10) NULL,"
                 + "[DES_ARTI][varchar](250) NULL,"
-                + "[CAP_ARTI][varchar](7) NULL,"
+                + "[CAP_ARTI][varchar](15) NULL,"
                 + "[EMPAQUE2][numeric](4,0) NULL,"
                 + "[PRECIO_VEN][numeric](12,2) NULL,"
                 + "[PRECIO_ESP][numeric](12,2) NULL,"
