@@ -47,7 +47,7 @@ namespace EXPOCOMA.Stand
 
 
         String Sesion = "---";
-        String SesionLetra = "J";
+        String SesionLetra = "N";
         String CproveFiltrar;
         String CartiFiltar;
 
@@ -103,7 +103,7 @@ namespace EXPOCOMA.Stand
                 {
                 //_tablasSQLCampos - CAMPOS DE LA TABLA SQL
                     "ID_SUCURSALALM,SEGMENT1,VENDOR_NAME,ATTRIBUTE9,inactive_date,BAJA_GRAL,ESTATUS",
-                    "ID_SUCURSALALM,SEGMENT1,NO_PROV_AFECTA_PRECIO,NO_PROV_AFECTA_PRECIO,SEGMENT2,DESCRIPTION,DESCRIPTION,ATTRIBUTE2,ATTRIBUTE3,STATUS_NUMBER,ATTRIBUTE13,ATTRIBUTE14,ATTRIBUTE15", //INVENTORY_ITEM_STATUS_CODE = STATUS
+                    "ID_SUCURSALALM,SEGMENT1,NO_PROV_AFECTA_PRECIO,NO_PROV_AFECTA_PRECIO,SEGMENT2,DESCRIPTION,DESCRIPTION,ATTRIBUTE2,ATTRIBUTE3,STATUS_NUMBER,ATTRIBUTE13,ATTRIBUTE14,ATTRIBUTE15,ATTRIBUTE7", //INVENTORY_ITEM_STATUS_CODE = STATUS
                     "",
                     "",
                 },
@@ -117,7 +117,7 @@ namespace EXPOCOMA.Stand
                 {
                 //_tablasNomDestinoCampos - CAMPOS DE TABLAS DESTINO
                     "ID_SUCURSALALM,C_PROVE,DESCRI,RESP_COMA,inactive_date,BAJA_GRAL,STATUS",//
-                    "ID_SUCURSALALM,C_ARTI,C_PROVE,C_PROVE2,FAMI_ARTI,DES_ARTI,DES_ART2,CAP_ARTI,EMPAQUE2,STATUS,CAJA,UNIDAD,EXHIBIDOR",
+                    "ID_SUCURSALALM,C_ARTI,C_PROVE,C_PROVE2,FAMI_ARTI,DES_ARTI,DES_ART2,CAP_ARTI,EMPAQUE2,STATUS,CAJA,UNIDAD,EXHIBIDOR,CANTIDAD",
                     "ID_SUCURSALALM,C_ARTI,DIS_DISPO",
                     "",
                 },
@@ -183,7 +183,7 @@ namespace EXPOCOMA.Stand
             _dtProveedor = _funcion.llenar_dt("dbf_proveedo", "id, ID_SUCURSALALM, C_PROVE, DESCRI, RESP_COMA,  C_PROVE2,STATUS", "WHERE (STATUS <> '*')"); //WHERE (STATUS <> '*') or ((inactive_date is null or BAJA_GRAL ='') AND (inactive_date is null and BAJA_GRAL =''))
             //_dtClientes = _funcion.llenar_dt("dbf_cliente clie, dbf_agentes agen", "clie.ID_SUCURSALALM, clie.C_CLIENTE, clie.NOM_CLIEN, clie.C_AGENTE AS CLIAGEN, agen.C_AGENTE AS AGENAGEN, agen.NOM_AGENTE, clie.C_RUTA, clie.NOM_TIENDA, clie.POBLACION, clie.TELEFONO", "WHERE (clie.C_AGENTE = agen.C_AGENTE)AND(clie.ID_SUCURSALALM = '" + idSucur + "' AND agen.ID_SUCURSALALM = '" + idSucur + "')");// "WHERE ID_SUCURSALALM = "+cBoxSucursal.SelectedValue.ToString());
             //_dtArticulo = _funcion.llenar_form("dbf_articulo", "c_prove ASC", "id, ID_SUCURSALALM, C_ARTI, FAMI_ARTI, DES_ARTI, CAP_ARTI, EMPAQUE2, STATUS, C_PROVE, C_PROVE2, CANTIDAD, CANCELA, FALTANTE, COSTO, UNIDAD, CAJA, EXHIBIDOR, MARG_PRE4");
-            _dtArticulo = _funcion.llenar_dt("dbf_articulo arti,dbf_inventa inve", "arti.id, arti.ID_SUCURSALALM, arti.C_ARTI, arti.FAMI_ARTI, arti.DES_ARTI, arti.CAP_ARTI, arti.EMPAQUE2, arti.STATUS, arti.C_PROVE, arti.C_PROVE2, arti.CANTIDAD, arti.CANCELA, arti.FALTANTE, arti.COSTO, arti.UNIDAD, arti.CAJA, arti.EXHIBIDOR, arti.MARG_PRE4, inve.DIS_DISPO", "WHERE arti.C_ARTI = inve.C_ARTI AND arti.ID_SUCURSALALM = inve.ID_SUCURSALALM AND arti.STATUS <> '*' AND arti.STATUS <> 'INACTIVO'");
+            _dtArticulo = _funcion.llenar_dt("dbf_articulo arti,dbf_inventa inve", "arti.id, arti.ID_SUCURSALALM, arti.C_ARTI, arti.FAMI_ARTI, arti.DES_ARTI, arti.CAP_ARTI, arti.EMPAQUE2, arti.STATUS, arti.C_PROVE, arti.C_PROVE2, arti.CANTIDAD, arti.CANCELA, arti.FALTANTE, arti.COSTO, arti.CAJA, arti.UNIDAD, arti.EXHIBIDOR, arti.MARG_PRE4, inve.DIS_DISPO", "WHERE arti.C_ARTI = inve.C_ARTI AND arti.ID_SUCURSALALM = inve.ID_SUCURSALALM AND arti.STATUS <> '*' AND arti.STATUS <> 'INACTIVO'");
             _dtProveGuardados = _funcion.llenar_dt("tbl_provexpo", "*", "WHERE COMPRADOR = '" + SesionLetra + "'");
             _dtArtiGuardados = _funcion.llenar_dt("tbl_artiexpo", "*");
             //id, ID_SUCURSALALM, C_PROVE, C_ARTI, DES_ARTI, EMPAQUE2, CAP_ARTI, STATUS
