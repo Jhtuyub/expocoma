@@ -208,6 +208,33 @@ namespace EXPOCOMA.Stand
                     for (int i = 0; i < _dtArticulo.Rows.Count; i++)
                     {
                         _dtArticulo.Rows[i]["PARTICIPA"] = false;
+
+                        if ((_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "SI") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "X") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "x"))
+                        {
+                            _dtArticulo.Rows[i]["UNIDAD"] = _dtArticulo.Rows[i]["CANTIDAD"];
+                        }
+                        else
+                        {
+                            _dtArticulo.Rows[i]["UNIDAD"] = "";
+                        }
+
+                        //if (_dtArticulo.Rows[i]["CAJA"].ToString().Trim() == "SI")
+                        //{
+                        //    _dtArticulo.Rows[i]["CAJA"] = "X";
+                        //}
+                        //else
+                        //{
+                        //    _dtArticulo.Rows[i]["CAJA"] = "";
+                        //}
+
+                        //if (_dtArticulo.Rows[i]["EXHIBIDOR"].ToString().Trim() == "SI")
+                        //{
+                        //    _dtArticulo.Rows[i]["EXHIBIDOR"] = "X";
+                        //}
+                        //else
+                        //{
+                        //    _dtArticulo.Rows[i]["EXHIBIDOR"] = "";
+                        //}
                     }
                     
             });
