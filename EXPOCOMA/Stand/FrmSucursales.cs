@@ -54,6 +54,7 @@ namespace EXPOCOMA.Stand
             dgvCatEmpresa.Columns["dbf"].Visible = false;
             dgvCatEmpresa.Columns["usuario"].Visible = false;
             dgvCatEmpresa.Columns["contrasena"].Visible = false;
+            dgvCatEmpresa.Columns["servidor"].Visible = false;
             dgvCatEmpresa.Columns["db"].Visible = false;
             dgvCatEmpresa.Columns["almacen"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
             dgvCatEmpresa.Columns["almacen"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -96,6 +97,7 @@ namespace EXPOCOMA.Stand
             dgvTblEmpresa.Columns["db"].Visible = false;
             dgvTblEmpresa.Columns["ruta_baja"].Visible = false;
             dgvTblEmpresa.Columns["agen_baja"].Visible = false;
+            dgvTblEmpresa.Columns["servidor"].Visible = false;
 
             dgvTblEmpresa.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
             dgvTblEmpresa.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
