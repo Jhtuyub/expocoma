@@ -196,6 +196,12 @@
     <Compile Include="Stand\FrmSucursales.Designer.cs">
       <DependentUpon>FrmSucursales.cs</DependentUpon>
     </Compile>
+    <Compile Include="Stand\FrmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stand\FrmUsuario.Designer.cs">
+      <DependentUpon>FrmUsuario.cs</DependentUpon>
+    </Compile>
     <Content Include="sqlceca40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -295,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Stand\FrmSucursales.resx">
       <DependentUpon>FrmSucursales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stand\FrmUsuario.resx">
+      <DependentUpon>FrmUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="DSReportes.xsc">

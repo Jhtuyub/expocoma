@@ -405,11 +405,6 @@ namespace EXPOCOMA.inicio
             }
         }
 
-        private void ToolStripMenuItemConfiguracion_Click(object sender, EventArgs e)
-        {
-            frmSistema _frmSistema = new frmSistema();
-            _frmSistema.ShowDialog();
-        }
 
         private void dgvExpos_KeyUp(object sender, KeyEventArgs e)
         {
@@ -431,6 +426,18 @@ namespace EXPOCOMA.inicio
         private void dgvExpos_MouseMove(object sender, MouseEventArgs e)
         {
             dgvExpos.Focus();
+        }
+
+        private void configuracionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmSistema _frmSistema = new frmSistema();
+            _frmSistema.ShowDialog();
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmUsuario _frmUsuarios = new FrmUsuario();
+            _frmUsuarios.ShowDialog();
         }
     }
 }
