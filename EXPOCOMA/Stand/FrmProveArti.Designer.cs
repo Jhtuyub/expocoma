@@ -54,6 +54,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.stripPBEstatus = new System.Windows.Forms.ToolStripProgressBar();
             this.stripSLEstatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnReporte = new System.Windows.Forms.Button();
             this.tabProveedor.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProveedor)).BeginInit();
@@ -182,7 +183,6 @@
             this.dgvProveedor.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProveedor_CellClick);
             this.dgvProveedor.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProveedor_CellContentClick);
             this.dgvProveedor.SelectionChanged += new System.EventHandler(this.dgvProveedor_SelectionChanged);
-            
             // 
             // label1
             // 
@@ -299,7 +299,6 @@
             this.dgvArticulo.TabStop = false;
             this.dgvArticulo.Tag = "";
             this.dgvArticulo.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvArticulo_CellContentClick);
-            
             // 
             // picbCargando
             // 
@@ -358,11 +357,23 @@
             this.stripSLEstatus.Size = new System.Drawing.Size(16, 17);
             this.stripSLEstatus.Text = "...";
             // 
+            // btnReporte
+            // 
+            this.btnReporte.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnReporte.Location = new System.Drawing.Point(98, 468);
+            this.btnReporte.Name = "btnReporte";
+            this.btnReporte.Size = new System.Drawing.Size(80, 29);
+            this.btnReporte.TabIndex = 33;
+            this.btnReporte.Text = "Reporte";
+            this.btnReporte.UseVisualStyleBackColor = true;
+            this.btnReporte.Click += new System.EventHandler(this.btnReporte_Click);
+            // 
             // FrmProveArti
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(909, 522);
+            this.Controls.Add(this.btnReporte);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.cBoxMostarProv);
@@ -426,5 +437,6 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripProgressBar stripPBEstatus;
         private System.Windows.Forms.ToolStripStatusLabel stripSLEstatus;
+        private System.Windows.Forms.Button btnReporte;
     }
 }

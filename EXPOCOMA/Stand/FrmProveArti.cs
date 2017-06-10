@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -205,18 +206,22 @@ namespace EXPOCOMA.Stand
 
 
                     _dtArticulo.Columns.Add("PARTICIPA", typeof(Boolean));
-                    for (int i = 0; i < _dtArticulo.Rows.Count; i++)
-                    {
-                        _dtArticulo.Rows[i]["PARTICIPA"] = false;
+                    _dtArticulo.Columns.Add("EXISCAJA");
+                for (int i = 0; i < _dtArticulo.Rows.Count; i++)
+                {
+                    _dtArticulo.Rows[i]["PARTICIPA"] = false;
 
-                        if ((_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "SI") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "X") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "x"))
-                        {
-                            _dtArticulo.Rows[i]["UNIDAD"] = _dtArticulo.Rows[i]["CANTIDAD"];
-                        }
-                        else
-                        {
-                            _dtArticulo.Rows[i]["UNIDAD"] = "";
-                        }
+                    if ((_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "SI") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "X") || (_dtArticulo.Rows[i]["UNIDAD"].ToString().Trim() == "x"))
+                    {
+                        _dtArticulo.Rows[i]["UNIDAD"] = _dtArticulo.Rows[i]["CANTIDAD"];
+                    }
+                    else
+                    {
+                        _dtArticulo.Rows[i]["UNIDAD"] = "";
+                    }
+
+                        _dtArticulo.Rows[i]["EXISCAJA"] = String.Format("{0:#,##0.##}", Convert.ToDecimal(_dtArticulo.Rows[i]["DIS_DISPO"]) / Convert.ToDecimal(_dtArticulo.Rows[i]["EMPAQUE2"]));
+                        //_dtArticulo.Rows[i]["EXISCAJA"] = Math.Round(Convert.ToDecimal(_dtArticulo.Rows[i]["DIS_DISPO"]) / Convert.ToDecimal(_dtArticulo.Rows[i]["EMPAQUE2"]), 2).ToString("0.00");
 
                         //if (_dtArticulo.Rows[i]["CAJA"].ToString().Trim() == "SI")
                         //{
@@ -437,9 +442,13 @@ namespace EXPOCOMA.Stand
                 dgvArticulo.Columns["EXHIBIDOR"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvArticulo.Columns["EXHIBIDOR"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                 dgvArticulo.Columns["MARG_PRE4"].Visible = false;
+                dgvArticulo.Columns["DIS_DISPO"].Visible = false;
                 dgvArticulo.Columns["DIS_DISPO"].HeaderText = "EXIS";
                 dgvArticulo.Columns["DIS_DISPO"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                 dgvArticulo.Columns["DIS_DISPO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgvArticulo.Columns["EXISCAJA"].HeaderText = "EXIS/C";
+                dgvArticulo.Columns["EXISCAJA"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+                dgvArticulo.Columns["EXISCAJA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                 dgvArticulo.DefaultCellStyle.SelectionBackColor = Properties.Settings.Default.filaSeleccion;
                 dgvArticulo.AlternatingRowsDefaultCellStyle.BackColor = Properties.Settings.Default.filaAltern;
@@ -2637,6 +2646,115 @@ namespace EXPOCOMA.Stand
             }
         }
 
-       
+        private void btnReporte_Click(object sender, EventArgs e)
+        {
+            //DataTable _dtReporteCompra = new DataTable();
+            //_dtReporteCompra.Columns.Add("CODIGO");
+            //_dtReporteCompra.Columns.Add("ORGANIZACION");
+            //_dtReporteCompra.Columns.Add("COMPRADOR");
+            //_dtReporteCompra.Columns.Add("Confirmacion");
+            //_dtReporteCompra.Columns.Add("Validacion_Art");
+
+            DataTable _dtReporteCompra = _funcion.llenar_dt("tbl_provexpo", "C_PROVE,DESCRI,COMPRADOR", "WHERE ID_SUCURSALALM = "+ cBoxSucursal.SelectedValue.ToString());
+            var exisArti = 0;
+            var TotalProve = _dtReporteCompra.Rows.Count;
+
+            _dtReporteCompra.Columns.Add("Confirmacion",typeof(Int32));
+            _dtReporteCompra.Columns.Add("Validacion_Art", typeof(Int32));
+
+
+
+            for (int i = 0; i < TotalProve; i++)
+            {
+                _dtReporteCompra.Rows[i]["Confirmacion"] = 1;
+
+                exisArti = _funcion.llenar_dt("tbl_artiexpo","C_ARTI", "WHERE ID_SUCURSALALM = " + cBoxSucursal.SelectedValue.ToString() +" AND C_PROVE = "+ _dtReporteCompra.Rows[i]["C_PROVE"].ToString()).Rows.Count;
+                if (exisArti > 0)
+                {
+                    _dtReporteCompra.Rows[i]["Validacion_Art"] = 1;
+                }
+                
+            }
+
+            String carpetaLocal = Application.StartupPath + @"\tmp_expo\" + nomExpo + @"\" + _nomUsuario;
+            String Archivo = "TMPCompradores_" + nomExpo + ".xls";
+            String ArcExcel = carpetaLocal + Archivo;
+            if (!Directory.Exists(carpetaLocal))
+            {
+                Directory.CreateDirectory(carpetaLocal);
+            }
+
+            if (!Directory.Exists(ArcExcel))
+            {
+                File.Delete(ArcExcel);
+            }
+
+            
+            using (ExcelPackage package = new ExcelPackage(new FileInfo(ArcExcel)))
+            {
+                //GUARDA EXCEL CON LOS DATOS DE UN DATATABLE
+                var worksheet = package.Workbook.Worksheets.Add("Hoja 1");
+
+                worksheet.Cells["A2:E2"].Merge = true;
+                //worksheet.Cells["A2:E2"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                worksheet.Cells["A2:E2"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells["A2:E2"].Value = "Reporte de Proveedores.";
+                worksheet.Cells["A2:E2"].Style.Font.Size = 18;
+
+                //worksheet.Cells["A3:E3"].Merge = true;
+                //worksheet.Cells["A3:E3"].Value = "Secursal: " + cBoxSucursal.Text;
+                worksheet.Cells["A3"].Value = "Sucursal:";
+                worksheet.Cells["A3"].Style.Font.Bold = true;
+                worksheet.Cells["B3"].Value =  cBoxSucursal.Text;
+                worksheet.Cells["B3"].Style.Font.Bold = true;
+
+                worksheet.Cells["D4"].Value = "Confirmados";
+                worksheet.Cells["D4"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells["D4"].Style.Font.Bold = true;
+                worksheet.Cells["E4"].Value = "Validados";
+                worksheet.Cells["E4"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells["E4"].Style.Font.Bold = true;
+
+                //worksheet.Cells["D4:E5"].Style.Font.Bold = true;
+                worksheet.Cells["D4"].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["D4"].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["E4"].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["E4"].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["D5"].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["D5"].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["E5"].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["E5"].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+
+                worksheet.Cells["D5"].Formula = "SUM(D8:D"+ (TotalProve + 7)+")";
+                worksheet.Cells["E5"].Formula = "SUM(E8:E" + (TotalProve + 7) + ")";
+
+                worksheet.Cells["A5:C5"].Merge = true;
+                worksheet.Cells["A5:C5"].Value = "Total Proveedores Participantes:";
+                worksheet.Cells["A5:C5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells["A5:C5"].Style.Font.Bold = true;
+                worksheet.Cells["A5:C5"].Style.Font.Size = 11;
+                worksheet.Cells["A5:C5"].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["A5:C5"].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["A5:C5"].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+                worksheet.Cells["A5:C5"].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Medium;
+
+                worksheet.Cells["A7"].LoadFromDataTable(_dtReporteCompra, true);
+
+                worksheet.Cells["A7:E7"].Style.Font.Bold = true;
+                worksheet.Cells["A7:E7"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                worksheet.Cells["A7"].Value = "CODIGO";
+                worksheet.Cells["B7"].Value = "ORGANIZACIÓN";
+                worksheet.Cells["C7"].Value = "COMPRADOR";
+                worksheet.Cells["D7"].Value = "Confirmación";
+                worksheet.Cells["E7"].Value = "Validación Art.";
+
+                worksheet.Cells["E7"].Column("").AutoFit;
+
+                package.Save();
+                System.Diagnostics.Process.Start(ArcExcel);
+
+           
+            }
+        }
     }
 }
